@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="04-网络, 巨瑞康的个人博客">
+    <meta name="keywords" content="05-JVM, 巨瑞康的个人博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>04-网络 | 巨瑞康的个人博客</title>
+    <title>05-JVM | 巨瑞康的个人博客</title>
     <link rel="icon" type="image/png" href="/JRK.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">04-网络</h1>
+                    <h1 class="description center-align post-title">05-JVM</h1>
                 </div>
             </div>
         </div>
@@ -460,28 +460,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-08-07
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-08-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.6k
+                    5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    17 分
                 </div>
                 
 
@@ -496,220 +496,169 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><h2 id="1-OSI-和-TCP-IP-的分层结构"><a href="#1-OSI-和-TCP-IP-的分层结构" class="headerlink" title="1. OSI 和 TCP/IP 的分层结构"></a>1. OSI 和 TCP/IP 的分层结构</h2><h3 id="1-分层介绍"><a href="#1-分层介绍" class="headerlink" title="1. 分层介绍"></a>1. 分层介绍</h3><ul>
-<li>OSI的体系结构分为七层，TCP/IP 的体系结构分为四层；</li>
-<li>学习计算机网络使用的是一种折中的办法，分为五层的体系结构，<strong>从下到上分别为：物理层、数据链路层、网络层、运输层和应用层</strong>。</li>
-</ul>
+                <h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1-内存区域"><a href="#1-内存区域" class="headerlink" title="1. 内存区域"></a>1. 内存区域</h2><p><img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F.png" alt=""></p>
+<p><img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/2019-3Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9FJDK1.8.png" alt=""></p>
 <hr>
-<h3 id="2-应用层"><a href="#2-应用层" class="headerlink" title="2. 应用层"></a>2. 应用层</h3><p><strong>应用层（application layer）</strong>的任务是<strong>通过应用进程间的交互</strong>来完成特定的网络应用。应用层协议定义的是<strong>应用进程间通信和交互的规则</strong>。</p>
-<ul>
-<li>对于不同的网络应用需要不同的应用层协议，如<strong>域名系统 DNS</strong>，支持万维网应用的 <strong>HTTP 协议</strong>，支持电子邮件的 <strong>SMTP 协议</strong>等。我们把<strong>应用层交互的数据单元称为报文</strong>。<ul>
-<li><strong>域名系统（DNS，Domain Name System）</strong>是因特网的一项核心服务，它作为可以将<strong>域名和 IP 地址相互映射</strong>的分布式数据库，能够使人们方便的访问互联网，而不用记住 IP 数串。如 <a href="http://www.baidu.com等。" target="_blank" rel="noopener">www.baidu.com等。</a></li>
-<li><strong>超文本传输协议（HTTP，HyperText Transfer Protocol）</strong>是互联网上最为广泛应用的网络协议之一，所有的 WWW 文件都必须遵守这个协议。设计 HTTP 最初的目的是为了提供一种发布和接收 HTML 页面的方法。</li>
-<li><strong>文件传输协议（FTP，File Transfer Protocol）</strong>：用于 Internet 上的控制文件的<strong>双向传输</strong>。在 FTP 的使用当中，用户经常遇到两个概念：<strong>下载（Download） 和上传（Upload）</strong>。在进进行文件传输时，FTP 的客户和服务器之间要先建立<strong>两个并行的 TCP 连接：控制连接和数据连接</strong>。实际用于传输文件的是数据连接。 </li>
-<li><strong>简单文件传输协议（TFTP，Trivial File Transfer Protocol）</strong>：是 <strong>TCP/IP 协议族</strong>中的一个用来在客户机与服务器之间进行简单文件传输的协议，提供不复杂、开销不大的文件传输服务。端口号为69。</li>
-<li><strong>简单邮件传输协议（SMTP，Simple Mail Transfer Protocol）</strong>：它是一组用于<strong>将邮件由源地址传送到目的地址</strong>的规则，由它来控制信件的中转方式。SMTP 协议属于 <strong>TCP/IP 协议族</strong>，它帮助每台计算机在发送或中转信件时找到下一个目的地。</li>
-<li><strong>邮局协议 3（Post Office Protocol 3）</strong>：是 <strong>TCP/IP 协议族</strong>中的一员，协议主要用于支持使用客户端远程管理在服务器上的电子邮件。</li>
-<li><strong>网络邮件访问协议（Internet Mail Access Protocol）</strong>：主要作用是邮件客户端从服务端获取邮件信息，下载邮件等。对于阅读、标记、移动和删除等操作，<strong>IMAP 协议使客户端与邮箱更新同步，POP3 协议仅在客户端内</strong>。</li>
-<li><strong>电子邮件系统</strong>：一个电子邮件系统有三个重要组成构件：用户代理、邮件服务器、邮件协议（包括邮件发送协议，如 SMTP，和邮件读取协议，如 POP3 和 IMAP）。用户代理和邮件服务器都要运行这些协议。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="3-运输层"><a href="#3-运输层" class="headerlink" title="3. 运输层"></a>3. 运输层</h3><p><strong>运输层（transport layer）</strong>的任务是向<strong>两台主机进程之间的通信</strong>提供通用的数据传输服务。应用进程利用该服务传送应用层报文。</p>
-<p><strong>运输层主要使用两种协议</strong>：</p>
-<ul>
-<li><strong>传输控制协议 TCP</strong>：提供<strong>面向连接</strong>的，<strong>可靠的</strong>数据传输服务。</li>
-<li><strong>用户数据协议 UDP</strong>：提供<strong>无连接</strong>的，<strong>不保证可靠</strong>的数据传输服务。</li>
-</ul>
-<hr>
-<h3 id="4-网络层"><a href="#4-网络层" class="headerlink" title="4. 网络层"></a>4. 网络层</h3><p>计算机网络中进行通信的两个计算机之间可能会经过很多个<strong>数据链路</strong>，也可能还要经过很多<strong>通信子网</strong>。<strong>网络层</strong>的任务是，当<strong>两个计算机间进行通信</strong>时，<strong>选择合适的网间路由和交换结点</strong>，确保数据及时传送。</p>
-<ul>
-<li>在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 <strong>IP 协议</strong>，因此分组也叫 <strong>IP 数据报</strong> ，简称 <strong>数据报</strong>。</li>
-<li>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Intert Protocol）和许多路由选择协议，因此互联网的网络层也叫做<strong>网际层</strong>或<strong>IP层</strong>。 </li>
-<li><strong>子网掩码</strong>：它是一种用来指明一个 IP 地址的哪些位标识的是主机所在的子网，以及哪些位标识的是主机的位掩码。子网掩码不能单独存在，它必须结合IP地址一起使用。</li>
-</ul>
-<hr>
-<h3 id="5-数据链路层"><a href="#5-数据链路层" class="headerlink" title="5. 数据链路层"></a>5. 数据链路层</h3><p><strong>数据链路层（data link layer）通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议。</strong></p>
-<ul>
-<li><p>在两个相邻节点之间传送数据时，<strong>数据链路层将网络层交下来的 IP 数据报组装成帧</strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。</p>
-</li>
-<li><p>链路是从一个结点到相邻节点的一段物理链路，数据链路则在链路的基础上增加了一些必要的硬件（如网络适配器）和软件（如协议的实现）。</p>
-</li>
-<li><p>数据链路层传输协议的数据单元是帧。数据链路层的三个基本问题是：<strong>封装成帧</strong>，<strong>透明传输</strong>和<strong>差错检测</strong>。</p>
-</li>
-<li><p><strong>MAC 地址</strong>：意译为媒体访问控制，或称为<strong>物理地址、硬件地址，用来定义网络设备的位置</strong>。在 OSI 模型中，第三层网络层负责 IP 地址，第二层数据链路层则负责 MAC 地址。因此<strong>一个主机会有一个 MAC 地址，而每个网络位置会有一个专属于它的 IP 地址</strong>。</p>
-</li>
-</ul>
-<hr>
-<h3 id="6-物理层"><a href="#6-物理层" class="headerlink" title="6. 物理层"></a>6. 物理层</h3><ul>
-<li><strong>在物理层上所传送的数据单位是比特</strong>。</li>
-<li><strong>物理层（physical layer）</strong>的作用是实现<strong>相邻计算机节点之间比特流的透明传送</strong>，尽可能屏蔽掉具体传输介质和物理设备的差异。</li>
-<li>“透明传送比特流” 表示<strong>经实际电路传送后的比特流没有发生变化</strong>，对传送的比特流来说，这个电路好像是看不见的。</li>
-</ul>
-<hr>
-<h2 id="2-TCP-和-UDP"><a href="#2-TCP-和-UDP" class="headerlink" title="2. TCP 和 UDP"></a>2. TCP 和 UDP</h2><h3 id="1-TCP-三次握手"><a href="#1-TCP-三次握手" class="headerlink" title="1. TCP 三次握手"></a>1. TCP 三次握手</h3><ol>
-<li><strong>客户端</strong>发送带有 <strong>SYN 标志</strong>的数据包给服务端——一次握手；</li>
-<li><strong>服务端</strong>发送带有 <strong>SYN/ACK 标志</strong>的数据包给客户端——二次握手；</li>
-<li><strong>客户端</strong>发送带有 <strong>ACK 标志</strong>的数据包给服务端——三次握手；</li>
-</ol>
-<ul>
-<li><strong>客户端先发送</strong>。</li>
-</ul>
-<hr>
-<h3 id="2-为什么要三次握手"><a href="#2-为什么要三次握手" class="headerlink" title="2. 为什么要三次握手"></a>2. 为什么要三次握手</h3><p><strong>三次握手的目的是建立可靠的通信信道</strong>。说到通讯，简单来说就是数据的发送与接收，而三次握手最主要的目的就是<strong>双方确认自己与对方的发送与接收是正常的。</strong> </p>
+<h3 id="1-程序计数器"><a href="#1-程序计数器" class="headerlink" title="1. 程序计数器"></a>1. 程序计数器</h3><p>程序计数器是一块较小的内存空间，主要有两个作用：</p>
 <ol>
-<li>第一次握手：服务端确认<strong>客户端发送正常，自己接收正常</strong>；</li>
-<li>第二次握手：<strong>客户端</strong>确认<strong>自己发送、接收正常，服务端发送、接收正常</strong>（客户端确认完成）；</li>
-<li>第三次握手：<strong>服务端</strong>确认<strong>自己发送、接收正常，客户端发送、接收正常</strong>（服务端确认完成）。</li>
-</ol>
-<ul>
-<li>因此三次握手就能使双方确认，自己和对方都收发正常。</li>
-</ul>
-<hr>
-<h3 id="4-四次挥手"><a href="#4-四次挥手" class="headerlink" title="4. 四次挥手"></a>4. 四次挥手</h3><ol>
-<li><strong>客户端</strong>发送一个带有 <strong>FIN 标志</strong>的报文给服务端，进入 WAIT-1 状态，表示释放连接——一次挥手；</li>
-<li><strong>服务端</strong>发送一个带有 <strong>ACK 标志</strong>的报文给客户端，表示确认收到；客户端收到确认报文，进入 WAIT-2状态——二次挥手；</li>
-<li><strong>服务端</strong>发送完所有数据后，发送一个带有 <strong>FIN 标志</strong>的报文给客户端，进入 LAST-ACK 状态，表示释放连接——三次挥手；</li>
-<li><strong>客户端</strong>发送一个带有 <strong>ACK 标志</strong>的报文给服务端，表示确认——四次挥手。</li>
-</ol>
-<ul>
-<li>注意：<strong>当客户端发送最后的确认后，并不会立刻释放连接，必须经过 2*MSL（最长报文段寿命）的时间后，客户端才会关闭 TCB（传输控制块）。而服务端接收到确认后，立即进入 CLOSED 状态。因此，服务端结束的时间要比客户端早一些</strong>。</li>
-</ul>
-<hr>
-<h3 id="5-为什么客户端断开前需要等待-2MSL"><a href="#5-为什么客户端断开前需要等待-2MSL" class="headerlink" title="5. 为什么客户端断开前需要等待 2MSL"></a>5. 为什么客户端断开前需要等待 2MSL</h3><ol>
-<li>客户端发送确认报文后，这个报文可能丢失；</li>
-<li>服务端迟迟接收不到确认报文，会重新发送请求断开连接报文；</li>
-<li>客户端在这 2MSL 时间内就会收到新的报文，再次发送确认报文，并重启 2MSL 计时器。</li>
+<li>字节码解释器通过改变程序计数器的值来依次<strong>读取指令</strong>，从而实现代码的流程控制，如：顺序执行、选择、循环、异常处理。</li>
+<li>在多线程的情况下，程序计数器用于<strong>记录当前线程执行的位置</strong>，从而当线程被切换后能够从之前的位置继续执行。</li>
+<li><strong>注意</strong>：<strong>程序计数器是唯一一个不会出现 <code>OutOfMemoryError</code> 的内存区域，它的生命周期随着线程的创建而创建，随着线程的死亡而死亡</strong>。</li>
 </ol>
 <hr>
-<h3 id="6-为什么挥手比握手多了一次"><a href="#6-为什么挥手比握手多了一次" class="headerlink" title="6. 为什么挥手比握手多了一次"></a>6. 为什么挥手比握手多了一次</h3><ol>
-<li>建立连接时，服务器接收到 SYN 报文后，<strong>将 SYN 和 ACK 放在一个报文中</strong>发送给客户端。</li>
-<li>关闭连接时，服务器接收到 FIN 报文后，<strong>可能还有未发送完的数据，于是先发送 ACK 表示确认，待数据都发送完后，再发送 FIN 报文请求关闭连接</strong>。由于 <strong>ACK 和 FIN 报文分开发送</strong>，从而导致挥手比握手多了一次。</li>
-</ol>
-<hr>
-<h3 id="7-TCP-和-UDP-的区别"><a href="#7-TCP-和-UDP-的区别" class="headerlink" title="7. TCP 和 UDP 的区别"></a>7. TCP 和 UDP 的区别</h3><ul>
-<li><strong>UDP 在传输数据前不需要先建立连接</strong>，接收端主机收到 UDP 报文后，<strong>不需要给出任何确认</strong>。一般用于语音、视频和直播等即时通信。</li>
-<li><strong>TCP 是面向连接的服务</strong>。TCP 在传输数据前必须先有<strong>三次握手</strong>建立连接，数据传送后要有<strong>四次挥手</strong>关闭连接，并且在数据传递时，有确认、窗口。重传和拥塞控制机制。也由于这些保证， TCP 的开销比 UDP 大，一般用于文件传输、发送和接收邮件、远程登录等场景。</li>
-</ul>
-<hr>
-<h3 id="8-TCP-如何保证可靠传输"><a href="#8-TCP-如何保证可靠传输" class="headerlink" title="8. TCP 如何保证可靠传输"></a>8. TCP 如何保证可靠传输</h3><ol>
-<li>应用数据被分割成 TCP 认为合适的<strong>数据块（分组）进行发送</strong>；</li>
-<li>TCP 给发送的<strong>每一个包编号</strong>，接收方对数据包进行排序，把有序数据传到应用层；</li>
-<li><strong>校验和</strong>：TCP 保持它首部和数据的检验和。这是一个端到端的检验和，目的是<strong>检测数据在传输过程中的任何变化</strong>。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段；</li>
-<li>TCP 的接收端会<strong>丢弃重复的数据</strong>；</li>
-<li><strong>流量控制</strong>：TCP 连接的每一方都有固定大小的缓冲空间，TCP 的<strong>接收端只允许发送端发送接收端缓冲区能接纳的数据</strong>。当接收方来不及处理发送方的数据时，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议，<strong>接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小</strong>，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据；</li>
-<li><strong>拥塞控制</strong>：当网络拥塞时，减少数据的发送；</li>
-<li><strong>ARQ 协议</strong>：每发完一个分组就<strong>停止发送</strong>，等待对方确认，收到确认后再发送下一个分组。也有<strong>连续 ARQ 协议，特点是 Go-Back-N</strong>。</li>
-<li><strong>超时重传</strong>：当 TCP 发出一个分组后，它启动一个定时器，等待接收端确认收到。<strong>如果不能及时收到一个确认，将重发这个分组</strong>。</li>
-</ol>
-<hr>
-<h2 id="3-HTTP-协议"><a href="#3-HTTP-协议" class="headerlink" title="3. HTTP 协议"></a>3. HTTP 协议</h2><h3 id="1-HTTP-简介"><a href="#1-HTTP-简介" class="headerlink" title="1. HTTP 简介"></a>1. HTTP 简介</h3><ul>
-<li>工作原理：HTTP 协议工作在客户端 / 服务器架构上（C / S）。<strong>浏览器作为 HTTP 客户端通过 URL 向 HTTP 服务端即WEB服务器发送所有请求</strong>。</li>
-<li><strong>HTTP 默认端口号为 80</strong>，可以修改。</li>
-<li><strong>注意事项</strong>：<ol>
-<li>HTTP 是<strong>无连接</strong>的（短连接）：<strong>每次连接只处理一个请求</strong>。当客户端浏览器访问的某个HTML或其他类型的Web页中包含有其他的Web资源（如JavaScript文件、图像文件、CSS文件等），每遇到这样一个Web资源，浏览器就会重新建立一个HTTP会话。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。 </li>
-<li>HTTP 是<strong>无状态</strong>的：无状态指协议<strong>对事物处理没有记忆能力</strong>。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
-<li>HTTP 是媒体独立的：只要客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过HTTP发送。 </li>
+<h3 id="2-虚拟机栈"><a href="#2-虚拟机栈" class="headerlink" title="2. 虚拟机栈"></a>2. 虚拟机栈</h3><ol>
+<li>虚拟机栈由一个个<strong>栈帧</strong>组成，描述的是 <strong>Java 方法执行的内存模型</strong>。</li>
+<li>每个方法被执行的时候都会创建一个栈帧，用于<strong>存储局部变量表、操作栈、动态链接和方法出口等信息</strong>。执行 <code>return</code> 语句和抛出异常会使栈帧出栈。<strong>每一个方法被调用的过程就对应一个栈帧在虚拟机栈中从入栈到出栈的过程</strong>。</li>
+<li><strong>局部变量表</strong>：一片连续的内存空间，用来存放<strong>方法参数</strong>，以及方法内定义的<strong>局部变量</strong>。存放着编译期间已知的数据类型(八大基本类型和<strong>对象引用-reference 类型</strong>，returnAddress 类型。 </li>
+<li><strong>reference 类型</strong>：与基本类型不同的是它不等同本身，它可能是指向一个对象起始位置指针，也可能指向一个代表对象的句柄，或其他与该对象有关的位置。</li>
+<li><strong>错误</strong>：Java 虚拟机栈可能出现两种类型的错误<ol>
+<li>线程请求的栈深度大于虚拟机允许的栈深度，将发生 <strong>StackOverflowError</strong>。</li>
+<li>若 Java 虚拟机堆中没有空闲内存，并且垃圾回收器也无法提供更多内存，发生 <strong>OutOfMemoryError</strong>。 </li>
 </ol>
 </li>
-</ul>
+<li><strong>生命周期</strong>：Java 虚拟机栈也是<strong>线程私有</strong>的，它的<strong>生命周期和线程相同</strong>。</li>
+</ol>
+<p><img src="05-JVM.assets/10006199-728567b81e7abff5-1596702433480.webp" alt=""></p>
 <hr>
-<h3 id="2-HTTP-消息结构"><a href="#2-HTTP-消息结构" class="headerlink" title="2. HTTP 消息结构"></a>2. HTTP 消息结构</h3><ul>
-<li><p>客户端：客户端发送一个 HTTP 请求到服务器，请求消息包括以下格式：<strong>请求行（request line）、请求头部（header）</strong>、空行和请求数据。</p>
+<h3 id="3-本地方法栈"><a href="#3-本地方法栈" class="headerlink" title="3. 本地方法栈"></a>3. 本地方法栈</h3><ol>
+<li>和虚拟机栈所发挥的作用非常相似，区别是：<strong>虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务</strong>。在 HotSpot 虚拟机中和 Java 虚拟机栈合二为一。</li>
+<li>Native 方法：<strong>该方法的实现由非 Java 语言实现</strong>，可能底层调用的 C 或者 C++。</li>
+<li>本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接、出口信息。</li>
+<li>方法执行完毕后相应的栈帧也会出栈并释放内存空间，<strong>也会出现 StackOverFlowError 和 OutOfMemoryError 两种错误</strong>。</li>
+</ol>
+<hr>
+<h3 id="4-堆"><a href="#4-堆" class="headerlink" title="4. 堆"></a>4. 堆</h3><ol>
+<li>Java 虚拟机所管理的内存中<strong>最大的一块</strong>，<strong>Java 堆是所有线程共享的一块内存区域，在虚拟机启动时创建</strong>。</li>
+<li>此内存区域的<strong>唯一目的</strong>就是<strong>存放对象实例</strong>，<strong>几乎所有的对象实例以及数组</strong>都在这里分配内存。</li>
+<li>Java 堆是垃圾收集器管理的主要区域，因此也被称作 <strong>GC 堆（Garbage Collected Heap）</strong>。</li>
+<li>根据虚拟机规范，Java 堆可以存在物理上不连续的内存空间，就像磁盘空间只要逻辑是连续的即可。<strong>它的内存大小可以设为固定大小，也可以扩展</strong>。</li>
+<li>如果堆中没有内存完成实例分配，而且堆无法扩展，将发生<strong>OutOfMemoryError</strong>（和内存无关，与配置的大小有关）。</li>
+</ol>
+<hr>
+<h3 id="5-方法区"><a href="#5-方法区" class="headerlink" title="5. 方法区"></a>5. 方法区</h3><ol>
+<li>方法区与 Java 堆一样，是<strong>各个线程共享</strong>的内存区域。</li>
+<li>方法区用于<strong>存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等</strong>数据。如 static 修饰的变量加载类的时候就被加载到方法区中。</li>
+<li><strong>运行时常量池存在于方法区</strong>。</li>
+<li>方法区是一个规定，类似于接口。<strong>永久代</strong>是实现方式，类似于实现了接口的类。JDK 1.8 以后，方法区被彻底移除，取而代之的是<strong>元空间</strong>（MetaSpace）。</li>
+<li><strong>元空间</strong>：元空间使用<strong>直接内存</strong>，受本机可用内存的限制，溢出的几率更小，可以加载的类更多。</li>
+</ol>
+<hr>
+<h2 id="2-虚拟机对象"><a href="#2-虚拟机对象" class="headerlink" title="2. 虚拟机对象"></a>2. 虚拟机对象</h2><h3 id="1-对象的创建过程"><a href="#1-对象的创建过程" class="headerlink" title="1. 对象的创建过程"></a>1. 对象的创建过程</h3><ol>
+<li><strong>类加载检查</strong>：虚拟机遇到一条 new 指令时，<strong>首先将去检查</strong>这个指令的参数是否能在常量池中定位到这个类的符号引用，并且检查这个符号引用代表的类是否已被加载过、解析和初始化过。<strong>如果没有，那必须先执行相应的类加载过程</strong>。</li>
+<li><strong>分配内存</strong>：在<strong>类加载检查</strong>通过后，接下来虚拟机将为新生对象<strong>分配内存</strong>。分配方式有<strong>指针碰撞</strong>和<strong>空闲列表</strong>两种。</li>
+<li><strong>初始化零值</strong>：内存分配完成后，虚拟机需要将分配到的内存空间都初始化为零值（不包括对象头），这一步操作<strong>保证了对象的实例字段在 Java 代码中可以不赋初始值就直接使用</strong>，程序能访问到这些字段的数据类型所对应的零值。</li>
+<li><strong>设置对象头</strong>：初始化零值完成之后，虚拟机要对对象进行必要的设置，例如这个<strong>对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的 GC 分代年龄等信息。 这些信息存放在对象头中。</strong> 另外，根据虚拟机当前运行状态的不同，如是否启用偏向锁等，对象头会有不同的设置方式。</li>
+<li><strong>执行 init 方法</strong>：一般来说，执行 new 指令之后会接着执行 init 方法，<strong>把对象按照程序员的意愿进行初始化</strong>，这样一个真正可用的对象才算完全产生出来。</li>
+</ol>
+<hr>
+<h3 id="2-对象的内存布局"><a href="#2-对象的内存布局" class="headerlink" title="2. 对象的内存布局"></a>2. 对象的内存布局</h3><p>在 Hotspot 虚拟机中，对象在内存中的布局可以分为 3 块区域：<strong>对象头</strong>、<strong>实例数据</strong>和<strong>对齐填充</strong>。</p>
+<ol>
+<li><strong>对象头</strong>：对象头包括两部分信息，<strong>第一部分用于存储对象自身的运行时数据（哈希码、GC 分代年龄、锁状态标志等等）</strong>。<strong>另一部分是类型指针</strong>，即对象指向它的类元数据的指针，<strong>虚拟机通过这个指针来确定这个对象是那个类的实例</strong>。</li>
+<li><strong>实例数据</strong>：实例数据部分是<strong>对象真正存储的有效信息，也是在程序中所定义的各种类型的字段内容</strong>。</li>
+<li><strong>对齐填充</strong>：仅仅<strong>起占位作用</strong>。虚拟机的自动内存管理系统要求对象起始地址<strong>必须是 8 字节的整数倍</strong>，换句话说就是对象的大小必须是 8 字节的整数倍。而对象头部分正好是 8 字节的倍数（1 倍或 2 倍），因此，当对象实例数据部分没有对齐时，就需要通过对齐填充来补全。</li>
+</ol>
+<hr>
+<h3 id="3-对象的访问定位"><a href="#3-对象的访问定位" class="headerlink" title="3. 对象的访问定位"></a>3. 对象的访问定位</h3><p>Java 程序通过<strong>虚拟机栈上的 reference 数据（在局部变量表中）</strong>来操作堆上的具体对象。对象的访问方式由虚拟机实现而定，目前主流的访问方式有<strong>使用句柄</strong>和<strong>直接指针</strong>两种：</p>
+<ol>
+<li><strong>句柄</strong>：如果使用句柄的话，那么 Java 堆中将会划分出一块内存来作为句柄池，<strong>reference 中存储的就是对象的句柄地址，而句柄中储存了对象实例数据的地址和类型数据的地址</strong>。</li>
+</ol>
+<p><img src="05-JVM.assets/10006199-27ef5c978077ed1c.webp" alt=""></p>
+<ol start="2">
+<li><strong>直接指针</strong>：如果使用直接指针访问，那么 Java 堆对象的布局中就必须考虑如何放置对象实例数据，但类型数据跟句柄访问方式一样。</li>
+</ol>
+<p><img src="05-JVM.assets/10006199-6cefc46d23c2d549.webp" alt=""></p>
+<p><strong>对比</strong>：</p>
 <ul>
-<li><strong>请求行</strong>中包括：<strong>请求方法</strong>（最常用的方法为 GET 和 POST）、<strong>URL</strong> 和<strong>协议版本</strong>，用空格隔开。</li>
-<li><strong>请求头部</strong>内格式为：<strong>头部字段名 ：值</strong>（可以有多个）。</li>
+<li><strong>句柄访问</strong>时，reference 储存的是稳定的句柄地址，在对象被移动（垃圾收集时移动对象是常态）<strong>只需改变句柄中实例数据的指针，不需要改动引用 reference 本身</strong>。</li>
+<li><strong>直接访问</strong>时，<strong>相比于句柄访问少了一次指针定位的开销时间</strong>，速度更快。</li>
+</ul>
+<hr>
+<h2 id="3-垃圾回收"><a href="#3-垃圾回收" class="headerlink" title="3. 垃圾回收"></a>3. 垃圾回收</h2><h3 id="1-分代和区域划分"><a href="#1-分代和区域划分" class="headerlink" title="1. 分代和区域划分"></a>1. 分代和区域划分</h3><p>Java 的自动内存管理主要是针对对象内存的回收和对象内存的分配。Java 堆是垃圾收集器管理的主要区域，因此也被称作 <strong>GC 堆（Garbage Collected Heap）</strong>。从垃圾回收的角度，由于现在收集器基本都采用分代垃圾收集算法，所以 Java 堆还可以细分为：<strong>新生代和老年代</strong>，再细致一点有：<strong>Eden 空间、From Survivor、To Survivor 空间（8:1:1）</strong>等。<strong>进一步划分的目的是更好地回收内存，或者更快地分配内存</strong>。</p>
+<p><img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/01d330d8-2710-4fad-a91c-7bbbfaaefc0e.png" alt=""></p>
+<hr>
+<h3 id="2-对象分配的区域"><a href="#2-对象分配的区域" class="headerlink" title="2. 对象分配的区域"></a>2. 对象分配的区域</h3><ul>
+<li>大多数情况下，<strong>对象在新生代中 Eden 区分配</strong>。当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC（新生代 GC）。</li>
+<li><strong>需要大量连续内存空间的大对象</strong>，比如字符串和数组，<strong>直接进入老年代</strong>，不在 Eden 区中分配。这是为了避免大对象在分配内存时，由于<strong>分配担保机制</strong>带来的复制而降低效率。</li>
+</ul>
+<hr>
+<h3 id="3-判断对象死亡"><a href="#3-判断对象死亡" class="headerlink" title="3. 判断对象死亡"></a>3. 判断对象死亡</h3><p>判断对象是否死亡有两种算法：</p>
+<ol>
+<li><strong>引用计数法</strong>：给对象中添加一个引用计数器，每当有一个地方引用它，计数器就加 1；当引用失效，计数器就减 1；任何时候计数器为 0 的对象就是不可能再被使用的。这个方法实现简单，效率高，但是目前主流的虚拟机中并没有选择这个算法来管理内存，其最主要的原因是它<strong>很难解决对象之间相互循环引用的问题</strong>。 </li>
+<li><strong>可达性分析算法</strong>：这个算法的基本思想就是通过一系列的称为 <strong>“GC Roots”</strong> 的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为引用链，<strong>若一个对象到 GC Roots 没有任何引用链相连的话，则证明此对象是不可用的</strong>。被判定为需要执行的对象将会<strong>被放在一个队列中进行第二次标记</strong>，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。可作为 GC Roots 的对象包括下面四种：<ul>
+<li><strong>虚拟机栈（栈帧中的本地变量表）中引用的对象</strong>，也就是平时所说的 Java 对象，存放在堆中；</li>
+<li><strong>本地方法栈（Native方法）中引用的对象</strong>；</li>
+<li><strong>方法区中类静态属性引用的对象</strong>，一般指被 static 修饰引用的对象，加载类时就加载到内存中；</li>
+<li><strong>方法区中常量引用的对象</strong>。</li>
 </ul>
 </li>
-<li><p>服务器端：服务器端响应消息包括以下格式：<strong>状态行</strong>、消息报头、空行和响应正文。</p>
-<ul>
-<li><strong>状态行</strong>中包括：协议版本和<strong>状态码</strong>。常用状态码有：<strong>200（OK）</strong>、301（资源被永久转移到其他 URL）、<strong>404（请求的资源不存在）</strong>和 500（内部服务器错误）等。</li>
+</ol>
+<hr>
+<h3 id="4-引用与垃圾回收"><a href="#4-引用与垃圾回收" class="headerlink" title="4. 引用与垃圾回收"></a>4. 引用与垃圾回收</h3><p>Java 中将引用分为四种，分别为强引用、软引用、弱引用和虚引用。</p>
+<ol>
+<li><strong>强引用</strong>：我们使用的大部分引用实际上都是强引用，这是使用最普遍的引用。<strong>如果一个对象具有强引用，那么垃圾回收器绝不会回收它。当内存空间不足时，也不会回收</strong>。Java 虚拟机宁愿抛出 OutOfMemoryError 错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足问题。</li>
+<li><strong>软引用</strong>：如果一个对象只具有软引用，如果内存空间足够，垃圾回收器就不会回收它，<strong>如果内存空间不足了，就会回收该对象的内存</strong>。只要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。</li>
+<li><strong>弱引用</strong>：如果一个对象只具有弱引用，在垃圾回收器线程发现时，<strong>不管当前内存空间足够与否，都会回收它的内存</strong>。 </li>
+<li><strong>虚引用</strong>：顾名思义就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。<strong>如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收</strong>。</li>
+</ol>
+<p>在程序设计中一般很少使用弱引用与虚引用，使用软引用的情况较多，这是因为<strong>软引用可以加速 JVM 对垃圾内存的回收速度，可以维护系统的运行安全，防止内存溢出（OutOfMemory）等问题的产生</strong>。</p>
+<hr>
+<h3 id="5-常量与类的回收"><a href="#5-常量与类的回收" class="headerlink" title="5. 常量与类的回收"></a>5. 常量与类的回收</h3><ol>
+<li><p>判断常量是废弃常量：<strong>当前常量没有被任何对象引用</strong>，就说明该常量是废弃常量。假如在常量池中存在字符串 “abc”，如果当前没有任何 String 对象引用该字符串常量的话，就说明常量 “abc” 就是废弃常量，如果这时发生内存回收的话而且有必要的话，”abc” 就会被系统清理出常量池。</p>
+</li>
+<li><p>判断类是无用类：判断类是无用类需要满足三个条件</p>
+<ol>
+<li>该类<strong>所有的实例都已经被回收</strong>，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 <strong>ClassLoader 已经被回收</strong>。</li>
+<li>该类对应的 <strong>java.lang.Class 对象没有在任何地方被引用</strong>，无法在任何地方通过反射访问该类的方法。</li>
+</ol>
+<p>满足以上三个条件的类为无用类，<strong>可以被回收，但并不是一定会回收</strong>。</p>
+</li>
+</ol>
+<hr>
+<h3 id="6-垃圾收集算法"><a href="#6-垃圾收集算法" class="headerlink" title="6. 垃圾收集算法"></a>6. 垃圾收集算法</h3><ol>
+<li><strong>标记-清除算法</strong>：首先标记出所有不需要回收的对象，在标记完成后统一回收掉所有没有被标记的对象。这种算法带来两个问题：效率问题和<strong>空间问题（会产生大量不连续的碎片）</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95.jpeg" alt=""></li>
+<li><strong>复制算法</strong>：它<strong>将内存分为大小相同的两块（From Survivor 和 To Survivor），每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉</strong>。这样就使每次的内存回收都是对内存区间的一半进行回收。 <img src="05-JVM.assets/fc349fbb9b204495a5321febe27818d4-new-image45920a9a-552c-4656-94d6-e3ca45ff9b76.png" alt=""></li>
+<li><strong>标记-整理算法</strong>：首先标记出所有不需要回收的对象，<strong>让所有存活对象向一端移动，然后直接清理掉边界以外的内存</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/94057049.png" alt=""></li>
+<li><strong>分代收集算法</strong>：在<strong>新生代中，每次收集都会有大量对象死去，所以可以选择复制算法</strong>，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而<strong>老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集</strong>。</li>
+</ol>
+<hr>
+<h3 id="7-新生代垃圾回收流程"><a href="#7-新生代垃圾回收流程" class="headerlink" title="7. 新生代垃圾回收流程"></a>7. 新生代垃圾回收流程</h3><ol>
+<li>新生代垃圾回收算法采用复制算法，内存分为 <strong>Eden 空间、From Survivor、To Survivor 空间（8:1:1）</strong>，优先使用 Eden 区。</li>
+<li>GC 开始前，对象只会存于 Eden 和 From Survivor 区域，<strong>To Survivor（保留空间）为空</strong>。</li>
+<li>GC 进行时：<ul>
+<li><strong>Eden 区所有存活的对象都被复制到 To Survivor区</strong>。</li>
+<li>而 <strong>From Survivor 区</strong>仍存活的对象中，<strong>年龄值达到阈值，移到老年代，没有达到则复制到 To Survivor 区</strong>。</li>
+<li>年龄阈值默认 15 是因为对象头中年龄占 4bit，新生代每熬过一次垃圾回收，年龄 +1，对高为 15。</li>
 </ul>
 </li>
-</ul>
-<hr>
-<h3 id="3-HTTP-方法"><a href="#3-HTTP-方法" class="headerlink" title="3. HTTP 方法"></a>3. HTTP 方法</h3><ol>
-<li><strong>GET：请求指定的页面信息，并返回实体主体。</strong></li>
-<li>HEAD：类似于 GET 请求，只不过返回的响应中没有具体的内容，用于获取报头。</li>
-<li><strong>POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST 请求可能会导致新资源的建立和/或已有资源的修改。</strong></li>
-<li>PUT：从客户端向服务器传送的数据取代指定的文档的内容。</li>
-<li>DELETE：请求服务器删除指定的页面。</li>
-<li>CONNECT：HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器。</li>
-<li>OPTIONS：允许客户端查看服务器的性能。</li>
-<li>TRACE：回显服务器收到的请求，主要用于测试或诊断。</li>
-<li>PATCH：是对 PUT 方法的补充，用来对已知资源进行局部更新。</li>
-</ol>
-<ul>
-<li><strong>其中最常用的方法为 GET 和 POST。</strong></li>
-</ul>
-<hr>
-<h3 id="4-HTTP-长连接和短连接"><a href="#4-HTTP-长连接和短连接" class="headerlink" title="4. HTTP 长连接和短连接"></a>4. HTTP 长连接和短连接</h3><ul>
-<li><strong>HTTP/1.0 中默认使用短连接</strong>。也就是说，客户端和服务器每进行一次 HTTP 操作，就建立一次连接，任务结束就中断连接。 </li>
-<li><strong>HTTP/1.1起，默认使用长连接</strong>，用以保持连接特性。在使用长连接的情况下，<strong>当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭，客户端再次访问这个服务器时，会继续使用这一条已经建立的连接</strong>。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。实现长连接需要客户端和服务端都支持长连接。</li>
-<li><strong>优缺点</strong>：请求频繁时，长连接省去较多 TCP 建立和关闭连接的操作，减少浪费，节约时间。请求不频繁时，短连接便于管理，不像长连接需要保活等，存在的连接都是有用的连接。</li>
-<li><strong>HTTP协议的长连接和短连接，实质上是TCP协议的长连接和短连接</strong>。</li>
-</ul>
-<hr>
-<h3 id="5-URI-和-URL-的区别"><a href="#5-URI-和-URL-的区别" class="headerlink" title="5. URI 和 URL 的区别"></a>5. URI 和 URL 的区别</h3><ul>
-<li>URI(Uniform Resource Identifier) 是统一资源标志符，<strong>可以唯一标识一个资源</strong>。</li>
-<li>URL(Uniform Resource Location) 是统一资源定位符，<strong>可以提供该资源的路径</strong>。它是一种具体的 URI，即 <strong>URL 可以用来标识一个资源，而且还指明了如何 locate 这个资源</strong>。 </li>
-</ul>
-<p>URI的作用像身份证号一样，URL的作用更像家庭住址一样。URL是一种具体的URI，它不仅唯一标识资源，而且还提供了定位该资源的信息。</p>
-<hr>
-<h3 id="6-HTTP-和-HTTPS-的区别"><a href="#6-HTTP-和-HTTPS-的区别" class="headerlink" title="6. HTTP 和 HTTPS 的区别"></a>6. HTTP 和 HTTPS 的区别</h3><ol>
-<li><strong>端口</strong>：HTTP 的 URL 由 “http://” 起始且默认使用端口 80，而 HTTPS 的 URL 由 “https://” 起始且默认使用端口 443。 </li>
-<li><strong>安全性和资源消耗：</strong> <strong>HTTP 协议</strong>运行在 TCP 之上，所有传输的内容都是<strong>明文</strong>，客户端和服务器端都无法验证对方的身份。<strong>HTTPS 协议</strong>是运行在 SSL/TLS 之上的 HTTP 协议，SSL/TLS 运行在 TCP之上。所有传输的内容都经过<strong>加密</strong>。所以，<strong>HTTP 安全性没有 HTTPS高，但是 HTTPS 比HTTP耗费更多服务器资源</strong>。</li>
+<li>GC 结束后，From Survivor 区域为空，<strong>将 From Survivor 区域和 To Survivor 区域互换</strong>。</li>
 </ol>
 <hr>
-<h3 id="7-从输入-URL-到显示页面的过程"><a href="#7-从输入-URL-到显示页面的过程" class="headerlink" title="7. 从输入 URL 到显示页面的过程"></a>7. 从输入 URL 到显示页面的过程</h3><ol>
-<li>DNS解析：通过 URL 找到服务器 IP 地址；</li>
-<li>建立 TCP 连接；</li>
-<li>发送 HTTP 请求；</li>
-<li>服务器处理请求并返回 HTTP 报文；</li>
-<li>浏览器解析并渲染页面；</li>
-<li>关闭连接。</li>
-</ol>
-<hr>
-<h2 id="4-Session-和-Cookie"><a href="#4-Session-和-Cookie" class="headerlink" title="4. Session 和 Cookie"></a>4. Session 和 Cookie</h2><h3 id="1-Cookie"><a href="#1-Cookie" class="headerlink" title="1. Cookie"></a>1. Cookie</h3><ul>
-<li>Cookie 实际是一段文本数据，用于记录用户状态，保存在客户端：<ul>
-<li>客户端请求服务器，如果服务器需要记录该用户的状态，就会使用 response 客户端发送一个 Cookie（相当于身份证号码），客户端会把 Cookie 保存起来；</li>
-<li>当客户端再次请求服务器时，会把请求和 Cookie 一同提交给服务器，服务器检查 Cookie 以确认用户状态。服务器还可以根据需要修改 Cookie 的内容。</li>
-</ul>
+<h3 id="8-分配担保"><a href="#8-分配担保" class="headerlink" title="8. 分配担保"></a>8. 分配担保</h3><ol>
+<li><p><strong>什么是分配担保</strong>：</p>
+<ol>
+<li><p>在发生<strong>新生代垃圾回收</strong>前，虚拟机会检查<strong>老年代最大可用连续空间是否大于新生代所有对象的总空间</strong>。如果大于，则此次垃圾回收是安全的。</p>
 </li>
-<li><strong>Cookie 的有效期</strong>：Cookie 的 maxAge 决定 Cookie 的有效期。<strong>maxAge 为正数时</strong>，浏览器会将maxAge为正数的 Cookie 持久化，即<strong>写到对应的 Cookie 文件中</strong>。无论客户关闭了浏览器还是电脑，只要还在 maxAge 秒之前，登录网站时该 Cookie 仍然有效。<strong>maxAge 为负数时</strong>，表示该 Cookie 仅在本浏览器窗口以及本窗口打开的子窗口内有效，关闭窗口后该 Cookie 即失效。这种 Cookie <strong>不会被写入文件中， Cookie 信息保存在浏览器内存中</strong>，因此关闭浏览器该 Cookie 就消失了。<strong>Cookie 默认的 maxAge 值为 –1</strong>，也就是说 Cookie 默认是会话 Cookie。<strong>maxAge 为0时</strong>，表示<strong>删除</strong>该 Cookie。</li>
-<li><strong>Cookie 的修改和删除</strong>：response 对象提供的 Cookie 操作方法只有一个添加操作 <code>add(Cookie cookie)</code>。要想修改 Cookie 只能使<strong>用一个同名的 Cookie 来覆盖原来的 Cookie</strong>，达到修改的目的。删除时用一个 maxAge 为 0 的同名 Cookie 覆盖原来的 Cookie。</li>
-</ul>
-<hr>
-<h3 id="2-Session"><a href="#2-Session" class="headerlink" title="2. Session"></a>2. Session</h3><ul>
-<li>Session 另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而 <strong>Session 保存在服务器上</strong>。<ul>
-<li>客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是 Session。</li>
-<li>客户端浏览器再次访问时只需要从该 Session 中查找该客户的状态。 </li>
-</ul>
+<li><p>如果小于，<strong>虚拟机会查看是否允许担保失败</strong>，如果允许，则会检查老年代最大可用连续空间是否大于<strong>历次移动到老年代的对象的平均大小</strong>，如果大于，则尝试一次新生代垃圾回收（有风险），<strong>如果小于或不允许风险，改为进行一次老年代垃圾回收</strong>。</p>
 </li>
-<li>每个来访者对应一个 Session 对象，<strong>所有该客户的状态信息都保存在这个 Session 对象里。Session 对象是在客户端第一次请求服务器的时候自动创建的</strong>。Session也是一种 key-value 的属性对。</li>
-<li><strong>Session 有效期</strong>：Session 保存在服务器端。<strong>为了获得更高的存取速度，服务器一般把Session放在内存里</strong>。每个用户都会有一个独立的 Session。<strong>为防止内存溢出，服务器会把长时间内没有活跃的Session从内存删除。这个时间就是Session的超时时间</strong>。如果超过了超时时间没访问过服务器，Session就自动失效了。</li>
-<li>Session 中提供了很多方法，使用起来比 Cookie 方便。</li>
-</ul>
-<hr>
-<h3 id="3-Session-和-Cookie-的联系"><a href="#3-Session-和-Cookie-的联系" class="headerlink" title="3. Session 和 Cookie 的联系"></a>3. Session 和 Cookie 的联系</h3><ul>
-<li><strong>Session需要使用Cookie作为识别标志</strong>：HTTP 协议是无状态的，Session 不能依据 HTTP 连接来判断是否为同一客户，因此服务器向客户端浏览器发送一个<strong>名为 JSESSIONID 的 Cookie，它的值为该 Session 的 id</strong>（也就是 <code>HttpSession.getId()</code> 的返回值）。Session依据该Cookie来识别是否为同一用户。</li>
-<li><strong>URL 地址重写</strong>：当某些客户端不支持 Cookie，而想要使用 Session 来记录用户状态时，就需要使用 URL 地址重写。URL 地址重写的原理是，<strong>将该用户 Session 的 id 信息重写到 URL 地址中。服务器能够解析重写后的 URL 获取 Session 的 id</strong>。这样即使客户端不支持 Cookie，也可以使用 Session 来记录用户状态。 </li>
-</ul>
-<hr>
-<h3 id="4-Session-和-Cookie-的区别"><a href="#4-Session-和-Cookie-的区别" class="headerlink" title="4. Session 和 Cookie 的区别"></a>4. Session 和 Cookie 的区别</h3><ol>
-<li>Cookie 数据保存在客户端（浏览器端），Session 数据保存在服务器端。</li>
-<li>Cookie 不是很安全，<strong>考虑到安全性应当使用 Session</strong>。但 Cookie 可以加密，使用时再到服务器端解密。</li>
-<li>Session 会在一定时间内保存在服务器上。当访问增多时，会比较占用服务器的性能，<strong>考虑到减轻服务器性能方面，应当使用 Cookie</strong>。</li>
-<li>单个 Cookie 保存的数据不能超过 4K，很多浏览器都限制一个站点最多保存 20 个 Cookie。<strong>Session对象没有对存储的数据量的限制，其中可以保存更为复杂的数据类型</strong>。</li>
+</ol>
+</li>
+<li><p><strong>为什么要进行分配担保</strong>：是因为新生代采用<strong>复制收集算法</strong>，假如大量对象在 Minor GC 后仍然存活（最极端情况为内存回收后新生代中所有对象均存活），而 Survivor 空间是比较小的，这时就需要老年代进行分配担保，<strong>把 Survivor 无法容纳的对象放到老年代</strong>。</p>
+</li>
+<li><p><strong>大对象分配</strong>：当为大对象分配内存时，如果该对象在垃圾回收时不被回收掉，由于 Survivor 空间较小，大概率出现 Survivor 空间不够的情况，根据分配担保机制，则需要移动到老年代，为了省去复制移动的消耗，<strong>直接在老年代进行分配</strong>。</p>
+</li>
 </ol>
 <hr>
-<h3 id="5-应用场景"><a href="#5-应用场景" class="headerlink" title="5. 应用场景"></a>5. 应用场景</h3><ul>
-<li><strong>登录网站</strong>，今输入用户名密码登录了，第二天再打开很多情况下就直接打开了。这个时候用到的一个机制就是 Cookie。</li>
-<li>Session 一个应用场景是<strong>购物车</strong>，添加了商品之后，服务器端储存这些添加的商品就用到了 Session。下一次同一个用户登录时，就可以从 Session 读取到之前添加的商品。<strong>Cookie只是一个身份信息</strong>，且容量有限，无法储存购物车这种较多的数据。</li>
-</ul>
+<h3 id="9-垃圾收集器"><a href="#9-垃圾收集器" class="headerlink" title="9. 垃圾收集器"></a>9. 垃圾收集器</h3><p>如果说垃圾收集算法是内存回收的方法论，那垃圾收集器就是内存回收的具体实现。垃圾收集器可以分为五种：</p>
+<ol>
+<li><strong>Serial 收集器</strong>：Serial （串行）收集器是一个单线程收集器，<strong>只会使用一条垃圾收集线程，并且在进行垃圾收集时会暂停其他所有工作线程</strong>，直至收集结束。优点是简单而高效，缺点是会使其他线程停顿，影响用户体验。<strong>Serial Old 收集器是 Serial 收集器的老年代版本</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/46873026.png" alt=""></li>
+<li><strong>ParNew 收集器</strong>：是 Serial 收集器的多线程版本，<strong>除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法和回收策略等）和 Serial 收集器完全一样</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/22018368.png" alt=""></li>
+<li><strong>Parallel Scavenge 收集器</strong>：关注点是<strong>吞吐量</strong>，所谓吞吐量是 CPU 中用于运行用户代码的时间与 CPU 消耗总时间的比值。<strong>Parallel Old 收集器是其老年代版本</strong>。</li>
+<li><strong>CMS 收集器</strong>：Concurrent Mark Sweep 收集器是以回收停顿时间最短为目标的收集器，是 Hotspot 虚拟机第一款真正意义上的<strong>并发收集器，实现了垃圾收集线程和用户线程（基本上）同时工作</strong>。CMS 收集器是由<strong>标记-清除</strong>算法实现的，垃圾收集整个过程分为四步：初始标记、并发标记、重新标记和并发清除。<strong>优点是并发收集，低停顿，缺点是对 CPU 资源敏感、无法处理浮动垃圾和产生大量空间碎片</strong>。</li>
+<li><strong>G1 收集器</strong>：Garbage First 垃圾优先收集器，面向服务器，主要针对配备多颗处理器和大容量内存的机器。<strong>以极高概率满足 GC 停顿时间的同时，还具备高吞吐量的特征</strong>。G1 弱化了分代的概念，将 Java 堆分为若干大小相同的 region，<strong>优先选择回收价值最大的 region</strong>，这种收集方式保证了 G1 收集器在有限时间内的高效率。<strong>与 CMS 收集器相比，不会产生空间碎片，可以压缩空间（整体基于标记整理算法，局部基于复制算法实现），且可设定最大停顿时间</strong>。</li>
+</ol>
+<p><img src="05-JVM.assets/11e9dcd0f1ee4f25836e6f1c47104c51-new-image69e1c56a-1d40-493a-9901-6efc647a01f3.png" alt=""></p>
 <hr>
-<h2 id="5-其他"><a href="#5-其他" class="headerlink" title="5. 其他"></a>5. 其他</h2><p>socket servlet 等</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -753,7 +702,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://x1a0kang.github.io/2020/08/05/04-wang-luo/">https://x1a0kang.github.io/2020/08/05/04-wang-luo/</a>
+                    <a href="https://x1a0kang.github.io/2020/08/07/05-jvm/">https://x1a0kang.github.io/2020/08/07/05-jvm/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -964,9 +913,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/08/07/05-jvm/">
                     <div class="card-image">
@@ -990,9 +940,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1005,6 +955,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1027,21 +978,21 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/hashmap-yuan-ma-jie-xi/">
+                <a href="/2020/08/05/04-wang-luo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HashMap源码解析">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="04-网络">
                         
-                        <span class="card-title">HashMap源码解析</span>
+                        <span class="card-title">04-网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HashMap 源码解析1. JDK 1.8 前后的区别1. HashMap 简介HashMap 继承了 AbstractMap ，实现了 Map、cloneable 和java.io.serializable 接口。
-
-继承了 Abstr
+                            网络1. OSI 和 TCP/IP 的分层结构1. 分层介绍
+OSI的体系结构分为七层，TCP/IP 的体系结构分为四层；
+学习计算机网络使用的是一种折中的办法，分为五层的体系结构，从下到上分别为：物理层、数据链路层、网络层、运输层和应用层
                         
                     </div>
                     <div class="publish-info">
