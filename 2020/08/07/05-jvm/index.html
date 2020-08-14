@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-07
+                    2020-08-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5k
+                    6.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
+                    23 分
                 </div>
                 
 
@@ -658,6 +658,84 @@
 <li><strong>G1 收集器</strong>：Garbage First 垃圾优先收集器，面向服务器，主要针对配备多颗处理器和大容量内存的机器。<strong>以极高概率满足 GC 停顿时间的同时，还具备高吞吐量的特征</strong>。G1 弱化了分代的概念，将 Java 堆分为若干大小相同的 region，<strong>优先选择回收价值最大的 region</strong>，这种收集方式保证了 G1 收集器在有限时间内的高效率。<strong>与 CMS 收集器相比，不会产生空间碎片，可以压缩空间（整体基于标记整理算法，局部基于复制算法实现），且可设定最大停顿时间</strong>。</li>
 </ol>
 <p><img src="05-JVM.assets/11e9dcd0f1ee4f25836e6f1c47104c51-new-image69e1c56a-1d40-493a-9901-6efc647a01f3.png" alt=""></p>
+<hr>
+<h2 id="4-类加载"><a href="#4-类加载" class="headerlink" title="4. 类加载"></a>4. 类加载</h2><h3 id="1-类加载过程"><a href="#1-类加载过程" class="headerlink" title="1. 类加载过程"></a>1. 类加载过程</h3><p>首先，在代码编译后，就会生成 JVM 能够识别的二进制字节流文件（.class文件）。JVM 把这个文件加载到内存的过程，就是类加载过程。</p>
+<p>类加载过程分为三步：<strong>加载-&gt;连接-&gt;初始化</strong>，其中，连接过程又可以分为三步：<strong>验证-&gt;准备-&gt;解析</strong>。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png" alt=""></p>
+<hr>
+<h3 id="2-加载"><a href="#2-加载" class="headerlink" title="2. 加载"></a>2. 加载</h3><p>这个加载是指类加载过程中的第一步，加载，需要使用到<strong>类加载器</strong>。在这个阶段，JVM 主要完成三件事：</p>
+<ol>
+<li>通过一个类的全类名（包名和类名）获取定义此类的二进制字节流文件（.class文件）。获取可以通过 jar 包和 war 包等方式；</li>
+<li>将字节流所代表的静态存储结构转换为方法区的运行时数据结构；</li>
+<li>在内存中生成一个代表该类的 class 对象，作为方法区这些数据的访问入口。虽为对象，但不在堆中，存放在方法区。</li>
+</ol>
+<ul>
+<li><strong>数组类型不通过类加载器创建，由 JVM 直接创建</strong>。</li>
+</ul>
+<hr>
+<h3 id="3-连接"><a href="#3-连接" class="headerlink" title="3. 连接"></a>3. 连接</h3><p>连接是类加载过程中的第二步，又可以分为三步：</p>
+<ol>
+<li><strong>验证</strong>：这一步主要是对 .class 文件的各个方面进行验证，<strong>验证类是否有正确的结构，类数据是否符合虚拟机的要求，程序语义是否合法，确保不会危害虚拟机安全</strong>。<ol>
+<li>文件格式验证：验证二进制字节流文件是否符合文件格式规范；</li>
+<li>元数据验证：对字节码文件进行语义分析，验证其信息符合 Java 语言规范；</li>
+<li>字节码验证：验证程序语义是合法的，符合逻辑的；</li>
+<li>符号引用验证：确保解析能正确执行。</li>
+</ol>
+</li>
+<li><strong>准备</strong>：<strong>准备阶段是正式为类变量分配内存并设置类变量初始值的阶段</strong>，这些内存都将在方法区中分配。对于该阶段有以下几点需要注意：<ol>
+<li>这时进行分配内存的<strong>仅为静态变量（static）</strong>，不包括实例变量；</li>
+<li><strong>没有被 final 修饰的变量赋默认的零值</strong>，到初始化阶段才会赋设定的值。被 final 修饰的变量直接赋设定的值。</li>
+</ol>
+</li>
+<li><strong>解析</strong>：将二进制数据中的<strong>符号引用替换为直接引用</strong>。符号引用就是一组符号来描述目标，可以是任何字面量。直接引用就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄。</li>
+</ol>
+<hr>
+<h3 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4. 初始化"></a>4. 初始化</h3><p>初始化阶段是执行类构造器中 <code>&lt;clinit&gt;()</code> 方法的过程。主要工作是<strong>为静态变量赋设定的初值</strong>。</p>
+<p>Java 虚拟机规范中规定了有且只有 5 中情况下，<strong>必须对类进行初始化</strong>：</p>
+<ol>
+<li>使用 new 关键字创建实例，使用 <code>getstatic()</code> <code>putstatic()</code> 访问或设置一个静态变量，使用 <code>invokestatic()</code> 调用一个静态方法时，对应类必须经过初始化。</li>
+<li>使用 <code>java.lang.reflect</code> 包的方法对类进行反射调用时，如果类没有初始化，需要触发其初始化。</li>
+<li>初始化一个类，如果其父类没有经过初始化，则触发其父类的初始化。</li>
+<li>当虚拟机启动时，用户需要指定一个主类（包含main()方法的类），虚拟机会首先初始化这个类。</li>
+<li>MethodHandle 和 VarHandle 可以看作是轻量级的反射调用机制，而要想使用这2个调用， 就必须先使用 findStaticVarHandle 来初始化要调用的类。</li>
+<li>当一个接口中定义了默认方法（default修饰，JDK 1.8 加入），有该接口的实现类发生了初始化，则该接口要在其之前被初始化。</li>
+</ol>
+<hr>
+<h3 id="5-卸载"><a href="#5-卸载" class="headerlink" title="5. 卸载"></a>5. 卸载</h3><p>加载后的类再被使用之后，需要进行卸载。卸载一个类需要满足三个要求：</p>
+<ol>
+<li>该类所有对象都被回收；</li>
+<li>该类没有在其他任何地方被引用；</li>
+<li><strong>该类的类加载器实例被回收</strong>。</li>
+</ol>
+<ul>
+<li>注意：由 JVM 自带的类加载器加载的类是不会被卸载的，但是由我们自定义的类加载器加载的类是可能被卸载的。 </li>
+</ul>
+<hr>
+<h3 id="6-类加载器"><a href="#6-类加载器" class="headerlink" title="6. 类加载器"></a>6. 类加载器</h3><p>JVM 中内置了三个重要的 ClassLoader：</p>
+<ol>
+<li><strong>BootstrapClassLoader(启动类加载器)</strong> ：最顶层的加载类，由C++实现，负责加载 <code>%JAVA_HOME%/lib</code>目录下的jar包和类或者或被 <code>-Xbootclasspath</code>参数指定的路径中的所有类。</li>
+<li><strong>ExtensionClassLoader(扩展类加载器)</strong> ：主要负责加载目录 <code>%JRE_HOME%/lib/ext</code> 目录下的jar包和类，或被 <code>java.ext.dirs</code> 系统变量所指定的路径下的jar包。</li>
+<li><strong>AppClassLoader(应用程序类加载器)</strong> :面向我们用户的加载器，负责加载当前应用classpath下的所有jar包和类。</li>
+</ol>
+<ul>
+<li><strong>CustomClassLoader（用户类加载器）</strong>：除了 JVM 自带的类加载器，用户可以自定义类加载器，用于加载指定路径的 class 文件。继承 java.lang.ClassLoader。</li>
+</ul>
+<p><strong>判断两个类是不是同一个类</strong>需要满足三个条件：是否由同一个 class 文件加载，是否由同一个 JVM 加载，和是否由同一个类加载器加载。</p>
+<hr>
+<h3 id="7-双亲委派机制"><a href="#7-双亲委派机制" class="headerlink" title="7. 双亲委派机制"></a>7. 双亲委派机制</h3><p>当一个类需要进行类加载时：</p>
+<ul>
+<li>首先判断当前类是否被加载过，被加载过的类会直接返回；</li>
+<li>如果没有，当前类不会尝试自己去加载这个类，而是把这个请求委派给父类去完成；</li>
+<li>每一个层次的类加载器都是如此，因此所有的加载请求都应该传送到启动类加载器中；</li>
+<li>当父类加载器反馈自己无法完成这个请求的时候（在它的加载路径下没有找到所需加载的 Class），子类加载器才会尝试自己去加载。</li>
+<li>当父类加载器为 null 时，会使用启动类加载器 <code>BootstrapClassLoader</code> 作为父类加载器。 </li>
+</ul>
+<p><img src="05-JVM.assets/7634245-7b7882e1f4ea5d7d.webp" alt=""></p>
+<hr>
+<h3 id="8-双亲委派机制的作用"><a href="#8-双亲委派机制的作用" class="headerlink" title="8. 双亲委派机制的作用"></a>8. 双亲委派机制的作用</h3><ol>
+<li><strong>防止重复加载</strong>。</li>
+<li><strong>保证 JVM 中的核心类不被篡改</strong>。如 String 类，无论哪个加载器要加载这个类，由于双亲委派机制，最终都会交由最顶层的启动类加载器来加载，这样保证了 String 类在各种类加载器环境中，都是同一个类。如果没有双亲委派机制的话，各个加载器自己加载 String 类，就会加载出多个 String 类，使程序出现混乱。</li>
+</ol>
 <hr>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1226,7 +1304,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">39.4k</span>&nbsp;字
+                class="white-color">41.1k</span>&nbsp;字
             
             
             
