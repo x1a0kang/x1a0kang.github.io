@@ -968,30 +968,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/07/05-jvm/">
+                <a href="/2020/08/05/03-rong-qi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="05-JVM">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="03-容器">
                         
-                        <span class="card-title">05-JVM</span>
+                        <span class="card-title">03-容器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            JVM1. 内存区域
+                            容器1. 容器总结1. 继承关系
+Collection 接口
 
+List 接口
 
-1. 程序计数器程序计数器是一块较小的内存空间，主要有两个作用：
-
-字节码解释器通过改变程序计数器的值来依次读取指令，从而实现代码的流程控制，如：顺序执行、选择、循环、异常处理。
-在多线程的情况下，程序计数器用于记
+ArrayList：Object数组。线程不安全。
+Vector：Object数组。线程安全。
+LinkedList：双向链表（JDK 1.6 前为循环链表，
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
                         </span>
                         <span class="publish-author">
                             
@@ -1027,21 +1028,19 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/hashmap-yuan-ma-jie-xi/">
+                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HashMap源码解析">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
                         
-                        <span class="card-title">HashMap源码解析</span>
+                        <span class="card-title">ArrayList源码解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HashMap 源码解析1. JDK 1.8 前后的区别1. HashMap 简介HashMap 继承了 AbstractMap ，实现了 Map、cloneable 和java.io.serializable 接口。
-
-继承了 Abstr
+                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
                         
                     </div>
                     <div class="publish-info">
@@ -1275,7 +1274,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">47.7k</span>&nbsp;字
+                class="white-color">49.3k</span>&nbsp;字
             
             
             
