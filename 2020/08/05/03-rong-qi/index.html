@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-08-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    14 分
                 </div>
                 
 
@@ -742,7 +742,106 @@ a<span class="token punctuation">.</span><span class="token function">split</spa
 </tr>
 </tbody></table>
 <hr>
-<h2 id="4-迭代器"><a href="#4-迭代器" class="headerlink" title="4. 迭代器"></a>4. 迭代器</h2><h2 id="5-比较器"><a href="#5-比较器" class="headerlink" title="5. 比较器"></a>5. 比较器</h2><script>
+<h2 id="4-迭代器"><a href="#4-迭代器" class="headerlink" title="4. 迭代器"></a>4. 迭代器</h2><h3 id="1-迭代器简介"><a href="#1-迭代器简介" class="headerlink" title="1. 迭代器简介"></a>1. 迭代器简介</h3><p>迭代器位于 java.util 包中。</p>
+<p>迭代器，可以<strong>使得不同的容器使用相同方法进行遍历</strong>，而不管底层数据结构如何。如 ArrayList、LinkedList、HashMap 和 HashSet 等，都可以使用迭代器。</p>
+<p><strong>迭代器（Iterator）是一个接口</strong>，继承了 Iterable 接口的容器，其<strong><code>iterator()</code> 方法返回一个标准的 Iterator 实现</strong>。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Iterator<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//1. ArrayList、LinkedList和HashSet使用迭代器</span>
+ArrayList<span class="token operator">&lt;</span>String<span class="token operator">></span> array <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Iterator<span class="token operator">&lt;</span>String<span class="token operator">></span> iterator <span class="token operator">=</span> array<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//2. 哈希表使用迭代器</span>
+Map map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//可以使用keySet，也可以使用entrySet</span>
+Iterator iterMap <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//Iterator iterMap = map.keySet().iterator();</span>
+<span class="token comment" spellcheck="true">//entrySet中数据的类型是Map.Entry，keySet中key是什么类型就返回什么类型</span>
+Map<span class="token punctuation">.</span>Entry strMap <span class="token operator">=</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token punctuation">)</span>iterMap<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//String key = iterator.next();</span></code></pre>
+<hr>
+<h3 id="2-迭代器的使用方法"><a href="#2-迭代器的使用方法" class="headerlink" title="2. 迭代器的使用方法"></a>2. 迭代器的使用方法</h3><p>迭代器中共有三种方法：</p>
+<ol>
+<li><code>next()</code>：返回迭代器的下一个元素；</li>
+<li><code>hasNext()</code>：判断是否还有下一个元素，每次调用 <code>next()</code> 前都会先调用这个方法；</li>
+<li><code>remove()</code>：删除元素。</li>
+</ol>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Iterator<span class="token punctuation">;</span>
+
+ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Iterator<span class="token operator">&lt;</span>Integer<span class="token operator">></span> it <span class="token operator">=</span> numbers<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>it<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Integer i <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        it<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 删除小于 10 的元素</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<hr>
+<h3 id="3-迭代器的删除特点"><a href="#3-迭代器的删除特点" class="headerlink" title="3. 迭代器的删除特点"></a>3. 迭代器的删除特点</h3><ol>
+<li>使用 <strong>for 循环</strong>删除 ArrayList 中的元素时，会出现<strong>漏删</strong>的现象。如：1 2 3 3 3 4，如果用 for 循环删除等于 3 的数，会得到 1 2 3 4 的结果。因为在删除第一个 3 后，后面的数发生了前移，第二个 3 来到了第一个 3 的位置，而指针已经指向下一个位置，导致第二个 3 被跳过了。</li>
+<li>在使用 Iterator 遍历容器的同时又对容器进行<strong>增加或者删除</strong>操作的话，会抛出版本号不符的异常。由于容器增加或删除会更新版本号，但迭代器中的版本号和容器初始状态的版本号相同，中途不会更新，当容器和迭代器版本号不同时， <strong><code>next()</code> 方法会抛出异常</strong>。</li>
+<li>迭代器中的 <code>remove()</code> 方法可以避免上述两种情况。<strong>在迭代器的 <code>remove()</code> 方法中，同步了容器和迭代器的版本号</strong>，因此删除时不会漏删，删除后使用 <code>next()</code> 方法也不会抛出异常。</li>
+</ol>
+<hr>
+<h2 id="5-比较器"><a href="#5-比较器" class="headerlink" title="5. 比较器"></a>5. 比较器</h2><h3 id="1-Comparable-接口"><a href="#1-Comparable-接口" class="headerlink" title="1. Comparable 接口"></a>1. Comparable 接口</h3><p>让目标类实现 Comparable 接口，覆盖重写 <code>compareTo()</code> 方法。这个类在 <code>sort()</code> 等方法比较时，会根据重写的比较规律进行比较。<strong>在 java.lang 包中，不需要导包</strong>。</p>
+<ol>
+<li>如果此对象大于指定对象，返回正整数；</li>
+<li>如果此对象小于指定对象，返回负整数；</li>
+<li>如果此对象大于指定对象，返回零；</li>
+</ol>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token operator">&lt;</span>Employee<span class="token operator">></span> <span class="token punctuation">{</span>  
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 员工编号  </span>
+    <span class="token keyword">private</span> <span class="token keyword">double</span> salary<span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 员工薪资  </span>
+
+    <span class="token comment" spellcheck="true">// 比较此对象与指定对象的顺序  </span>
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compareTo</span><span class="token punctuation">(</span>Employee o<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment" spellcheck="true">// 比较员工编号，如果此对象的编号大于、等于、小于指定对象，则返回1、0、-1  </span>
+        <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">></span> o<span class="token punctuation">.</span>id <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">==</span> o<span class="token punctuation">.</span>id <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token comment" spellcheck="true">// 如果编号相等，则比较薪资  </span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token comment" spellcheck="true">// 比较员工薪资，如果此对象的薪资大于、等于、小于指定对象，则返回1、0、-1  </span>
+            result <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>salary <span class="token operator">></span> o<span class="token punctuation">.</span>salary <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>salary <span class="token operator">==</span> o<span class="token punctuation">.</span>salary <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span> </code></pre>
+<hr>
+<h3 id="2-Comparator-接口"><a href="#2-Comparator-接口" class="headerlink" title="2. Comparator 接口"></a>2. Comparator 接口</h3><p>单独定义一个对象比较器，继承 Comparator 接口，并覆盖重写 <code>compare(o1,o2)</code> 方法。<strong>在 java.util 包中，需要导包</strong>。</p>
+<ol>
+<li>如果 o1 大于 o2，返回正整数；</li>
+<li>如果 o1 小于 o2，返回负整数；</li>
+<li>如果 o1 等于 o2，返回零；</li>
+</ol>
+<ul>
+<li><strong>返回 o1 - o2 是升序，返回 o2 - o1 是降序</strong>。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">EmployeeComparable</span> <span class="token keyword">implements</span> <span class="token class-name">Comparator</span><span class="token operator">&lt;</span>Employee<span class="token operator">></span> <span class="token punctuation">{</span>  
+
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compare</span><span class="token punctuation">(</span>Employee o1<span class="token punctuation">,</span> Employee o2<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment" spellcheck="true">// 比较员工编号，如果此对象的编号大于、等于、小于指定对象，则返回1、0、-1  </span>
+        <span class="token keyword">int</span> result <span class="token operator">=</span> o1<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> o2<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token comment" spellcheck="true">// 如果编号相等，则比较薪资  </span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token comment" spellcheck="true">// 比较员工薪资，如果此对象的薪资大于、等于、小于指定对象，则返回1、0、-1  </span>
+            result <span class="token operator">=</span> o1<span class="token punctuation">.</span><span class="token function">getSalary</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> o2<span class="token punctuation">.</span><span class="token function">getSalary</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>   
+<span class="token punctuation">}</span>  
+
+<span class="token comment" spellcheck="true">//使用时作为参数传入sort方法中</span>
+Collections<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>employees2<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">EmployeeComparable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  </code></pre>
+<hr>
+<h3 id="3-两种比较器的区别"><a href="#3-两种比较器的区别" class="headerlink" title="3. 两种比较器的区别"></a>3. 两种比较器的区别</h3><ol>
+<li>实现 Comparable 接口要<strong>在类的内部进行修改</strong>，适合自定义类时使用；</li>
+<li>实现 Comparator 接口的比较器不需要修改待比较类，适合<strong>对已有类进行排序</strong>时使用。</li>
+</ol>
+<hr>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1307,7 +1406,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">49.3k</span>&nbsp;字
+                class="white-color">50.4k</span>&nbsp;字
             
             
             
