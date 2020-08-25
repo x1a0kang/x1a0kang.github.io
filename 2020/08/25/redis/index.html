@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并发容器总结, 巨瑞康的个人博客">
+    <meta name="keywords" content="Redis, 巨瑞康的个人博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>并发容器总结 | 巨瑞康的个人博客</title>
+    <title>Redis | 巨瑞康的个人博客</title>
     <link rel="icon" type="image/png" href="/JRK.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并发容器总结</h1>
+                    <h1 class="description center-align post-title">Redis</h1>
                 </div>
             </div>
         </div>
@@ -460,28 +460,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-08-25
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-08-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    3.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    15 分
                 </div>
                 
 
@@ -496,152 +496,258 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="并发容器总结"><a href="#并发容器总结" class="headerlink" title="并发容器总结"></a>并发容器总结</h1><h2 id="1-ArrayList-的并发容器-CopyOnWriteArrayList"><a href="#1-ArrayList-的并发容器-CopyOnWriteArrayList" class="headerlink" title="1. ArrayList 的并发容器 CopyOnWriteArrayList"></a>1. ArrayList 的并发容器 CopyOnWriteArrayList</h2><h3 id="1-CopyOnWriteArrayList-简介"><a href="#1-CopyOnWriteArrayList-简介" class="headerlink" title="1. CopyOnWriteArrayList 简介"></a>1. CopyOnWriteArrayList 简介</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CopyOnWriteArrayList</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Object</span>
-    <span class="token keyword">implements</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">,</span> RandomAccess<span class="token punctuation">,</span> Cloneable<span class="token punctuation">,</span> Serializable</code></pre>
-<ul>
-<li>实现了 <strong>RandomAccess 接口</strong>，实现这个接口表明集合是支持<strong>快速随机访问</strong>的。在 CopyOnWriteArrayList 中，可以<strong>通过元素的序号快速获取元素</strong>，这就是快速随机访问。</li>
-<li>实现了 Cloneable 接口，即覆盖了 <code>clone()</code> ，<strong>可以被克隆</strong>。</li>
-<li>实现了 <strong>java.io.serializable</strong> 接口，这表示 CopyOnWriteArrayList <strong>支持序列化，可以通过序列化进行传输</strong>。</li>
-<li><strong>CopyOnWriteArrayList 是线程安全的</strong>。同样线程安全的数组容器还有有 Vector 。</li>
-</ul>
+                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p><strong><em>Redis</em></strong>（Remote Dictionary Server )，即远程字典服务。是一个开源的使用 C 语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value 数据库。</p>
+<p>由于 Redis 基于内存，所以读写速度快，常被用作缓存。另外也经常用来做分布式锁，或消息队列。</p>
 <hr>
-<h3 id="2-CopyOnWriteArrayList-读取操作的实现"><a href="#2-CopyOnWriteArrayList-读取操作的实现" class="headerlink" title="2. CopyOnWriteArrayList 读取操作的实现"></a>2. CopyOnWriteArrayList 读取操作的实现</h3><pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/** The array, accessed only via getArray/setArray. */</span>
-    <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> E <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> E <span class="token function">get</span><span class="token punctuation">(</span>Object<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>E<span class="token punctuation">)</span> a<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">final</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> array<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>可见，<strong>CopyOnWriteArrayList 读取操作没有任何同步和锁操作</strong>。</li>
-<li>读取操作并不会改变数组，因此对读取操作加锁是一种浪费资源，<strong>读取操作允许多个线程同时访问</strong>。ReentrantReadWriteLock 读写锁的思想是，<strong>读读共享、写写互斥、读写互斥和写读互斥</strong>。而 <strong>CopyOnWriteArrayList 可以做到读写不互斥，只有写写之间需要同步等待</strong>。</li>
-<li>CopyOnWriteArrayList 即使发生修改，<strong>原内部数组也不会改变，而是产生一个新数组，然后将引用指向新数组</strong>，因此可以保证数据安全，读写可以同时进行。</li>
-</ul>
-<hr>
-<h3 id="3-CopyOnWriteArrayList-写入操作的实现"><a href="#3-CopyOnWriteArrayList-写入操作的实现" class="headerlink" title="3. CopyOnWriteArrayList 写入操作的实现"></a>3. CopyOnWriteArrayList 写入操作的实现</h3><p>CopyOnWriteArrayList 写入操作 <code>add()</code> 方法在添加集合的时候加了锁，保证了同步，避免了多线程写的时候会 copy 出多个副本出来。</p>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
-     * Appends the specified element to the end of this list.
-     *
-     * @param e element to be appended to this list e是要加入数组的元素
-     * @return {@code true} (as specified by {@link Collection#add})
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> ReentrantLock lock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
-        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//加锁</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            Object<span class="token punctuation">[</span><span class="token punctuation">]</span> elements <span class="token operator">=</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> len <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-            Object<span class="token punctuation">[</span><span class="token punctuation">]</span> newElements <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">copyOf</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span> len <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//拷贝新数组，长度+1</span>
-            <span class="token comment" spellcheck="true">//把新元素放在数组的末尾</span>
-            newElements<span class="token punctuation">[</span>len<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
-            <span class="token function">setArray</span><span class="token punctuation">(</span>newElements<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//释放锁</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>这里并发控制使用的是 <strong>ReentrantLock</strong>，没有使用 synchronized。</li>
-</ul>
-<hr>
-<h3 id="4-CopyOnWriteArrayList-和-ArrayList-的对比"><a href="#4-CopyOnWriteArrayList-和-ArrayList-的对比" class="headerlink" title="4. CopyOnWriteArrayList 和 ArrayList 的对比"></a>4. CopyOnWriteArrayList 和 ArrayList 的对比</h3><hr>
-<h3 id="5-CopyOnWriteArrayList-和-Vector-的对比"><a href="#5-CopyOnWriteArrayList-和-Vector-的对比" class="headerlink" title="5. CopyOnWriteArrayList 和 Vector 的对比"></a>5. CopyOnWriteArrayList 和 Vector 的对比</h3><hr>
-<h2 id="2-队列的并发容器"><a href="#2-队列的并发容器" class="headerlink" title="2. 队列的并发容器"></a>2. 队列的并发容器</h2><h3 id="1-ConcurrentLinkedQueue-简介"><a href="#1-ConcurrentLinkedQueue-简介" class="headerlink" title="1. ConcurrentLinkedQueue 简介"></a>1. ConcurrentLinkedQueue 简介</h3><p>Java 提供的线程安全的 Queue 可以分为<strong>阻塞队列</strong>和<strong>非阻塞队列</strong>，其中<strong>阻塞队列的典型例子是 BlockingQueue，非阻塞队列的典型例子是 ConcurrentLinkedQueue</strong>，在实际应用中要根据实际需要选用阻塞队列或者非阻塞队列。 <strong>阻塞队列可以通过加锁来实现，非阻塞队列可以通过 CAS 操作实现。</strong></p>
-<p>ConcurrentLinkedQueue 使用链表作为其数据结构，<strong>ConcurrentLinkedQueue 应该算是在高并发环境中性能最好的队列了</strong>。它之所有能有很好的性能，是因为其内部复杂的实现。对于 ConcurrentLinkedQueue 知道<strong>主要使用 CAS 非阻塞算法来实现线程安全</strong>就好了。</p>
-<p>ConcurrentLinkedQueue 适合在<strong>对性能要求相对较高，同时对队列的读写存在多个线程同时进行</strong>的场景。</p>
-<hr>
-<h3 id="2-BlockingQueue-简介"><a href="#2-BlockingQueue-简介" class="headerlink" title="2. BlockingQueue 简介"></a>2. BlockingQueue 简介</h3><ul>
-<li><p>阻塞队列（BlockingQueue）被广泛使用在“生产者-消费者”问题中，其原因是 <strong>BlockingQueue 提供了可阻塞的插入和移除的方法</strong>。当队列容器已满，生产者线程会被阻塞，直到队列未满；当队列容器为空时，消费者线程会被阻塞，直至队列非空时为止。 </p>
-</li>
-<li><p><strong>BlockingQueue 是一个接口</strong>，继承自 Queue，所以<strong>其实现类也可以作为 Queue 的实现来使用（多态）</strong>，而 Queue 又继承自 Collection 接口。 </p>
-</li>
-</ul>
-<p>接下来主要介绍 BlockingQueue 的三个实现类：<strong>ArrayBlockingQueue、LinkedBlockingQueue 和 PriorityBlockingQueue</strong>。</p>
-<hr>
-<h3 id="3-ArrayBlockingQueue-简介"><a href="#3-ArrayBlockingQueue-简介" class="headerlink" title="3. ArrayBlockingQueue 简介"></a>3. ArrayBlockingQueue 简介</h3><ul>
-<li><p><strong>ArrayBlockingQueue</strong> 是 BlockingQueue 接口的有界队列实现类，底层采用<strong>数组</strong>来实现。ArrayBlockingQueue 一旦创建，<strong>容量不能改变</strong>。其并发控制采用<strong>可重入锁</strong>来控制，<strong>不管是插入操作还是读取操作，都需要获取到锁才能进行操作</strong>。当队列容量满时，尝试将元素放入队列将导致操作阻塞；尝试从一个空队列中取一个元素也会同样阻塞。</p>
-</li>
-<li><p>ArrayBlockingQueue 的锁是非公平锁，如果要保证公平性，通常会降低吞吐量。如果需要获得公平的 ArrayBlockingQueue，构造方法中提供了相关参数：</p>
-</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> ArrayBlockingQueue<span class="token operator">&lt;</span>Integer<span class="token operator">></span> blockingQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<hr>
-<h3 id="4-LinkedBlockingQueue-简介"><a href="#4-LinkedBlockingQueue-简介" class="headerlink" title="4. LinkedBlockingQueue 简介"></a>4. LinkedBlockingQueue 简介</h3><ul>
-<li><strong>LinkedBlockingQueue</strong> 底层基于<strong>单向链表</strong>实现的阻塞队列，可以当做无界队列也可以当做有界队列来使用，同样满足 FIFO 的特性，<strong>与 ArrayBlockingQueue 相比起来具有更高的吞吐量</strong>，为了防止 LinkedBlockingQueue 容量迅速增，损耗大量内存。通常在创建 LinkedBlockingQueue 对象时，会指定其大小，<strong>如果未指定，容量等于 Integer.MAX_VALUE</strong>。 </li>
-</ul>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
-     *某种意义上的无界队列，队列容量非常大
-     * Creates a {@code LinkedBlockingQueue} with a capacity of
-     * {@link Integer#MAX_VALUE}.
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<h2 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1. 数据结构"></a>1. 数据结构</h2><h3 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a>1. String</h3><ol>
+<li><strong>String 数据结构是简单的 key-value 类型</strong>。Redis 的 String 不光可以保存文本数据，还可以保存二进制数据，并且获取字符串长度复杂度为 O(1)。</li>
+<li><strong>常用命令</strong>：<code>set,get,strlen,exists,dect,incr,setex</code> 等等。 </li>
+<li><strong>应用场景</strong>：一般常用在需要计数的场景，比如用户的访问次数、热点文章的点赞转发数量等等。</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> <span class="token keyword">set</span> key value <span class="token comment" spellcheck="true">#设置 key-value 类型的值</span>
+OK
+127.0.0.1:6379<span class="token operator">></span> get key <span class="token comment" spellcheck="true"># 根据 key 获得对应的 value</span>
+<span class="token string">"value"</span>
+127.0.0.1:6379<span class="token operator">></span> exists key  <span class="token comment" spellcheck="true"># 判断某个 key 是否存在</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> strlen key <span class="token comment" spellcheck="true"># 返回 key 所储存的字符串值的长度。</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5
+127.0.0.1:6379<span class="token operator">></span> del key <span class="token comment" spellcheck="true"># 删除某个 key 对应的值</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> get key
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
 
-    <span class="token comment" spellcheck="true">/**
-     *有界队列
-     * Creates a {@code LinkedBlockingQueue} with the given (fixed) capacity.
-     *
-     * @param capacity the capacity of this queue
-     * @throws IllegalArgumentException if {@code capacity} is not greater
-     *         than zero
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>capacity <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-        last <span class="token operator">=</span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">(</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>我理解类似于 LinkedList 的线程安全版本。</li>
-</ul>
+127.0.0.1:6379<span class="token operator">></span> <span class="token keyword">set</span> number 1
+OK
+127.0.0.1:6379<span class="token operator">></span> incr number <span class="token comment" spellcheck="true"># 将 key 中储存的数字值增一</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+127.0.0.1:6379<span class="token operator">></span> get number
+<span class="token string">"2"</span>
+127.0.0.1:6379<span class="token operator">></span> decr number <span class="token comment" spellcheck="true"># 将 key 中储存的数字值减一</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> get number
+<span class="token string">"1"</span></code></pre>
 <hr>
-<h3 id="5-PriorityBlockingQueue-简介"><a href="#5-PriorityBlockingQueue-简介" class="headerlink" title="5. PriorityBlockingQueue 简介"></a>5. PriorityBlockingQueue 简介</h3><ul>
-<li><strong>PriorityBlockingQueue</strong> 是一个<strong>支持优先级的无界阻塞队列</strong>。默认情况下元素采用自然顺序进行排序，也可以通过自定义类实现 <code>compareTo()</code> 方法来指定元素排序规则，或者初始化时通过构造器参数 <code>Comparator</code> 来指定排序规则。</li>
-<li>PriorityBlockingQueue 队列为无界队列。ArrayBlockingQueue 是有界队列，LinkedBlockingQueue 可以通过在构造函数中传入 capacity 指定队列最大的容量。但是 PriorityBlockingQueue 只能指定初始的队列大小，后面插入元素的时候，<strong>如果空间不够的话会自动扩容</strong>。</li>
-<li>PriorityBlockingQueue 并发控制采用的是 <strong>ReentrantLock</strong>。</li>
-<li>简单地说，它就是 <strong>PriorityQueue 的线程安全版本</strong>。不可以插入 null 值，同时，插入队列的对象必须是可比较大小的（comparable），否则报 ClassCastException 异常。它的<strong>插入操作 <code>put()</code> 方法不会阻塞，因为它是无界队列。<code>take()</code> 方法在队列为空的时候会阻塞</strong> 。</li>
-</ul>
-<hr>
-<h2 id="3-HashMap-的并发容器-ConcurrenHashMap"><a href="#3-HashMap-的并发容器-ConcurrenHashMap" class="headerlink" title="3. HashMap 的并发容器 ConcurrenHashMap"></a>3. HashMap 的并发容器 ConcurrenHashMap</h2><h3 id="1-ConcurrenHashMap-简介"><a href="#1-ConcurrenHashMap-简介" class="headerlink" title="1. ConcurrenHashMap 简介"></a>1. ConcurrenHashMap 简介</h3><p>在 ConcurrentHashMap 中，<strong>无论是读操作还是写操作都能保证很高的性能</strong>：在进行读操作时(几乎)不需要加锁，而在写操作时，通过<strong>锁分段技术</strong>只对所操作的段加锁，而不影响客户端对其它段的访问。 </p>
-<ul>
-<li>Java7 中 ConcruuentHashMap 使用的分段锁，也就是每一个 Segment 上同时只有一个线程可以操作，每一个 Segment 都是一个类似 HashMap 数组的结构，它可以扩容，它的冲突会转化为链表。但是 Segment 的个数一但初始化就不能改变。 </li>
-<li>Java8 中的 ConcruuentHashMap 使用的 Synchronized 锁加 CAS 的机制。结构也由 Java7 中的 <strong>Segment 数组 + HashEntry 数组 + 链表</strong> 进化成了 <strong>Node 数组 + 链表 / 红黑树</strong>，Node 是类似于一个 HashEntry 的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。</li>
-</ul>
-<hr>
-<h3 id="2-Java-7-和-Java-8-中ConcurrenHashMap-的区别"><a href="#2-Java-7-和-Java-8-中ConcurrenHashMap-的区别" class="headerlink" title="2. Java 7 和 Java 8 中ConcurrenHashMap 的区别"></a>2. Java 7 和 Java 8 中ConcurrenHashMap 的区别</h3><ol>
-<li><strong>Java 7</strong> 中，ConcurrnetHashMap 由很多个 <strong>Segment</strong> 组合，而每一个 Segment 是一个类似于 HashMap 的结构，所以每一个 HashMap 的内部可以进行扩容。但是 Segment 的个数一旦<strong>初始化就不能改变</strong>。</li>
+<h3 id="2-List"><a href="#2-List" class="headerlink" title="2. List"></a>2. List</h3><ol>
+<li>Redis 中 List 的实现为一个 <strong>双向链表</strong>，可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销。</li>
+<li><strong>常用命令</strong>： <code>rpush,lpop,lpush,rpop,lrange、llen</code> 等。</li>
+<li><strong>应用场景</strong>：发布与订阅或者说消息队列、慢查询。 </li>
 </ol>
-<p><img src="%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93.assets/Java7ConcurrenHashMap.png" alt=""></p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 右进左取（左进右取）是队列</span>
+127.0.0.1:6379<span class="token operator">></span> rpush myList value1 <span class="token comment" spellcheck="true"># 向 list 的头部（右边）添加元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> rpush myList value2 value3 <span class="token comment" spellcheck="true"># 向list的头部（最右边）添加多个元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+127.0.0.1:6379<span class="token operator">></span> lpop myList <span class="token comment" spellcheck="true"># 将 list的尾部(最左边)元素取出</span>
+<span class="token string">"value1"</span>
+127.0.0.1:6379<span class="token operator">></span> lrange myList 0 1 <span class="token comment" spellcheck="true"># 查看对应下标的list列表， 0 为 start,1为 end</span>
+1<span class="token punctuation">)</span> <span class="token string">"value2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"value3"</span>
+127.0.0.1:6379<span class="token operator">></span> lrange myList 0 -1 <span class="token comment" spellcheck="true"># 查看列表中的所有元素，-1表示倒数第一</span>
+1<span class="token punctuation">)</span> <span class="token string">"value2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"value3"</span>
+
+<span class="token comment" spellcheck="true"># 右进右取（左进左取）是栈</span>
+127.0.0.1:6379<span class="token operator">></span> rpush myList2 value1 value2 value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+127.0.0.1:6379<span class="token operator">></span> rpop myList2 <span class="token comment" spellcheck="true"># 将 list的头部(最右边)元素取出</span>
+<span class="token string">"value3"</span>
+
+<span class="token comment" spellcheck="true"># 查看链表长度</span>
+127.0.0.1:6379<span class="token operator">></span> llen myList
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<hr>
+<h3 id="3-Hash"><a href="#3-Hash" class="headerlink" title="3. Hash"></a>3. Hash</h3><ol>
+<li>Hash 类似于 JDK1.8 前的 HashMap，内部实现也差不多(数组 + 链表)。Hash 是一个 String 类型的 field 和 value 的映射表，<strong>特别适合用于存储对象</strong>。比如可以用 Hash 数据结构来存储用户信息，商品信息等等。</li>
+<li><strong>常用命令：</strong> <code>hset,hmset,hexists,hget,hgetall,hkeys,hvals</code> 等。 </li>
+<li><strong>应用场景:</strong> 系统中对象数据的存储。 </li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> hset userInfoKey name <span class="token string">"jrk"</span> description <span class="token string">"dev"</span> age <span class="token string">"23"</span>
+OK
+127.0.0.1:6379<span class="token operator">></span> hexists userInfoKey name <span class="token comment" spellcheck="true"># 查看 key 对应的 value中指定的字段是否存在。</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> hget userInfoKey name <span class="token comment" spellcheck="true"># 获取存储在哈希表中指定字段的值。</span>
+<span class="token string">"jrk"</span>
+127.0.0.1:6379<span class="token operator">></span> hget userInfoKey age
+<span class="token string">"23"</span>
+127.0.0.1:6379<span class="token operator">></span> hgetall userInfoKey <span class="token comment" spellcheck="true"># 获取在哈希表中指定 key 的所有字段和值</span>
+1<span class="token punctuation">)</span> <span class="token string">"name"</span>
+2<span class="token punctuation">)</span> <span class="token string">"jrk"</span>
+3<span class="token punctuation">)</span> <span class="token string">"description"</span>
+4<span class="token punctuation">)</span> <span class="token string">"dev"</span>
+5<span class="token punctuation">)</span> <span class="token string">"age"</span>
+6<span class="token punctuation">)</span> <span class="token string">"23"</span>
+127.0.0.1:6379<span class="token operator">></span> hkeys userInfoKey <span class="token comment" spellcheck="true"># 获取 key 列表</span>
+1<span class="token punctuation">)</span> <span class="token string">"name"</span>
+2<span class="token punctuation">)</span> <span class="token string">"description"</span>
+3<span class="token punctuation">)</span> <span class="token string">"age"</span>
+127.0.0.1:6379<span class="token operator">></span> hvals userInfoKey <span class="token comment" spellcheck="true"># 获取 value 列表</span>
+1<span class="token punctuation">)</span> <span class="token string">"jrk"</span>
+2<span class="token punctuation">)</span> <span class="token string">"dev"</span>
+3<span class="token punctuation">)</span> <span class="token string">"23"</span>
+127.0.0.1:6379<span class="token operator">></span> hset userInfoKey name <span class="token string">"x1a0kang"</span> <span class="token comment" spellcheck="true"># 修改某个字段对应的值</span>
+127.0.0.1:6379<span class="token operator">></span> hget userInfoKey name
+<span class="token string">"x1a0kang"</span></code></pre>
+<hr>
+<h3 id="4-Set"><a href="#4-Set" class="headerlink" title="4. Set"></a>4. Set</h3><ol>
+<li>Set 类似于 Java 中的 HashSet。Redis 中的 Set 类型是一种无序集合，集合中的元素没有先后顺序。Set 提供了判断某个成员是否在一个 Set 集合内的重要接口，<strong>可以基于 Set 轻易实现交集、并集、差集的操作</strong>。Redis 可以非常方便的实现如共同关注、共同粉丝、共同喜好等功能。这个过程也就是求交集的过程。</li>
+<li><strong>常用命令：</strong> <code>sadd,spop,smembers,sismember,scard,sinterstore,sunion</code> 等。 </li>
+<li><strong>应用场景:</strong> 需要存放的数据不能重复以及需要获取多个数据源交集和并集等场景 </li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> sadd mySet value1 value2 <span class="token comment" spellcheck="true"># 添加元素进去</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+127.0.0.1:6379<span class="token operator">></span> sadd mySet value1 <span class="token comment" spellcheck="true"># 不允许有重复元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+127.0.0.1:6379<span class="token operator">></span> smembers mySet <span class="token comment" spellcheck="true"># 查看 set 中所有的元素</span>
+1<span class="token punctuation">)</span> <span class="token string">"value1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"value2"</span>
+127.0.0.1:6379<span class="token operator">></span> scard mySet <span class="token comment" spellcheck="true"># 查看 set 的长度</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+127.0.0.1:6379<span class="token operator">></span> sismember mySet value1 <span class="token comment" spellcheck="true"># 检查某个元素是否存在set 中，只能接收单个元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> sadd mySet2 value2 value3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+127.0.0.1:6379<span class="token operator">></span> sinterstore mySet3 mySet mySet2 <span class="token comment" spellcheck="true"># 获取 mySet 和 mySet2 的交集并存放在 mySet3 中</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> smembers mySet3
+1<span class="token punctuation">)</span> <span class="token string">"value2"</span></code></pre>
+<hr>
+<h3 id="5-Sorted-Set"><a href="#5-Sorted-Set" class="headerlink" title="5. Sorted Set"></a>5. Sorted Set</h3><ol>
+<li>和 Set 相比，Sorted Set 增加了一个权重参数 score，使得集合中的元素能够按 score 进行有序排列，还可以通过 score 的范围来获取元素的列表。</li>
+<li><strong>常用命令：</strong> <code>zadd,zcard,zscore,zrange,zrevrange,zrem</code> 等。 </li>
+<li><strong>应用场景：</strong> 需要对数据根据某个权重进行排序的场景。比如在直播系统中，实时排行信息包含直播间在线用户列表，各种礼物排行榜。</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> zadd myZset 3.0 value1 <span class="token comment" spellcheck="true"># 添加元素到 sorted set 中 3.0 为权重</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> zadd myZset 2.0 value2 1.0 value3 <span class="token comment" spellcheck="true"># 一次添加多个元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+127.0.0.1:6379<span class="token operator">></span> zcard myZset <span class="token comment" spellcheck="true"># 查看 sorted set 中的元素数量</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+127.0.0.1:6379<span class="token operator">></span> zscore myZset value1 <span class="token comment" spellcheck="true"># 查看某个 value 的权重</span>
+<span class="token string">"3"</span>
+127.0.0.1:6379<span class="token operator">></span> zrange  myZset 0 -1 <span class="token comment" spellcheck="true"># 顺序输出某个范围区间的元素，0 -1 表示输出所有元素</span>
+1<span class="token punctuation">)</span> <span class="token string">"value3"</span>
+2<span class="token punctuation">)</span> <span class="token string">"value2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"value1"</span>
+127.0.0.1:6379<span class="token operator">></span> zrange  myZset 0 1 <span class="token comment" spellcheck="true"># 顺序输出某个范围区间的元素，0 为 start  1 为 stop</span>
+1<span class="token punctuation">)</span> <span class="token string">"value3"</span>
+2<span class="token punctuation">)</span> <span class="token string">"value2"</span>
+127.0.0.1:6379<span class="token operator">></span> zrevrange  myZset 0 1 <span class="token comment" spellcheck="true"># 逆序输出某个范围区间的元素，0 为 start  1 为 stop</span>
+1<span class="token punctuation">)</span> <span class="token string">"value1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"value2"</span></code></pre>
+<hr>
+<h2 id="2-缓存"><a href="#2-缓存" class="headerlink" title="2. 缓存"></a>2. 缓存</h2><h3 id="1-缓存的作用"><a href="#1-缓存的作用" class="headerlink" title="1. 缓存的作用"></a>1. 缓存的作用</h3><ol>
+<li>数据库的数据存在硬盘上，Redis 则是在内存上，读取速度比数据库快很多，因此高频数据放在缓存中可以提高读取效率。</li>
+<li>数据库能承受的请求数量较小，QPS（Query Per Second）大概都在 1w 左右（4 核 8g），使用 Redis 可以提高 QPS。</li>
+</ol>
+<p><img src="https://snailclimb.gitee.io/javaguide/docs/database/Redis/images/redis-all/%E7%BC%93%E5%AD%98%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png" alt=""></p>
+<hr>
+<h3 id="2-缓存过期"><a href="#2-缓存过期" class="headerlink" title="2. 缓存过期"></a>2. 缓存过期</h3><p>一般情况下，设置保存的缓存数据的时候都会设置一个<strong>过期时间</strong>。</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> expire key  60 <span class="token comment" spellcheck="true"># 数据在 60s 后过期</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+127.0.0.1:6379<span class="token operator">></span> setex key 60 value <span class="token comment" spellcheck="true"># 数据在 60s 后过期 (setex:[set] + [ex]pire)</span>
+OK
+127.0.0.1:6379<span class="token operator">></span> ttl key <span class="token comment" spellcheck="true"># 查看数据还有多久过期</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 56</code></pre>
 <ul>
-<li>整理：<ul>
-<li><strong>Segment 的个数默认是 16</strong>，也可以认为 ConcurrentHashMap 默认支持最多 16 个线程并发；</li>
-<li>Segment 的个数也会向上取得最近的 2 的整数幂；</li>
-<li>Segment 中的 HashMap 默认容量是 2，负载因子 0.75f，扩容阈值 1.5，插入第二个值时才会扩容；</li>
-<li>Segment 中的 HashMap 扩容机制和 HashMap 相同，容量扩容为原来的 2 倍。<strong>数据迁移后，只可能在原来的位置，或者（原来的位置 + 原来的容量）位置</strong>（HashMap 也是一样）；</li>
-<li><strong>Segment 继承了 ReentrantLock</strong>，所以 Segment 内部可以很方便的获取锁。</li>
+<li>Redis 中除了字符串类型有自己独有设置过期时间的命令 <code>setex</code> 外，其他方法都需要依靠 <code>expire</code> 命令来设置过期时间 。另外， <code>persist</code> 命令可以移除一个键的过期时间 </li>
+</ul>
+<p><strong>过期时间的作用</strong>：</p>
+<ol>
+<li>因为内存是有限的，如果缓存中的所有数据都是一直保存的话，会导致内存不够。</li>
+<li>有些业务就是需要某个数据只在某一时间段内存在，比如短信验证码可能只在1分钟内有效，用户登录的 token 可能只在 1 天内有效。</li>
+</ol>
+<hr>
+<h3 id="3-过期删除"><a href="#3-过期删除" class="headerlink" title="3. 过期删除"></a>3. 过期删除</h3><p>Redis 通过一个叫做<strong>过期字典（可以看作是 Hash 表）</strong>来保存数据过期的时间。过期字典的键指向Redis 数据库中的某个 key (键)，过期字典的值是一个 long long 类型的整数，这个整数保存了 key 所指向的数据库键的过期时间。</p>
+<p> Redis 采用删除策略是<strong>定期删除+惰性删除</strong>：</p>
+<ol>
+<li><strong>惰性删除</strong> ：只会在取出 key 的时候才对数据进行过期检查。这样对CPU最友好，但是可能会造成太多过期 key 没有被删除。</li>
+<li><strong>定期删除</strong> ： 每隔一段时间抽取一批 key 执行删除过期 key 操作。并且，Redis 底层会限制删除操作执行的时长和频率，来减少删除操作对 CPU 时间的影响。</li>
+</ol>
+<hr>
+<h3 id="4-内存淘汰机制"><a href="#4-内存淘汰机制" class="headerlink" title="4. 内存淘汰机制"></a>4. 内存淘汰机制</h3><p>仅仅通过给 key 设置过期时间还是有问题的，因为定期删除和惰性删除可能会漏掉很多过期 key。这样就导致大量过期 key 堆积在内存里。</p>
+<p>为了解决上述问题，Redis 还采用了内存淘汰机制，共有 8 种<strong>内存淘汰策略</strong>：</p>
+<ol>
+<li><strong>volatile-lru（least recently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰。常用。</li>
+<li><strong>volatile-ttl</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰。</li>
+<li><strong>volatile-random</strong>：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰。</li>
+<li><strong>allkeys-lru（least recently used）</strong>：当内存不足以容纳新写入数据时，移除最近最少使用的 数据，<strong>这个是最常用的</strong>。</li>
+<li><strong>allkeys-random</strong>：从数据集（server.db[i].dict）中任意选择数据淘汰。</li>
+<li><strong>no-eviction</strong>：禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。不常用。</li>
+</ol>
+<p>4.0 版本后增加以下两种：</p>
+<ol start="7">
+<li><p><strong>volatile-lfu（least frequently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最不经常使用的数据淘汰。</p>
+</li>
+<li><p><strong>allkeys-lfu（least frequently used）</strong>：当内存不足以容纳新写入数据时，移除最不经常使用的数据。</p>
+</li>
+</ol>
+<ul>
+<li>注意新增的两种和之前策略的区别，新增的两种策略都是取<strong>最不经常使用（least frequently used）</strong>的数据，而之前的策略是取<strong>最近最少使用（least recently used）</strong>的数据，有个<strong>时间段的区别</strong>。</li>
+</ul>
+<hr>
+<h3 id="5-缓存穿透"><a href="#5-缓存穿透" class="headerlink" title="5. 缓存穿透"></a>5. 缓存穿透</h3><ol>
+<li><strong>缓存穿透</strong>是指用户请求<strong>缓存和数据库中都没有的数据</strong>。如 id 为 -1 的数据。<ul>
+<li>由于数据库中不存在请求的数据，那么访问数据库后，这个数据也不会被加入缓存。这就导致每次这种请求都要穿透缓存，到达数据库进行查询，给数据库带来巨大的压力。</li>
 </ul>
 </li>
-</ul>
-<ol start="2">
-<li><strong>Java 8</strong> 中，不再是之前的 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>，非常类似于 Java 8 中的 HashMap。</li>
+<li>解决方法：<ol>
+<li><strong>参数校验</strong>：把不合法的请求直接抛出异常信息返回。如 id 不能小于 0，传入手机号长度不对等。</li>
+<li><strong>缓存无效数据</strong>：就算是数据库中没有的数据，也添加一个到缓存中，可以解决该数据请求频繁的情况。但如果无效数据变化频繁，缓存中就会添加大量无效数据，因此最好给无效数据设置较短的过期时间。</li>
+<li><strong>布隆过滤器</strong>：将所有可能的请求值放在布隆过滤器中，当收到用户请求时，判断请求的数据是否在布隆过滤器中，如果不存在直接返回错误信息，存在则继续请求流程。</li>
 </ol>
-<p><img src="%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93.assets/Java8_concurrenthashmap.png" alt=""></p>
-<ul>
-<li>整理：<ul>
-<li>使用 <strong>CAS 和 synchronized 锁</strong>来保证并发安全；</li>
-<li><strong>synchronized 只锁定当前链表或红黑二叉树的首节点</strong>，这样只要 hash 不冲突，就不会产生并发，提高效率。</li>
+</li>
+</ol>
+<hr>
+<h3 id="6-缓存击穿"><a href="#6-缓存击穿" class="headerlink" title="6. 缓存击穿"></a>6. 缓存击穿</h3><ol>
+<li><strong>缓存击穿</strong>是指用户请求<strong>缓存中没有，而数据库中有的数据</strong>。<ul>
+<li>如<strong>某个数据</strong>并发请求大，但在缓存中被过期删除，这时大并发请求就穿过缓存，直接访问数据库，就像在特定的点击穿了一个洞。</li>
 </ul>
 </li>
-</ul>
+<li>解决方法：<strong>给热点数据设置永不过期</strong>。</li>
+</ol>
 <hr>
-<h3 id="3-ConcurrentHashMap-和-HashTable-的对比"><a href="#3-ConcurrentHashMap-和-HashTable-的对比" class="headerlink" title="3. ConcurrentHashMap 和 HashTable 的对比"></a>3. ConcurrentHashMap 和 HashTable 的对比</h3><ol>
-<li>底层数据结构：JDK1.7之前ConcurrentHashMap由<strong>分段的数组+链表</strong>实现，JDK1.8采用的数据结构和HashMap一样，<strong>数组+链表/红黑树</strong>。HashTable和JDK1.8之前的HashMap采用<strong>数组+链表</strong>的形式。</li>
-<li>实现线程安全的方式： <strong>ConcurrentHashMap **在JDK1.7时，对整个桶数组进行了分割分段（segment），每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。</strong>到了 JDK1.8 的时候已经摒弃了Segment的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。** 整个看起来就像是优化过且线程安全的 HashMap 。<strong>HashTable</strong> 使用 synchronized 来保证线程安全，所有操作竞争一把锁，效率非常低下。 </li>
+<h3 id="7-缓存雪崩"><a href="#7-缓存雪崩" class="headerlink" title="7. 缓存雪崩"></a>7. 缓存雪崩</h3><ol>
+<li><strong>缓存雪崩</strong>是指大量查询<strong>不同数据</strong>的请求，穿过缓存，直接访问数据库。<ul>
+<li>如缓存中<strong>大量数据</strong>过期删除，而查询这些数据的并发请求巨大，全都直接访问数据库，给数据库带来巨大的压力。</li>
+<li>或如缓存出现错误，<strong>宕机或断网</strong>而不能运行，这时所有的请求都会到达数据库，给数据库带来巨大的压力。</li>
+<li>雪崩和击穿不同的是，<strong>击穿是单点击穿，只是某一个数据，而雪崩是大量数据</strong>。</li>
+</ul>
+</li>
+<li>解决方法：<ol>
+<li><strong>过期时间随机</strong>：加入缓存中的数据，过期时间随机设置，防止同一时间大量数据过期。</li>
+<li><strong>热点数据设置永不过期</strong>。</li>
+<li><strong>Redis 集群</strong>：使用多台 Redis，避免单机出现问题整个缓存服务都没办法使用。</li>
+<li><strong>限流</strong>：避免同时处理大量请求。在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个 key 只允许一个线程查询数据和写缓存，其他线程等待。</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h2 id="3-线程和事务"><a href="#3-线程和事务" class="headerlink" title="3. 线程和事务"></a>3. 线程和事务</h2><h3 id="1-Redis-的单线程"><a href="#1-Redis-的单线程" class="headerlink" title="1. Redis 的单线程"></a>1. Redis 的单线程</h3><p><strong>Redis 基于 Reactor 模式来设计开发了自己的一套高效的事件处理模型</strong> ，这套事件处理模型对应的是 Redis 中的文件事件处理器（file event handler）。由于文件事件处理器（file event handler）是单线程方式运行的，所以我们一般都说 Redis 是单线程模型。 </p>
+<p>Redis 通过 <strong>IO 多路复用程序</strong> 来监听来自客户端的大量连接（或者说是监听多个 socket）。<strong>I/O 多路复用技术的使用让 Redis 不需要额外创建多余的线程来监听客户端的大量连接，降低了资源的消耗</strong>。</p>
+<hr>
+<h3 id="2-Redis-为什么不使用多线程"><a href="#2-Redis-为什么不使用多线程" class="headerlink" title="2. Redis 为什么不使用多线程"></a>2. Redis 为什么不使用多线程</h3><p>使用多线程的问题：</p>
+<ol>
+<li>单线程编程相比于多线程容易并且更容易维护；</li>
+<li>Redis 的性能瓶颈不再 CPU ，主要在内存和网络；</li>
+<li>多线程就会存在死锁、线程上下文切换等问题，甚至会影响性能。</li>
+</ol>
+<p>实际上，<strong>Redis 在 4.0 之后的版本中就已经加入了对多线程的支持。Redis 6.0 引入多线程主要是为了提高网络 IO 读写性能</strong>，因为这个算是 Redis 中的一个性能瓶颈（Redis 的瓶颈主要受限于内存和网络）。 </p>
+<p>Redis 的多线程只是在<strong>网络数据的读写</strong>这类耗时操作上使用了， 执行命令仍然是单线程顺序执行。并且多线程默认是禁用的，只使用主线程。如需开启需要修改 redis 配置文件。</p>
+<hr>
+<h3 id="3-事务"><a href="#3-事务" class="headerlink" title="3. 事务"></a>3. 事务</h3><ol>
+<li><strong>MULTI</strong>：使用 MULTI 命令后可以输入多个命令，Redis不会立即执行这些命令，而是将它们放到队列 。</li>
+<li><strong>EXEC</strong>：使用 EXEC 命令后，将执行队列中的所有命令。</li>
+<li><strong>DISCARD</strong>：清除所有先前在一个事务中放入队列的命令，然后恢复正常的连接状态。</li>
+<li><strong>WATCH</strong>：当某个事务需要按条件执行时，就要使用这个命令将给定的键设置为受监控的状态。注意：使用该命令可以实现 Redis 的乐观锁。 </li>
+</ol>
+<ul>
+<li><strong>Redis 事务不支持回滚</strong>，因此若某条命令运行时出错，后面的命令还是会执行。</li>
+</ul>
+<p>为什么不支持回滚：</p>
+<ol>
+<li>大多数事务失败是因为<strong>语法错误或者类型错误</strong>，这两种错误，在开发阶段都是可以避免的。</li>
+<li>Redis 为了<strong>性能方面</strong>就忽略了事务回滚。 </li>
 </ol>
 <hr>
 <script>
@@ -687,7 +793,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://x1a0kang.github.io/2020/08/05/bing-fa-rong-qi-zong-jie/">https://x1a0kang.github.io/2020/08/05/bing-fa-rong-qi-zong-jie/</a>
+                    <a href="https://x1a0kang.github.io/2020/08/25/redis/">https://x1a0kang.github.io/2020/08/25/redis/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -902,24 +1008,26 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
+                <a href="/2020/08/25/mysql/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="MySQL">
                         
-                        <span class="card-title">ArrayList源码解析</span>
+                        <span class="card-title">MySQL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
+                            MySQL1. MySQL 基础1. SQL 分类SQL 可以分为两个部分：数据定义语言（DDL）和数据操作语言（DML）。
+
+DDL 部分的作用是创建/删除数据库或创建/删除表，也可以定义索引（键），规定表之间的链接，以及施加表间的约束。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
                         </span>
                         <span class="publish-author">
                             
@@ -952,27 +1060,29 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/bing-fa-rong-qi-zong-jie/">
+                <a href="/2020/08/25/spring/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="并发容器总结">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring">
                         
-                        <span class="card-title">并发容器总结</span>
+                        <span class="card-title">Spring</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            并发容器总结1. ArrayList 的并发容器 CopyOnWriteArrayList1. CopyOnWriteArrayList 简介public class CopyOnWriteArrayList&lt;E> extends O
+                            Spring1. IoC 控制反转1. 什么是 IoCIoC（Inversion of control ）控制反转/反转控制。它是一种思想而不是一个技术实现。描述的是：Java 开发领域对象的创建以及管理的问题。 
+
+传统的开发方式 ：往往
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
                             </span>
                         <span class="publish-author">
                             
@@ -986,7 +1096,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="巨瑞康的个人博客">
+    <meta name="keywords" content="Spring, 巨瑞康的个人博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>巨瑞康的个人博客</title>
+    <title>Spring | 巨瑞康的个人博客</title>
     <link rel="icon" type="image/png" href="/JRK.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">Spring</h1>
                 </div>
             </div>
         </div>
@@ -429,12 +429,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                <span class="chip bg-color">面试</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                Java学习
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -443,28 +460,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-07-08
+                    2020-08-25
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-07-08
+                    2020-08-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    81
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 
@@ -479,12 +496,76 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre><code>title: 404
-date: 2018-09-30
-time: 17:25:30
-type: "404"
-layout: "404"
-description: "Oops～，我崩溃了！找不到你想要的页面 :("</code></pre><script>
+                <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="1-IoC-控制反转"><a href="#1-IoC-控制反转" class="headerlink" title="1. IoC 控制反转"></a>1. IoC 控制反转</h2><h3 id="1-什么是-IoC"><a href="#1-什么是-IoC" class="headerlink" title="1. 什么是 IoC"></a>1. 什么是 IoC</h3><p>IoC（Inversion of control ）控制反转/反转控制。<strong>它是一种思想而不是一个技术实现</strong>。描述的是：Java 开发领域对象的创建以及管理的问题。 </p>
+<ul>
+<li><strong>传统的开发方式</strong> ：往往是在类 A 中手动通过 new 关键字来 new 一个 B 的对象出来。</li>
+<li><strong>使用 IoC 思想的开发方式</strong> ：不通过 new 关键字来创建对象，而是通过 IoC 容器（Spring 框架）来帮助我们实例化对象。我们需要哪个对象，直接从 IoC 容器里面取出即可。</li>
+</ul>
+<p>使用 IoC 思想开发，<strong>程序（上述中的类 A）不再控制对象（上述中的类 B）的创建和管理，而是由 IoC 容器控制</strong>。相对于传统的开发方式，这里的<strong>控制权由程序转移给了 IoC 容器，这种控制权的转移就是控制反转</strong>。</p>
+<p><strong>IoC 容器实际上就是一个 Map</strong>，其中存放的是各种对象；</p>
+<hr>
+<h3 id="2-IoC-再理解"><a href="#2-IoC-再理解" class="headerlink" title="2. IoC 再理解"></a>2. IoC 再理解</h3><ol>
+<li>传统方法中，两个类直接发生关系（在类 A 中 new 一个 B 的对象），耦合度高；使用 IoC 思想开发，两个类不产生直接关系，对象的控制权由第三方 IoC 托管，<strong>降低了耦合性</strong>；</li>
+<li>当代码的需求产生改变时，新的需求实现类变成了 C，这时需要将 A 类中 new 的对象由 B 改为 C，如果还有其他很多地方也需要新的实现类，代码的修改非常繁琐。<strong>使用 IoC 思想开发后，修改一处配置（配置文件），即可完成修改</strong>。<ul>
+<li>小例子：在红警中，传统方法就是根据需求的不同造出了灰熊坦克、幻影坦克等；使用 IoC 思想开发后，就像红警中的多功能步兵车（A 类），根据需求不同，向其中注入不同的对象（B / C 类），就会产生不同的效果。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="3-DI-依赖注入"><a href="#3-DI-依赖注入" class="headerlink" title="3. DI 依赖注入"></a>3. DI 依赖注入</h3><p>DI（Dependency Injection）是 IoC 最常见以及最合理的<strong>实现方式</strong>。</p>
+<ul>
+<li><strong>IoC 是思想，DI 是实现方式</strong>。</li>
+</ul>
+<p>A 类需要使用 B 类，即 A 依赖于 B。但在 IoC 思想下，A 不直接创建 B，而是<strong>由 IoC 容器负责创建，然后把 B 注入 A 中，这就是依赖注入</strong>。</p>
+<ol>
+<li><strong>基于 setter 注入</strong>：通过 A 类中为 B 类设置的 setter 方法注入被调用者的实例。</li>
+<li><strong>基于构造器注入</strong>：通过 A 类中的构造器注入被调用者的实例。</li>
+</ol>
+<hr>
+<h2 id="2-AOP-面向切面编程"><a href="#2-AOP-面向切面编程" class="headerlink" title="2. AOP 面向切面编程"></a>2. AOP 面向切面编程</h2><h3 id="1-什么是-AOP"><a href="#1-什么是-AOP" class="headerlink" title="1. 什么是 AOP"></a>1. 什么是 AOP</h3><p>AOP（Aspect-Oriented Programming）：面向切面编程。能够将那些<strong>不影响业务逻辑，却为业务模块所调用的逻辑或功能（例如事务处理、日志管理、权限控制等）抽取并封装起来，形成切面，再根据业务流程的要求，把切面切入流程的特定位置</strong>。</p>
+<p>这样做可以<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
+<hr>
+<h3 id="2-与继承的区别"><a href="#2-与继承的区别" class="headerlink" title="2. 与继承的区别"></a>2. 与继承的区别</h3><ol>
+<li><strong>继承</strong>：从多个类中提取出相同的属性，封装为一个类。这个类作为父类，其他类继承这个父类就都可以获得这些属性。<strong>这些属性是子类一定且全都需要的</strong>。<strong>继承可以看做是自上而下的</strong>，减少重复代码，有利于扩展。</li>
+<li><strong>AOP</strong>：从多个业务模块中抽取出通用的逻辑或功能，封装为一个类。<ul>
+<li><strong>这些逻辑和功能并不一定在每一个业务模块中都出现</strong>。如业务一需要事务处理，业务二需要日志管理，业务三需要权限控制，业务四需要……<strong>业务可能需要这些功能，但不是一定要，也不一定全都要</strong>。</li>
+<li>这些与业务无关，但是业务间通用的功能，可以提取封装在一个类中，<strong>既有事务处理，也有日志管理等功能</strong>。</li>
+<li>当业务流程中需要这些功能时，将其在特定的位置切入，</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="3-代理模式"><a href="#3-代理模式" class="headerlink" title="3. 代理模式"></a>3. 代理模式</h3><ul>
+<li><strong>Spring AOP 基于动态代理实现</strong>。</li>
+</ul>
+<p>代理模式就是给某个被代理对象提供一个代理对象，<strong>通过代理对象控制对被代理对象的访问，屏蔽外界对被代理对象的访问</strong>。</p>
+<p>例如：中介。房东将房子交给中介，由中介带租客看房，签合同，房东与租客不需要产生关系。</p>
+<p>代理模式的实现可以分为<strong>静态代理</strong>和<strong>动态代理</strong>。</p>
+<ol>
+<li><strong>静态代理</strong>：由程序员创建或特定工具自动生成源代码，再对其进行编译。<strong>在程序运行之前，代理类.class文件就已经被创建</strong>，代理类和委托类的关系在运行前就确定。</li>
+<li><strong>动态代理</strong>：动态代理类的源码是<strong>在程序运行期间由 JVM 根据反射等机制动态的生成</strong>，所以不存在代理类的字节码文件。代理类和委托类的关系是在程序运行时确定。</li>
+</ol>
+<p>具体参考：<a href="https://www.jianshu.com/p/9cdcf4e5c27d" target="_blank" rel="noopener">设计模式之——代理模式</a></p>
+<hr>
+<h2 id="3-Bean"><a href="#3-Bean" class="headerlink" title="3. Bean"></a>3. Bean</h2><h3 id="1-什么是-Bean"><a href="#1-什么是-Bean" class="headerlink" title="1. 什么是 Bean"></a>1. 什么是 Bean</h3><p>Spring Bean 可复用的组件，由 Spring IoC 容器实例化、组装和管理。</p>
+<p>配置方案：</p>
+<ol>
+<li>XML 文件中配置；</li>
+<li>JAVA 代码显式配置；</li>
+<li>隐式自动装配。</li>
+</ol>
+<hr>
+<h3 id="2-Bean-的作用域"><a href="#2-Bean-的作用域" class="headerlink" title="2. Bean 的作用域"></a>2. Bean 的作用域</h3><ol>
+<li><strong>singleton</strong> : 唯一 bean 实例，<strong>Spring 中的 bean 默认都是单例的</strong>。</li>
+<li><strong>prototype</strong> : 每次请求都会创建一个新的 bean 实例。 </li>
+<li>request : 每一次 HTTP 请求都会产生一个新的 bean，该 bean 仅在当前 HTTP request 内有效。 </li>
+<li>session : 每一次 HTTP 请求都会产生一个新的 bean，该 bean 仅在当前 HTTP session 内有效。</li>
+<li>application：该 bean 仅在当前 ServletContext 内有效。</li>
+<li>websocket：该 bean 仅在当前 WebSocket 内有效。</li>
+</ol>
+<hr>
+<h3 id="3-Bean-的生命周期"><a href="#3-Bean-的生命周期" class="headerlink" title="3. Bean 的生命周期"></a>3. Bean 的生命周期</h3><hr>
+<h2 id="4-Spring-事务"><a href="#4-Spring-事务" class="headerlink" title="4. Spring 事务"></a>4. Spring 事务</h2><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -527,7 +608,7 @@ description: "Oops～，我崩溃了！找不到你想要的页面 :("</code></p
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://x1a0kang.github.io/404.html">https://x1a0kang.github.io/404.html</a>
+                    <a href="https://x1a0kang.github.io/2020/08/25/spring/">https://x1a0kang.github.io/2020/08/25/spring/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -564,7 +645,15 @@ description: "Oops～，我崩溃了！找不到你想要的页面 :("</code></p
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                    <span class="chip bg-color">面试</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -730,45 +819,54 @@ description: "Oops～，我崩溃了！找不到你想要的页面 :("</code></p
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/404.html">
+                <a href="/2020/08/25/redis/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Redis">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Redis</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            title: 404
-date: 2018-09-30
-time: 17:25:30
-type: "404"
-layout: "404"
-description: "Oops～，我崩溃了！找不到你想要的页面 :("
-        docu
+                            RedisRedis（Remote Dictionary Server )，即远程字典服务。是一个开源的使用 C 语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value 数据库。
+由于 Redis 基于内存，所以读写速度快，常
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-08
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            巨瑞康
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    Java学习
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -776,43 +874,53 @@ description: "Oops～，我崩溃了！找不到你想要的页面 :("
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/404.html">
+                <a href="/2020/08/25/bing-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="并发">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">并发</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            title: 404
-date: 2018-09-30
-time: 17:25:30
-type: "404"
-layout: "404"
-description: "Oops～，我崩溃了！找不到你想要的页面 :("
-        docu
+                            并发1. 基础1. 进程和线程进程：进程是资源分配的基本单位，是系统运行程序的基本单位。开启一个程序如QQ，就是开启了一个进程。
+线程：线程是比进程更小的执行单位，是CPU调度的最小单位。一个进程中可以有多个线程，它们可以共享进程资源。同类
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            巨瑞康
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    Java学习
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
