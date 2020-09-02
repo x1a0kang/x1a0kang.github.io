@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-25
+                    2020-09-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.7k
+                    7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    25 分
+                    26 分
                 </div>
                 
 
@@ -892,16 +892,17 @@
 <pre class=" language-SQL"><code class="language-SQL">--用法 INNER 可以省略
 SELECT STU.name, STU.gender,class.name FROM STU (INNER) JOIN class ON STU.'class_id' = class.'id'</code></pre>
 <ol start="2">
-<li><strong>左外连接</strong>：LEFT JOIN ON (条件)。<strong>查询左表所有的行，即使不符合条件</strong>。</li>
+<li><strong>左外连接</strong>：LEFT JOIN ON (条件)。<strong>查询左表所有的行，不符合条件的列用 null 表示</strong>。</li>
 </ol>
 <pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true">--用法</span>
 <span class="token keyword">SELECT</span> STU<span class="token punctuation">.</span>name<span class="token punctuation">,</span> STU<span class="token punctuation">.</span>gender<span class="token punctuation">,</span>class<span class="token punctuation">.</span>name <span class="token keyword">FROM</span> STU <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> class <span class="token keyword">ON</span> STU<span class="token punctuation">.</span><span class="token string">'class_id'</span> <span class="token operator">=</span> class<span class="token punctuation">.</span><span class="token string">'id'</span></code></pre>
 <ol start="3">
-<li><strong>右外连接</strong>：RIGHT JOIN ON (条件)。<strong>查询右表所有的行，即使不符合条件</strong>。</li>
+<li><strong>右外连接</strong>：RIGHT JOIN ON (条件)。<strong>查询右表所有的行，不符合条件的列用 null 表示</strong>。</li>
 </ol>
 <pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true">--用法</span>
 <span class="token keyword">SELECT</span> STU<span class="token punctuation">.</span>name<span class="token punctuation">,</span> STU<span class="token punctuation">.</span>gender<span class="token punctuation">,</span>class<span class="token punctuation">.</span>name <span class="token keyword">FROM</span> STU <span class="token keyword">RIGHT</span> <span class="token keyword">JOIN</span> class <span class="token keyword">ON</span> STU<span class="token punctuation">.</span><span class="token string">'class_id'</span> <span class="token operator">=</span> class<span class="token punctuation">.</span><span class="token string">'id'</span></code></pre>
 <ol start="4">
+<li><strong>全外连接</strong>：FULL JOIN ON（条件）。<strong>查询两表所有的行，不符合条件的列用 null 表示</strong>。</li>
 <li><strong>子查询</strong>：嵌套查询</li>
 </ol>
 <pre class=" language-sql"><code class="language-sql"><span class="token comment" spellcheck="true">--子查询的结果可以是单行单列、多行单列和多行多列的</span>
@@ -918,6 +919,18 @@ SELECT STU.name, STU.gender,class.name FROM STU (INNER) JOIN class ON STU.'class
     <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> emp <span class="token keyword">WHERE</span> emp<span class="token punctuation">.</span><span class="token punctuation">`</span>join_date<span class="token punctuation">`</span> <span class="token operator">></span> <span class="token string">'2011-11-11'</span><span class="token punctuation">)</span> t2 <span class="token comment" spellcheck="true">--子查询结果作为t2表</span>
 <span class="token keyword">WHERE</span> 
     t1<span class="token punctuation">.</span>id <span class="token operator">=</span> t2<span class="token punctuation">.</span>dept_id<span class="token punctuation">;</span></code></pre>
+<hr>
+<h3 id="9-InnoDB-和-MyISAM-的区别"><a href="#9-InnoDB-和-MyISAM-的区别" class="headerlink" title="9. InnoDB 和 MyISAM 的区别"></a>9. InnoDB 和 MyISAM 的区别</h3><ol>
+<li>InnoDB 支持事务，MyISAM 不支持事务；</li>
+<li>InnoDB 支持外键，MyISAM 不支持外键；</li>
+<li>InnoDB 是聚集索引，MyISAM 是非聚集索引（索引部分中有具体解释）；</li>
+<li>InnoDB 不保存行数，如果使用 COUNT() 还需要全表扫描。MyISAM 保存行数，可以直接返回；</li>
+<li>InnoDB 支持行锁和表锁，但行锁是锁在索引上的，如果不能命中索引，就会退化为表锁。MyISAM 不支持行锁，仅支持表锁；</li>
+<li>InnoDB 必须有主键，如果没有定义，会自动生成一个（用户不可见）。MyISAM 可以没有主键；</li>
+</ol>
+<ul>
+<li>读操作多的情况下，MyISAM 更好，因为 InnoDB 要维护更多的数据。</li>
+</ul>
 <hr>
 <h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2. 事务"></a>2. 事务</h2><h3 id="1-什么是事务"><a href="#1-什么是事务" class="headerlink" title="1. 什么是事务"></a>1. 什么是事务</h3><p>概念：<strong>事务是逻辑上的一组操作，要么同时成功，要么同时失败</strong>。</p>
 <p>举例：<strong>事务最经典也经常被拿出来说例子就是转账了</strong>。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么都成功，要么都要失败。</p>
@@ -960,7 +973,7 @@ ROLLBACK</code></pre>
 <li><strong>READ-UNCOMMITTED(读取未提交)：</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong>。 </li>
 <li><strong>READ-COMMITTED(读取已提交)：</strong> 允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong>。 </li>
 <li><strong>REPEATABLE-READ(可重复读)：</strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生</strong>。</li>
-<li><strong>SERIALIZABLE(可串行化)：</strong> 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。 </li>
+<li><strong>SERIALIZABLE(可串行化)：</strong> 最高的隔离级别，完全服从 ACID 的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。 </li>
 </ol>
 <table>
 <thead>
@@ -1072,14 +1085,13 @@ ROLLBACK</code></pre>
 </ul>
 <hr>
 <h3 id="8-聚集索引和非聚集索引"><a href="#8-聚集索引和非聚集索引" class="headerlink" title="8. 聚集索引和非聚集索引"></a>8. 聚集索引和非聚集索引</h3><ul>
-<li>聚集索引是<strong>索引结构和数据一起存放的索引</strong>，以<strong>主键</strong>创建的索引；</li>
-<li>非聚集索引是<strong>索引结构和数据分开存放的索引</strong>，以<strong>非主键</strong>创建的索引。</li>
+<li>聚集索引是<strong>索引结构和数据一起存放的索引</strong>，找到索引就找到了数据；</li>
+<li>非聚集索引是<strong>索引结构和数据分开存放的索引</strong>，索引和数据用两个文件储存。</li>
 </ul>
-<p><strong>区别</strong>：</p>
+<p><strong>InnoDB 和 MyISAM 的区别</strong>：</p>
 <ul>
-<li>聚集索引在叶子节点存储的是<strong>表中的数据</strong>；</li>
-<li>非聚集索引在叶子节点中存储的是<strong>主键和索引列信息</strong>；</li>
-<li>使用非聚集索引查询时，<strong>要先拿到主键，再通过主键去查询数据</strong>，这个过程也叫做<strong>回表</strong>。</li>
+<li><strong>InnoDB 使用聚集索引。聚集索引是唯一的</strong>，一个表中只有一个，一般是主键。<strong>只有聚集索引的 B+ 树的叶子节点储存了行的所有信息</strong>。其他再建立的索引都是非聚集索引，<strong>B+树的叶子节点储存当前列的信息和主键值</strong>。查询时，<strong>要先拿到主键，再通过主键去查询数据</strong>，这个过程也叫做<strong>回表</strong>。</li>
+<li><strong>MyISAM 使用非聚集索引</strong>，索引的 B+ 树的叶子节点储存的是指向行数据的地址，对于表数据来说，这两个键没有任何差别。由于索引树是独立的，所以<strong>不会出现回表</strong>。</li>
 </ul>
 <hr>
 <h3 id="9-覆盖索引"><a href="#9-覆盖索引" class="headerlink" title="9. 覆盖索引"></a>9. 覆盖索引</h3><p>我们知道在 InnoDB 存储引擎中，如果不是主键索引，叶子节点存储的是<strong>主键和索引列息</strong>。最终还是要回表，也就是要通过主键再查找一次。 </p>
@@ -1712,7 +1724,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">55.8k</span>&nbsp;字
+                class="white-color">67.6k</span>&nbsp;字
             
             
             

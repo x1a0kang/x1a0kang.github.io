@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-25
+                    2020-09-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.8k
+                    4.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    18 分
                 </div>
                 
 
@@ -558,7 +558,7 @@ OK
 <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
 <hr>
 <h3 id="3-Hash"><a href="#3-Hash" class="headerlink" title="3. Hash"></a>3. Hash</h3><ol>
-<li>Hash 类似于 JDK1.8 前的 HashMap，内部实现也差不多(数组 + 链表)。Hash 是一个 String 类型的 field 和 value 的映射表，<strong>特别适合用于存储对象</strong>。比如可以用 Hash 数据结构来存储用户信息，商品信息等等。</li>
+<li>Hash 类似于 JDK1.8 前的 HashMap，内部实现也差不多(数组 + 链表)。Hash 是一个 String 类型的 field 和 value 的映射表，其中 field 可以有多个，<strong>特别适合用于存储对象</strong>。比如可以用 Hash 数据结构来存储用户信息，商品信息等等。</li>
 <li><strong>常用命令：</strong> <code>hset,hmset,hexists,hget,hgetall,hkeys,hvals</code> 等。 </li>
 <li><strong>应用场景:</strong> 系统中对象数据的存储。 </li>
 </ol>
@@ -723,31 +723,85 @@ OK
 </li>
 </ol>
 <hr>
-<h2 id="3-线程和事务"><a href="#3-线程和事务" class="headerlink" title="3. 线程和事务"></a>3. 线程和事务</h2><h3 id="1-Redis-的单线程"><a href="#1-Redis-的单线程" class="headerlink" title="1. Redis 的单线程"></a>1. Redis 的单线程</h3><p><strong>Redis 基于 Reactor 模式来设计开发了自己的一套高效的事件处理模型</strong> ，这套事件处理模型对应的是 Redis 中的文件事件处理器（file event handler）。由于文件事件处理器（file event handler）是单线程方式运行的，所以我们一般都说 Redis 是单线程模型。 </p>
+<h2 id="3-线程"><a href="#3-线程" class="headerlink" title="3. 线程"></a>3. 线程</h2><h3 id="1-Redis-的单线程"><a href="#1-Redis-的单线程" class="headerlink" title="1. Redis 的单线程"></a>1. Redis 的单线程</h3><p><strong>Redis 基于 Reactor 模式来设计开发了自己的一套高效的事件处理模型</strong> ，这套事件处理模型对应的是 Redis 中的文件事件处理器（file event handler）。由于文件事件处理器（file event handler）是单线程方式运行的，所以我们一般都说 Redis 是单线程模型。 </p>
 <p>Redis 通过 <strong>IO 多路复用程序</strong> 来监听来自客户端的大量连接（或者说是监听多个 socket）。<strong>I/O 多路复用技术的使用让 Redis 不需要额外创建多余的线程来监听客户端的大量连接，降低了资源的消耗</strong>。</p>
 <hr>
 <h3 id="2-Redis-为什么不使用多线程"><a href="#2-Redis-为什么不使用多线程" class="headerlink" title="2. Redis 为什么不使用多线程"></a>2. Redis 为什么不使用多线程</h3><p>使用多线程的问题：</p>
 <ol>
-<li>单线程编程相比于多线程容易并且更容易维护；</li>
+<li>单线程编程相比于多线程容易并且<strong>更容易维护</strong>；</li>
 <li>Redis 的性能瓶颈不再 CPU ，主要在内存和网络；</li>
-<li>多线程就会存在死锁、线程上下文切换等问题，甚至会影响性能。</li>
+<li>多线程就会存在<strong>死锁</strong>、线程<strong>上下文切换</strong>等问题，甚至会影响性能。</li>
 </ol>
 <p>实际上，<strong>Redis 在 4.0 之后的版本中就已经加入了对多线程的支持。Redis 6.0 引入多线程主要是为了提高网络 IO 读写性能</strong>，因为这个算是 Redis 中的一个性能瓶颈（Redis 的瓶颈主要受限于内存和网络）。 </p>
-<p>Redis 的多线程只是在<strong>网络数据的读写</strong>这类耗时操作上使用了， 执行命令仍然是单线程顺序执行。并且多线程默认是禁用的，只使用主线程。如需开启需要修改 redis 配置文件。</p>
+<p>Redis 的多线程只是在<strong>网络数据的读写</strong>这类耗时操作上使用了， 执行命令仍然是单线程顺序执行。并且<strong>多线程默认是禁用的</strong>，只使用主线程。如需开启需要修改 redis 配置文件。</p>
 <hr>
-<h3 id="3-事务"><a href="#3-事务" class="headerlink" title="3. 事务"></a>3. 事务</h3><ol>
+<h2 id="4-事务和持久化"><a href="#4-事务和持久化" class="headerlink" title="4. 事务和持久化"></a>4. 事务和持久化</h2><h3 id="1-事务"><a href="#1-事务" class="headerlink" title="1. 事务"></a>1. 事务</h3><ol>
 <li><strong>MULTI</strong>：使用 MULTI 命令后可以输入多个命令，Redis不会立即执行这些命令，而是将它们放到队列 。</li>
 <li><strong>EXEC</strong>：使用 EXEC 命令后，将执行队列中的所有命令。</li>
 <li><strong>DISCARD</strong>：清除所有先前在一个事务中放入队列的命令，然后恢复正常的连接状态。</li>
 <li><strong>WATCH</strong>：当某个事务需要按条件执行时，就要使用这个命令将给定的键设置为受监控的状态。注意：使用该命令可以实现 Redis 的乐观锁。 </li>
 </ol>
-<ul>
-<li><strong>Redis 事务不支持回滚</strong>，因此若某条命令运行时出错，后面的命令还是会执行。</li>
-</ul>
+<blockquote>
+<p><strong>Redis 事务不支持回滚</strong>，因此若某条命令运行时出错，后面的命令还是会执行。</p>
+</blockquote>
+<ol>
+<li><strong>编译时错误</strong>：如命令格式/语法错误，会在入队后检查出来，使用 EXEC 命令后，会报错停止，<strong>所有语句都不会被执行</strong>。</li>
+<li><strong>运行时错误</strong>：语句语法没有错误，可以正常编译通过，但执行期间出错，如 1 / 0，或对非数字进行加一操作等。使用 EXEC 命令后，<strong>所有命令都会执行，只会在出错的命令行报错，不影响其他命令</strong>。</li>
+</ol>
 <p>为什么不支持回滚：</p>
 <ol>
 <li>大多数事务失败是因为<strong>语法错误或者类型错误</strong>，这两种错误，在开发阶段都是可以避免的。</li>
 <li>Redis 为了<strong>性能方面</strong>就忽略了事务回滚。 </li>
+</ol>
+<hr>
+<h3 id="2-持久化"><a href="#2-持久化" class="headerlink" title="2. 持久化"></a>2. 持久化</h3><blockquote>
+<p>因为 Redis 数据是保存在内存上的，如果使用 Redis 保存数据，就必须要进行持久化。</p>
+</blockquote>
+<ol>
+<li><p><strong>RDB（Redis DataBase）</strong>：使用快照进行持久化，保存的文件为 dump.rdb。有两种方式：</p>
+<ol>
+<li><code>save</code> 方式，使用主进程进行持久化，把 Redis 中的数据都写入一个临时文件中，全部写完之后，再将临时文件覆盖掉上一次的持久化文件。这种方式进行持久化操作时，<strong>会暂停其他的操作，直到持久化结束</strong>。</li>
+<li><code>bgsave</code> 方式：主进程创建 fork 出一个子进程，由子进程进行持久化操作，方式和上述相同。但这种方式是异步操作，<strong>持久化过程中不会影响其他操作，只会在 fork 过程中暂停其他操作，但时间很短</strong>。 </li>
+</ol>
+</li>
+<li><p><strong>AoF（Append only File）</strong>：将 Redis 中的操作命令记录在一个文件中，每次操作会将命令追加进持久化文件中，文件为 appendonly.aof。</p>
+<ol>
+<li><strong>AoF 方式有一个 AoF 缓冲区</strong>，和 RDB 方式类似，如果每次有一个命令需要写入 AoF 文件，都去硬盘上写入，非常消耗性能，因此命令都会先被写入缓冲区，再写入硬盘。</li>
+<li><strong>重写</strong>：由于 AoF 会一直向文件中追加信息，文件的体积会越来越大，达到一定程度后，就要对持久化文件进行重写。重写时，主进程会 fork 出一个子进程进行重写，<strong>重写与旧文件无关，会直接根据 Redis 中的数据写入命令</strong>，写入一个临时文件，全部重写完成后覆盖旧文件。</li>
+<li><strong>重写为何会缩小文件体积</strong>：原文件中可能有很多冗余操作，如添加后又删除，重写时 Redis 中并没有这个数据，也就不会再写相关的命令。还有一些命令可以合并为一条命令，也可以缩小空间。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>AoF 方式默认不开启，如果两种方式都开启，则会产生两个持久化文件，<strong>Redis 在启动时，会优先读取 AoF 方式的持久化文件</strong>，因此这里的数据相对更完整。</li>
+</ul>
+<hr>
+<h3 id="3-两种持久化方式的对比"><a href="#3-两种持久化方式的对比" class="headerlink" title="3. 两种持久化方式的对比"></a>3. 两种持久化方式的对比</h3><blockquote>
+<p><strong>RDB 方式</strong>：</p>
+</blockquote>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>写入的是紧凑的数据，文件占用空间小，全量复制，适合用作备份和灾难恢复。</li>
+<li>恢复数据速度快，在大数据量时，比 AoF快很多。</li>
+<li><code>bgsave</code> 不会影响其他命令，异步处理。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>触发持久化的规则不频繁，若 Redis 宕机，上次持久化之后的数据都会丢失。</li>
+<li>子进程进行持久化时，父进程同时可以进行写入命令，期间的命令不会被子进程持久化，可能造成数据丢失。</li>
+</ol>
+<blockquote>
+<p><strong>AoF 方式</strong>：</p>
+</blockquote>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>持久化操作更频繁，可以每次操作都写入，可以每秒写入一次，最多丢失一秒数据，保存数据更完整。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>由于持续写入，且写入的是命令，占用空间更大。</li>
+<li>文件多大时会触发重写操作，会 fork 出一个子进程进行重写，同时还要多维护一个缓冲区，消耗较大。</li>
+<li>大数据量情况下，恢复数据速度较 RDB 慢很多。</li>
 </ol>
 <hr>
 <script>
@@ -1311,7 +1365,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">55.8k</span>&nbsp;字
+                class="white-color">67.6k</span>&nbsp;字
             
             
             

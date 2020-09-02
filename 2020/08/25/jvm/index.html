@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-25
+                    2020-09-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.6k
+                    7.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    23 分
+                    25 分
                 </div>
                 
 
@@ -616,9 +616,17 @@
 </ol>
 <hr>
 <h3 id="6-垃圾收集算法"><a href="#6-垃圾收集算法" class="headerlink" title="6. 垃圾收集算法"></a>6. 垃圾收集算法</h3><ol>
-<li><strong>标记-清除算法</strong>：首先标记出所有不需要回收的对象，在标记完成后统一回收掉所有没有被标记的对象。这种算法带来两个问题：效率问题和<strong>空间问题（会产生大量不连续的碎片）</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95.jpeg" alt=""></li>
-<li><strong>复制算法</strong>：它<strong>将内存分为大小相同的两块（From Survivor 和 To Survivor），每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉</strong>。这样就使每次的内存回收都是对内存区间的一半进行回收。 <img src="05-JVM.assets/fc349fbb9b204495a5321febe27818d4-new-image45920a9a-552c-4656-94d6-e3ca45ff9b76.png" alt=""></li>
-<li><strong>标记-整理算法</strong>：首先标记出所有不需要回收的对象，<strong>让所有存活对象向一端移动，然后直接清理掉边界以外的内存</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/94057049.png" alt=""></li>
+<li><strong>标记-清除算法</strong>：首先标记出所有不需要回收的对象，在标记完成后统一回收掉所有没有被标记的对象。这种算法带来的问题：<strong>空间问题（会产生大量不连续的碎片）</strong>，导致新的对象在分配时，寻找可用地址的效率变低（效率问题），甚至<strong>可能因为没有足够的连续内存，而触发一次垃圾回收</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95.jpeg" alt=""></li>
+<li><strong>复制算法</strong>：它<strong>将内存分为大小相同的两块（From Survivor 和 To Survivor），每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉</strong>。这样就使每次的内存回收都是对内存区间的一半进行回收。 <img src="05-JVM.assets/fc349fbb9b204495a5321febe27818d4-new-image45920a9a-552c-4656-94d6-e3ca45ff9b76.png" alt=""><ul>
+<li>优点：<strong>不会产生内存碎片</strong>，分配对象的空间时只要按顺序分配即可。</li>
+<li>缺点：把能够使用的内存分为两份，<strong>每次最多只能使用一半内存</strong>，内存空间浪费大。同时<strong>当对象的存活率较高时，需要大量的复制移动操作，效率低</strong>。</li>
+</ul>
+</li>
+<li><strong>标记-整理算法</strong>：首先标记出所有不需要回收的对象，<strong>让所有存活对象向一端移动，然后直接清理掉边界以外的内存</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/94057049.png" alt=""><ul>
+<li>优点：不会造成内存碎片，也不用把内存分为两份，内存利用率高。</li>
+<li>缺点：标记后需要移动存活对象，消耗大量时间。</li>
+</ul>
+</li>
 <li><strong>分代收集算法</strong>：在<strong>新生代中，每次收集都会有大量对象死去，所以可以选择复制算法</strong>，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而<strong>老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集</strong>。</li>
 </ol>
 <hr>
@@ -628,7 +636,7 @@
 <li>GC 进行时：<ul>
 <li><strong>Eden 区所有存活的对象都被复制到 To Survivor区</strong>。</li>
 <li>而 <strong>From Survivor 区</strong>仍存活的对象中，<strong>年龄值达到阈值，移到老年代，没有达到则复制到 To Survivor 区</strong>。</li>
-<li>年龄阈值默认 15 是因为对象头中年龄占 4bit，新生代每熬过一次垃圾回收，年龄 +1，对高为 15。</li>
+<li>年龄阈值默认 15 是因为对象头中年龄占 4bit，新生代每熬过一次垃圾回收，年龄 +1，最高为 15。</li>
 </ul>
 </li>
 <li>GC 结束后，From Survivor 区域为空，<strong>将 From Survivor 区域和 To Survivor 区域互换</strong>。</li>
@@ -651,13 +659,48 @@
 <hr>
 <h3 id="9-垃圾收集器"><a href="#9-垃圾收集器" class="headerlink" title="9. 垃圾收集器"></a>9. 垃圾收集器</h3><p>如果说垃圾收集算法是内存回收的方法论，那垃圾收集器就是内存回收的具体实现。垃圾收集器可以分为五种：</p>
 <ol>
-<li><strong>Serial 收集器</strong>：Serial （串行）收集器是一个单线程收集器，<strong>只会使用一条垃圾收集线程，并且在进行垃圾收集时会暂停其他所有工作线程</strong>，直至收集结束。优点是简单而高效，缺点是会使其他线程停顿，影响用户体验。<strong>Serial Old 收集器是 Serial 收集器的老年代版本</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/46873026.png" alt=""></li>
-<li><strong>ParNew 收集器</strong>：是 Serial 收集器的多线程版本，<strong>除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法和回收策略等）和 Serial 收集器完全一样</strong>。<img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/22018368.png" alt=""></li>
-<li><strong>Parallel Scavenge 收集器</strong>：关注点是<strong>吞吐量</strong>，所谓吞吐量是 CPU 中用于运行用户代码的时间与 CPU 消耗总时间的比值。<strong>Parallel Old 收集器是其老年代版本</strong>。</li>
-<li><strong>CMS 收集器</strong>：Concurrent Mark Sweep 收集器是以回收停顿时间最短为目标的收集器，是 Hotspot 虚拟机第一款真正意义上的<strong>并发收集器，实现了垃圾收集线程和用户线程（基本上）同时工作</strong>。CMS 收集器是由<strong>标记-清除</strong>算法实现的，垃圾收集整个过程分为四步：初始标记、并发标记、重新标记和并发清除。<strong>优点是并发收集，低停顿，缺点是对 CPU 资源敏感、无法处理浮动垃圾和产生大量空间碎片</strong>。</li>
-<li><strong>G1 收集器</strong>：Garbage First 垃圾优先收集器，面向服务器，主要针对配备多颗处理器和大容量内存的机器。<strong>以极高概率满足 GC 停顿时间的同时，还具备高吞吐量的特征</strong>。G1 弱化了分代的概念，将 Java 堆分为若干大小相同的 region，<strong>优先选择回收价值最大的 region</strong>，这种收集方式保证了 G1 收集器在有限时间内的高效率。<strong>与 CMS 收集器相比，不会产生空间碎片，可以压缩空间（整体基于标记整理算法，局部基于复制算法实现），且可设定最大停顿时间</strong>。</li>
+<li><p><strong>Serial 收集器</strong>：针对<strong>新生代</strong>进行垃圾收集。Serial （串行）收集器是一个单线程收集器，<strong>采用复制算法，只会使用一条垃圾收集线程，并且在进行垃圾收集时会暂停其他所有工作线程</strong>，直至收集结束。</p>
+<ul>
+<li>优点：<strong>简单而高效</strong>，对于限定单核处理时，没有线程切换的开销。</li>
+<li>缺点：<strong>Stop the World</strong>。会使其他线程停顿，影响用户体验。</li>
+<li><strong>Serial Old 收集器是 Serial 收集器的老年代版本</strong>，采用标记整理算法，用途则是作为 CMS（Concurrent Mode Failure）失败时的备选方案。<br><img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/46873026.png" alt=""></li>
+</ul>
+</li>
+<li><p><strong>ParNew 收集器</strong>：针对<strong>新生代</strong>进行垃圾收集。是 Serial 收集器的多线程版本，<strong>除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法和回收策略等）和 Serial 收集器完全一样</strong>，和 Serial 共用了许多代码。在多核的情况下，多线程收集相对单线程效率更高，但也要 <strong>Stop the World</strong>。<br> <img src="https://snailclimb.gitee.io/javaguide/docs/java/jvm/pictures/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/22018368.png" alt=""></p>
+</li>
+<li><p><strong>Parallel Scavenge 收集器</strong>：针对<strong>新生代</strong>进行垃圾收集。关注点是<strong>吞吐量</strong>，所谓吞吐量是 CPU 中用于运行用户代码的时间与 CPU 消耗总时间的比值。<strong>Parallel Old 收集器是其老年代版本</strong>。</p>
+<ul>
+<li><strong>和 ParNew 的对比</strong>：如 ParNew 等其他收集器，目标都是尽可能缩短 Stop the World 的时间，而 Parallel Scavenge 收集器的目标是达到一个<strong>可控的吞吐量</strong>。</li>
+</ul>
+</li>
+<li><p><strong>CMS 收集器</strong>：Concurrent Mark Sweep 收集器是以回收停顿时间最短为目标的收集器，是 Hotspot 虚拟机第一款真正意义上的<strong>并发收集器，实现了垃圾收集线程和用户线程（基本上）同时工作</strong>。CMS 收集器是由<strong>标记-清除</strong>算法实现的，垃圾收集整个过程分为四步：初始标记、并发标记、重新标记和并发清除。<strong>优点是并发收集，低停顿，缺点是对 CPU 资源敏感、无法处理浮动垃圾和产生大量空间碎片</strong>。</p>
+<ul>
+<li>初始标记：仅仅标记与 GC Root 有直接关联的对象，速度快，但要 <strong>Stop the World</strong>。</li>
+<li>并发标记：由 GC Root 开始进行 Tracing 的过程，这个过程可以<strong>和用户线程共同进行的</strong>。</li>
+<li>重新标记：修正并发标记期间由于用户程序运行导致的标记变动。需要 <strong>Stop the World</strong>，时间比初始标记稍长，但远比并发标记时间短。</li>
+<li>并发清除：清除没有被标记的对象。这个过程可以<strong>和用户线程共同进行的</strong>。</li>
+<li><strong>Concurrent Mode Failure</strong>：由于 CMS 是和用户线程同时执行的，用户线程在执行过程中也可能产生垃圾，这部分垃圾叫<strong>浮动垃圾</strong>。为了保护用户线程有足够的空间运行，需要在内存中预留一块区域，如果这个区域不够，则会发生垃圾回收失败。这是就需要启动备选方案 <strong>Serial Old 收集器</strong>进行垃圾收集。</li>
+</ul>
+</li>
+<li><p><strong>G1 收集器</strong>：Garbage First 垃圾优先收集器，面向服务器，主要针对配备多颗处理器和大容量内存的机器。<strong>以极高概率满足 GC 停顿时间的同时，还具备高吞吐量的特征</strong>。</p>
+<ul>
+<li><p>G1 弱化了分代的概念，将 Java 堆分为若干大小相同的 region，并且维护了一个优先列表，每次根据用户允许的实践，<strong>优先选择回收价值最大的 region</strong>。</p>
+</li>
+<li><p>用户可以规定在一个<strong>长度为 M 毫秒的时间片内，垃圾收集的时间不得超过 N 毫秒</strong>。</p>
+</li>
+<li><p>初始标记：仅仅标记与 GC Root 有直接关联的对象，速度快，但要 <strong>Stop the World</strong>。</p>
+</li>
+<li><p>并发标记：由 GC Root 开始进行 Tracing 的过程，这个过程可以<strong>和用户线程共同进行的</strong>。</p>
+</li>
+<li><p>最终标记：修正并发标记期间由于用户程序运行导致的标记变动。需要 <strong>Stop the World</strong>。</p>
+</li>
+<li><p>筛选回收：筛选回收阶段首先对各个 Region 的回收价值和成本进行排序，根据用户所期望的 GC 停顿时间来制定回收计划，这个阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分Region，时间是用户可控制的，而且停顿用户线程将大幅提高收集效率。</p>
+</li>
+<li><p><strong>与 CMS 收集器相比，不会产生空间碎片，可以压缩空间（整体基于标记整理算法，局部基于复制算法实现），且可设定最大停顿时间</strong>。<br><img src="05-JVM.assets/11e9dcd0f1ee4f25836e6f1c47104c51-new-image69e1c56a-1d40-493a-9901-6efc647a01f3.png" alt=""></p>
+</li>
+</ul>
+</li>
 </ol>
-<p><img src="05-JVM.assets/11e9dcd0f1ee4f25836e6f1c47104c51-new-image69e1c56a-1d40-493a-9901-6efc647a01f3.png" alt=""></p>
 <hr>
 <h2 id="4-类加载"><a href="#4-类加载" class="headerlink" title="4. 类加载"></a>4. 类加载</h2><h3 id="1-类加载过程"><a href="#1-类加载过程" class="headerlink" title="1. 类加载过程"></a>1. 类加载过程</h3><p>首先，在代码编译后，就会生成 JVM 能够识别的二进制字节流文件（.class文件）。JVM 把这个文件加载到内存的过程，就是类加载过程。</p>
 <p>类加载过程分为三步：<strong>加载-&gt;连接-&gt;初始化</strong>，其中，连接过程又可以分为三步：<strong>验证-&gt;准备-&gt;解析</strong>。</p>
@@ -667,7 +710,7 @@
 <ol>
 <li>通过一个类的全类名（包名和类名）获取定义此类的二进制字节流文件（.class文件）。获取可以通过 jar 包和 war 包等方式；</li>
 <li>将字节流所代表的静态存储结构转换为方法区的运行时数据结构；</li>
-<li>在内存中生成一个代表该类的 class 对象，作为方法区这些数据的访问入口。虽为对象，但不在堆中，存放在方法区。</li>
+<li>在内存中生成一个代表该类的 Class 对象，作为方法区这些数据的访问入口。虽为对象，但不在堆中，<strong>存放在方法区</strong>。</li>
 </ol>
 <ul>
 <li><strong>数组类型不通过类加载器创建，由 JVM 直接创建</strong>。</li>
@@ -713,9 +756,9 @@
 <hr>
 <h3 id="6-类加载器"><a href="#6-类加载器" class="headerlink" title="6. 类加载器"></a>6. 类加载器</h3><p>JVM 中内置了三个重要的 ClassLoader：</p>
 <ol>
-<li><strong>BootstrapClassLoader(启动类加载器)</strong> ：最顶层的加载类，由C++实现，负责加载 <code>%JAVA_HOME%/lib</code>目录下的jar包和类或者或被 <code>-Xbootclasspath</code>参数指定的路径中的所有类。</li>
-<li><strong>ExtensionClassLoader(扩展类加载器)</strong> ：主要负责加载目录 <code>%JRE_HOME%/lib/ext</code> 目录下的jar包和类，或被 <code>java.ext.dirs</code> 系统变量所指定的路径下的jar包。</li>
-<li><strong>AppClassLoader(应用程序类加载器)</strong> :面向我们用户的加载器，负责加载当前应用classpath下的所有jar包和类。</li>
+<li><strong>BootstrapClassLoader(启动类加载器)</strong> ：最顶层的加载类，由C++实现，负责加载 <code>%JAVA_HOME%/lib</code>目录下的 jar 包和类或者或被 <code>-Xbootclasspath</code>参数指定的路径中的所有类。</li>
+<li><strong>ExtensionClassLoader(扩展类加载器)</strong> ：主要负责加载目录 <code>%JRE_HOME%/lib/ext</code> 目录下的jar包和类，或被 <code>java.ext.dirs</code> 系统变量所指定的路径下的 jar 包。</li>
+<li><strong>AppClassLoader(应用程序类加载器)</strong> :面向我们用户的加载器，负责加载当前应用 classpath 下的所有 jar 包和类。</li>
 </ol>
 <ul>
 <li><strong>CustomClassLoader（用户类加载器）</strong>：除了 JVM 自带的类加载器，用户可以自定义类加载器，用于加载指定路径的 class 文件。继承 java.lang.ClassLoader。</li>
@@ -1298,7 +1341,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">55.8k</span>&nbsp;字
+                class="white-color">67.6k</span>&nbsp;字
             
             
             

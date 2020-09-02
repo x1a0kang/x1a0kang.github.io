@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并发容器总结, 巨瑞康的个人博客">
+    <meta name="keywords" content="JavaEE/MySQL基础课堂笔记, 巨瑞康的个人博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>并发容器总结 | 巨瑞康的个人博客</title>
+    <title>JavaEE/MySQL基础课堂笔记 | 巨瑞康的个人博客</title>
     <link rel="icon" type="image/png" href="/JRK.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并发容器总结</h1>
+                    <h1 class="description center-align post-title">JavaEE/MySQL基础课堂笔记</h1>
                 </div>
             </div>
         </div>
@@ -429,29 +429,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
-                            </a>
-                        
-                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                <span class="chip bg-color">面试</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                Java学习
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -460,28 +443,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-09-02
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-01-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    2.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    8 分
                 </div>
                 
 
@@ -496,164 +479,286 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="并发容器总结"><a href="#并发容器总结" class="headerlink" title="并发容器总结"></a>并发容器总结</h1><h2 id="1-ArrayList-的并发容器-CopyOnWriteArrayList"><a href="#1-ArrayList-的并发容器-CopyOnWriteArrayList" class="headerlink" title="1. ArrayList 的并发容器 CopyOnWriteArrayList"></a>1. ArrayList 的并发容器 CopyOnWriteArrayList</h2><h3 id="1-CopyOnWriteArrayList-简介"><a href="#1-CopyOnWriteArrayList-简介" class="headerlink" title="1. CopyOnWriteArrayList 简介"></a>1. CopyOnWriteArrayList 简介</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CopyOnWriteArrayList</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Object</span>
-    <span class="token keyword">implements</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">,</span> RandomAccess<span class="token punctuation">,</span> Cloneable<span class="token punctuation">,</span> Serializable</code></pre>
-<ul>
-<li>实现了 <strong>RandomAccess 接口</strong>，实现这个接口表明集合是支持<strong>快速随机访问</strong>的。在 CopyOnWriteArrayList 中，可以<strong>通过元素的序号快速获取元素</strong>，这就是快速随机访问。</li>
-<li>实现了 Cloneable 接口，即覆盖了 <code>clone()</code> ，<strong>可以被克隆</strong>。</li>
-<li>实现了 <strong>java.io.serializable</strong> 接口，这表示 CopyOnWriteArrayList <strong>支持序列化，可以通过序列化进行传输</strong>。</li>
-<li><strong>CopyOnWriteArrayList 是线程安全的</strong>。同样线程安全的数组容器还有有 Vector 。</li>
-</ul>
-<hr>
-<h3 id="2-CopyOnWriteArrayList-读取操作的实现"><a href="#2-CopyOnWriteArrayList-读取操作的实现" class="headerlink" title="2. CopyOnWriteArrayList 读取操作的实现"></a>2. CopyOnWriteArrayList 读取操作的实现</h3><pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/** The array, accessed only via getArray/setArray. */</span>
-    <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> E <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> E <span class="token function">get</span><span class="token punctuation">(</span>Object<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>E<span class="token punctuation">)</span> a<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">final</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> array<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>可见，<strong>CopyOnWriteArrayList 读取操作没有任何同步和锁操作</strong>。</li>
-<li>读取操作并不会改变数组，因此对读取操作加锁是一种浪费资源，<strong>读取操作允许多个线程同时访问</strong>。ReentrantReadWriteLock 读写锁的思想是，<strong>读读共享、写写互斥、读写互斥和写读互斥</strong>。而 <strong>CopyOnWriteArrayList 可以做到读写不互斥，只有写写之间需要同步等待</strong>。</li>
-<li>CopyOnWriteArrayList 即使发生修改，<strong>原内部数组也不会改变，而是产生一个新数组，然后将引用指向新数组</strong>，因此可以保证数据安全，读写可以同时进行。</li>
-</ul>
-<hr>
-<h3 id="3-CopyOnWriteArrayList-写入操作的实现"><a href="#3-CopyOnWriteArrayList-写入操作的实现" class="headerlink" title="3. CopyOnWriteArrayList 写入操作的实现"></a>3. CopyOnWriteArrayList 写入操作的实现</h3><p>CopyOnWriteArrayList 写入操作 <code>add()</code> 方法在添加集合的时候加了锁，保证了同步，避免了多线程写的时候会 copy 出多个副本出来。</p>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
-     * Appends the specified element to the end of this list.
-     *
-     * @param e element to be appended to this list e是要加入数组的元素
-     * @return {@code true} (as specified by {@link Collection#add})
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> ReentrantLock lock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
-        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//加锁</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            Object<span class="token punctuation">[</span><span class="token punctuation">]</span> elements <span class="token operator">=</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> len <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-            Object<span class="token punctuation">[</span><span class="token punctuation">]</span> newElements <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">copyOf</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span> len <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//拷贝新数组，长度+1</span>
-            <span class="token comment" spellcheck="true">//把新元素放在数组的末尾</span>
-            newElements<span class="token punctuation">[</span>len<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
-            <span class="token function">setArray</span><span class="token punctuation">(</span>newElements<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//释放锁</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>这里并发控制使用的是 <strong>ReentrantLock</strong>，没有使用 synchronized。</li>
-</ul>
-<hr>
-<h3 id="4-CopyOnWriteArrayList-和-Vector-的对比"><a href="#4-CopyOnWriteArrayList-和-Vector-的对比" class="headerlink" title="4. CopyOnWriteArrayList 和 Vector 的对比"></a>4. CopyOnWriteArrayList 和 Vector 的对比</h3><ol>
-<li>Vector 内增删改查所有的方法都加了 synchronized 关键字，但效率低，每次同步都要获取锁和释放锁。</li>
-<li>CopyOnWriteArrayList 仅在增删改方法上加了锁，查方法没有加锁。可能会导致读取到的不是最新值。</li>
-<li>CopyOnWriteArrayList 使用的是 ReentrantLock。并且在添加过程中复制出一个新数组，不影响原数组的读。</li>
+                <h1 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a>今日内容</h1><ol>
+<li>数据库的基本概念</li>
 </ol>
-<hr>
-<h3 id="5-CopyOnWriteArrayList-和-Collections-synchronizedList-的对比"><a href="#5-CopyOnWriteArrayList-和-Collections-synchronizedList-的对比" class="headerlink" title="5. CopyOnWriteArrayList 和 Collections.synchronizedList 的对比"></a>5. CopyOnWriteArrayList 和 Collections.synchronizedList 的对比</h3><ol>
-<li>Collections.synchronizedList 对部分操作加了 synchronized 关键字，<strong>包括读操作</strong>，但遍历操作还是线程不安全的。CopyOnWriteArrayList 使用的是 ReentrantLock，仅在增删改方法上加了锁，<strong>读操作没有加锁</strong>。</li>
-<li>在多线程高并发的条件下，CopyOnWriteArrayList 由于每次都要复制新数组出来，<strong>写操作的效率不如 Collections.synchronizedList</strong>。而由于 Collections.synchronizedList 在读操作上加了锁，<strong>读操作的效率不如 CopyOnWriteArrayList</strong>。</li>
-<li>CopyOnWriteArrayList 适合以读为主的业务，如用作缓存。Collections.synchronizedList 适用于读写操作均衡的情况。</li>
-</ol>
-<hr>
-<h2 id="2-队列的并发容器"><a href="#2-队列的并发容器" class="headerlink" title="2. 队列的并发容器"></a>2. 队列的并发容器</h2><h3 id="1-ConcurrentLinkedQueue-简介"><a href="#1-ConcurrentLinkedQueue-简介" class="headerlink" title="1. ConcurrentLinkedQueue 简介"></a>1. ConcurrentLinkedQueue 简介</h3><p>Java 提供的线程安全的 Queue 可以分为<strong>阻塞队列</strong>和<strong>非阻塞队列</strong>，其中<strong>阻塞队列的典型例子是 BlockingQueue，非阻塞队列的典型例子是 ConcurrentLinkedQueue</strong>，在实际应用中要根据实际需要选用阻塞队列或者非阻塞队列。 <strong>阻塞队列可以通过加锁来实现，非阻塞队列可以通过 CAS 操作实现。</strong></p>
-<p>ConcurrentLinkedQueue 使用链表作为其数据结构，<strong>ConcurrentLinkedQueue 应该算是在高并发环境中性能最好的队列了</strong>。它之所有能有很好的性能，是因为其内部复杂的实现。对于 ConcurrentLinkedQueue 知道<strong>主要使用 CAS 非阻塞算法来实现线程安全</strong>就好了。</p>
-<p>ConcurrentLinkedQueue 适合在<strong>对性能要求相对较高，同时对队列的读写存在多个线程同时进行</strong>的场景。</p>
-<hr>
-<h3 id="2-BlockingQueue-简介"><a href="#2-BlockingQueue-简介" class="headerlink" title="2. BlockingQueue 简介"></a>2. BlockingQueue 简介</h3><ul>
-<li><p>阻塞队列（BlockingQueue）被广泛使用在“生产者-消费者”问题中，其原因是 <strong>BlockingQueue 提供了可阻塞的插入和移除的方法</strong>。当队列容器已满，生产者线程会被阻塞，直到队列未满；当队列容器为空时，消费者线程会被阻塞，直至队列非空时为止。 </p>
-</li>
-<li><p><strong>BlockingQueue 是一个接口</strong>，继承自 Queue，所以<strong>其实现类也可以作为 Queue 的实现来使用（多态）</strong>，而 Queue 又继承自 Collection 接口。 </p>
-</li>
-</ul>
-<p>接下来主要介绍 BlockingQueue 的三个实现类：<strong>ArrayBlockingQueue、LinkedBlockingQueue 和 PriorityBlockingQueue</strong>。</p>
-<hr>
-<h3 id="3-ArrayBlockingQueue-简介"><a href="#3-ArrayBlockingQueue-简介" class="headerlink" title="3. ArrayBlockingQueue 简介"></a>3. ArrayBlockingQueue 简介</h3><ul>
-<li><p><strong>ArrayBlockingQueue</strong> 是 BlockingQueue 接口的有界队列实现类，底层采用<strong>数组</strong>来实现。ArrayBlockingQueue 一旦创建，<strong>容量不能改变</strong>。其并发控制采用<strong>可重入锁</strong>来控制，<strong>不管是插入操作还是读取操作，都需要获取到锁才能进行操作</strong>。当队列容量满时，尝试将元素放入队列将导致操作阻塞；尝试从一个空队列中取一个元素也会同样阻塞。</p>
-</li>
-<li><p>ArrayBlockingQueue 的锁是非公平锁，如果要保证公平性，通常会降低吞吐量。如果需要获得公平的 ArrayBlockingQueue，构造方法中提供了相关参数：</p>
-</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> ArrayBlockingQueue<span class="token operator">&lt;</span>Integer<span class="token operator">></span> blockingQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<hr>
-<h3 id="4-LinkedBlockingQueue-简介"><a href="#4-LinkedBlockingQueue-简介" class="headerlink" title="4. LinkedBlockingQueue 简介"></a>4. LinkedBlockingQueue 简介</h3><ul>
-<li><strong>LinkedBlockingQueue</strong> 底层基于<strong>单向链表</strong>实现的阻塞队列，可以当做无界队列也可以当做有界队列来使用，同样满足 FIFO 的特性，<strong>与 ArrayBlockingQueue 相比起来具有更高的吞吐量</strong>，为了防止 LinkedBlockingQueue 容量迅速增，损耗大量内存。通常在创建 LinkedBlockingQueue 对象时，会指定其大小，<strong>如果未指定，容量等于 Integer.MAX_VALUE</strong>。 </li>
-</ul>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
-     *某种意义上的无界队列，队列容量非常大
-     * Creates a {@code LinkedBlockingQueue} with a capacity of
-     * {@link Integer#MAX_VALUE}.
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment" spellcheck="true">/**
-     *有界队列
-     * Creates a {@code LinkedBlockingQueue} with the given (fixed) capacity.
-     *
-     * @param capacity the capacity of this queue
-     * @throws IllegalArgumentException if {@code capacity} is not greater
-     *         than zero
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>capacity <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-        last <span class="token operator">=</span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">(</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<hr>
-<h3 id="5-PriorityBlockingQueue-简介"><a href="#5-PriorityBlockingQueue-简介" class="headerlink" title="5. PriorityBlockingQueue 简介"></a>5. PriorityBlockingQueue 简介</h3><ul>
-<li><strong>PriorityBlockingQueue</strong> 是一个<strong>支持优先级的无界阻塞队列</strong>。默认情况下元素采用自然顺序进行排序，也可以通过自定义类实现 <code>compareTo()</code> 方法来指定元素排序规则，或者初始化时通过构造器参数 <code>Comparator</code> 来指定排序规则。</li>
-<li>PriorityBlockingQueue 队列为无界队列。ArrayBlockingQueue 是有界队列，LinkedBlockingQueue 可以通过在构造函数中传入 capacity 指定队列最大的容量。但是 PriorityBlockingQueue 只能指定初始的队列大小，后面插入元素的时候，<strong>如果空间不够的话会自动扩容</strong>。</li>
-<li>PriorityBlockingQueue 并发控制采用的是 <strong>ReentrantLock</strong>。</li>
-<li>简单地说，它就是 <strong>PriorityQueue 的线程安全版本</strong>。不可以插入 null 值，同时，插入队列的对象必须是可比较大小的（comparable），否则报 ClassCastException 异常。它的<strong>插入操作 <code>put()</code> 方法不会阻塞，因为它是无界队列。<code>take()</code> 方法在队列为空的时候会阻塞</strong> 。</li>
-</ul>
-<hr>
-<h2 id="3-HashMap-的并发容器-ConcurrenHashMap"><a href="#3-HashMap-的并发容器-ConcurrenHashMap" class="headerlink" title="3. HashMap 的并发容器 ConcurrenHashMap"></a>3. HashMap 的并发容器 ConcurrenHashMap</h2><h3 id="1-ConcurrenHashMap-简介"><a href="#1-ConcurrenHashMap-简介" class="headerlink" title="1. ConcurrenHashMap 简介"></a>1. ConcurrenHashMap 简介</h3><p>在 ConcurrentHashMap 中，<strong>无论是读操作还是写操作都能保证很高的性能</strong>：在进行读操作时(几乎)不需要加锁，而在写操作时，通过<strong>锁分段技术</strong>只对所操作的段加锁，而不影响客户端对其它段的访问。 </p>
-<ul>
-<li>Java7 中 ConcruuentHashMap 使用的分段锁，也就是每一个 Segment 上同时只有一个线程可以操作，每一个 Segment 都是一个类似 HashMap 数组的结构，它可以扩容，它的冲突会转化为链表。但是 Segment 的个数一但初始化就不能改变。 </li>
-<li>Java8 中的 ConcruuentHashMap 使用的 Synchronized 锁加 CAS 的机制。结构也由 Java7 中的 <strong>Segment 数组 + HashEntry 数组 + 链表</strong> 进化成了 <strong>Node 数组 + 链表 / 红黑树</strong>，Node 是类似于一个 HashEntry 的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。</li>
-</ul>
-<hr>
-<h3 id="2-Java-7-和-Java-8-中ConcurrenHashMap-的区别"><a href="#2-Java-7-和-Java-8-中ConcurrenHashMap-的区别" class="headerlink" title="2. Java 7 和 Java 8 中ConcurrenHashMap 的区别"></a>2. Java 7 和 Java 8 中ConcurrenHashMap 的区别</h3><ol>
-<li><strong>Java 7</strong> 中，ConcurrnetHashMap 由很多个 <strong>Segment</strong> 组合，而每一个 Segment 是一个类似于 HashMap 的结构，所以每一个 HashMap 的内部可以进行扩容。但是 Segment 的个数一旦<strong>初始化就不能改变</strong>。</li>
-</ol>
-<p><img src="%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93.assets/5220087-8c5b0cc951e61398.webp" alt=""></p>
-<ul>
-<li>整理：<ul>
-<li><strong>Segment 的个数默认是 16</strong>，也可以认为 ConcurrentHashMap 默认支持最多 16 个线程并发；</li>
-<li>Segment 的个数也会向上取得最近的 2 的整数幂；</li>
-<li>Segment 中的 HashMap 默认容量是 2，负载因子 0.75f，扩容阈值 1.5，插入第二个值时才会扩容；</li>
-<li>Segment 中的 HashMap 扩容机制和 HashMap 相同，容量扩容为原来的 2 倍。<strong>数据迁移后，只可能在原来的位置，或者（原来的位置 + 原来的容量）位置</strong>（HashMap 也是一样）；</li>
-<li><strong>Segment 继承了 ReentrantLock</strong>，所以 Segment 内部可以很方便的获取锁。</li>
-</ul>
-</li>
-</ul>
 <ol start="2">
-<li><strong>Java 8</strong> 中，不再是之前的 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>，非常类似于 Java 8 中的 HashMap</li>
+<li><p>MySQL数据库软件</p>
+<ol>
+<li>安装</li>
+<li>卸载</li>
+<li>配置</li>
 </ol>
-<p><img src="%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93.assets/5220087-63281d7b737f1109.webp" alt=""></p>
-<ul>
-<li>整理：<ul>
-<li>使用 <strong>CAS 和 synchronized 锁</strong>来保证并发安全。不产生哈希冲突时，使用 CAS 进行加入等操作，有哈希冲突时，用 synchronized 锁住头节点保证线程安全；</li>
-<li>关键数据如 value 用 volatile 修饰，保证可见性，但不能保证原子性。</li>
-<li>原子性用锁来保证。<strong>synchronized 只锁定当前链表或红黑二叉树的首节点</strong>，这样只要 hash 不冲突，就不会产生并发，提高效率。</li>
-<li><code>get()</code> 方法没有同步过程。</li>
-</ul>
 </li>
-</ul>
-<hr>
-<h3 id="3-ConcurrentHashMap-和-HashTable-的对比"><a href="#3-ConcurrentHashMap-和-HashTable-的对比" class="headerlink" title="3. ConcurrentHashMap 和 HashTable 的对比"></a>3. ConcurrentHashMap 和 HashTable 的对比</h3><ol>
-<li>底层数据结构：JDK1.7之前ConcurrentHashMap由<strong>分段的数组+链表</strong>实现，JDK1.8采用的数据结构和HashMap一样，<strong>数组+链表/红黑树</strong>。HashTable和JDK1.8之前的HashMap采用<strong>数组+链表</strong>的形式。</li>
-<li>实现线程安全的方式： <strong>ConcurrentHashMap **在JDK1.7时，对整个桶数组进行了分割分段（segment），每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。</strong>到了 JDK1.8 的时候已经摒弃了 Segment 的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。** 整个看起来就像是优化过且线程安全的 HashMap 。<strong>HashTable</strong> 使用 synchronized 来保证线程安全，所有操作竞争一把锁，效率非常低下。 </li>
+<li><p>SQL</p>
+</li>
 </ol>
-<hr>
-<script>
+<h2 id="数据库的基本概念"><a href="#数据库的基本概念" class="headerlink" title="数据库的基本概念"></a>数据库的基本概念</h2><pre><code>1. 数据库的英文单词： DataBase 简称 ： DB
+2. 什么数据库？
+    * 用于存储和管理数据的仓库。
+
+3. 数据库的特点：
+    1. 持久化存储数据的。其实数据库就是一个文件系统
+    2. 方便存储和管理数据
+    3. 使用了统一的方式操作数据库 -- SQL
+
+
+4. 常见的数据库软件
+    * 参见《MySQL基础.pdf》</code></pre><h1 id="MySQL数据库软件"><a href="#MySQL数据库软件" class="headerlink" title="MySQL数据库软件"></a>MySQL数据库软件</h1><pre><code>1. 安装
+    * 参见《MySQL基础.pdf》
+2. 卸载
+    1. 去mysql的安装目录找到my.ini文件
+        * 复制 datadir="C:/ProgramData/MySQL/MySQL Server 5.5/Data/"
+    2. 卸载MySQL
+    3. 删除C:/ProgramData目录下的MySQL文件夹。
+
+3. 配置
+    * MySQL服务启动
+        1. 手动。
+        2. cmd--&gt; services.msc 打开服务的窗口
+        3. 使用管理员打开cmd
+            * net start mysql : 启动mysql的服务
+            * net stop mysql:关闭mysql服务
+    * MySQL登录
+        1. mysql -uroot -p密码
+        2. mysql -hip -uroot -p连接目标的密码
+        3. mysql --host=ip --user=root --password=连接目标的密码
+    * MySQL退出
+        1. exit
+        2. quit
+
+    * MySQL目录结构
+        1. MySQL安装目录：basedir="D:/develop/MySQL/"
+            * 配置文件 my.ini
+        2. MySQL数据目录：datadir="C:/ProgramData/MySQL/MySQL Server 5.5/Data/"
+            * 几个概念
+                * 数据库：文件夹
+                * 表：文件
+                * 数据：数据</code></pre><h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><pre><code>1.什么是SQL？
+    Structured Query Language：结构化查询语言
+    其实就是定义了操作所有关系型数据库的规则。每一种数据库操作的方式存在不一样的地方，称为“方言”。
+
+2.SQL通用语法
+    1. SQL 语句可以单行或多行书写，以分号结尾。
+    2. 可使用空格和缩进来增强语句的可读性。
+    3. MySQL 数据库的 SQL 语句不区分大小写，关键字建议使用大写。
+    4. 3 种注释
+        * 单行注释: -- 注释内容 或 # 注释内容(mysql 特有) 
+        * 多行注释: /* 注释 */
+
+3. SQL分类
+    1) DDL(Data Definition Language)数据定义语言
+        用来定义数据库对象：数据库，表，列等。关键字：create, drop,alter 等
+    2) DML(Data Manipulation Language)数据操作语言
+        用来对数据库中表的数据进行增删改。关键字：insert, delete, update 等
+    3) DQL(Data Query Language)数据查询语言
+        用来查询数据库中表的记录(数据)。关键字：select, where 等
+    4) DCL(Data Control Language)数据控制语言(了解)
+        用来定义数据库的访问权限和安全级别，及创建用户。关键字：GRANT， REVOKE 等</code></pre><h2 id="DDL-操作数据库、表"><a href="#DDL-操作数据库、表" class="headerlink" title="DDL:操作数据库、表"></a>DDL:操作数据库、表</h2><pre><code>1. 操作数据库：CRUD
+    1. C(Create):创建
+        * 创建数据库：
+            * create database 数据库名称;
+        * 创建数据库，判断不存在，再创建：
+            * create database if not exists 数据库名称;
+        * 创建数据库，并指定字符集
+            * create database 数据库名称 character set 字符集名;
+
+        * 练习： 创建db4数据库，判断是否存在，并制定字符集为gbk
+            * create database if not exists db4 character set gbk;
+    2. R(Retrieve)：查询
+        * 查询所有数据库的名称:
+            * show databases;
+        * 查询某个数据库的字符集:查询某个数据库的创建语句
+            * show create database 数据库名称;
+    3. U(Update):修改
+        * 修改数据库的字符集
+            * alter database 数据库名称 character set 字符集名称;
+    4. D(Delete):删除
+        * 删除数据库
+            * drop database 数据库名称;
+        * 判断数据库存在，存在再删除
+            * drop database if exists 数据库名称;
+    5. 使用数据库
+        * 查询当前正在使用的数据库名称
+            * select database();
+        * 使用数据库
+            * use 数据库名称;
+
+
+2. 操作表
+    1. C(Create):创建
+        1. 语法：
+            create table 表名(
+                列名1 数据类型1,
+                列名2 数据类型2,
+                ....
+                列名n 数据类型n
+            );
+            * 注意：最后一列，不需要加逗号（,）
+            * 数据库类型：
+                1. int：整数类型
+                    * age int,
+                2. double:小数类型
+                    * score double(5,2)
+                3. date:日期，只包含年月日，yyyy-MM-dd
+                4. datetime:日期，包含年月日时分秒     yyyy-MM-dd HH:mm:ss
+                5. timestamp:时间错类型    包含年月日时分秒     yyyy-MM-dd HH:mm:ss    
+                    * 如果将来不给这个字段赋值，或赋值为null，则默认使用当前的系统时间，来自动赋值
+
+                6. varchar：字符串
+                    * name varchar(20):姓名最大20个字符
+                    * zhangsan 8个字符  张三 2个字符
+
+
+        * 创建表
+            create table student(
+                id int,
+                name varchar(32),
+                age int ,
+                score double(4,1),
+                birthday date,
+                insert_time timestamp
+            );
+        * 复制表：
+            * create table 表名 like 被复制的表名;          
+    2. R(Retrieve)：查询
+        * 查询某个数据库中所有的表名称
+            * show tables;
+        * 查询表结构
+            * desc 表名;
+    3. U(Update):修改
+        1. 修改表名
+            alter table 表名 rename to 新的表名;
+        2. 修改表的字符集
+            alter table 表名 character set 字符集名称;
+        3. 添加一列
+            alter table 表名 add 列名 数据类型;
+        4. 修改列名称 类型
+            alter table 表名 change 列名 新列别 新数据类型;
+            alter table 表名 modify 列名 新数据类型;
+        5. 删除列
+            alter table 表名 drop 列名;
+    4. D(Delete):删除
+        * drop table 表名;
+        * drop table  if exists 表名 ;</code></pre><ul>
+<li>客户端图形化工具：SQLYog</li>
+</ul>
+<h2 id="DML：增删改表中数据"><a href="#DML：增删改表中数据" class="headerlink" title="DML：增删改表中数据"></a>DML：增删改表中数据</h2><pre><code>1. 添加数据：
+    * 语法：
+        * insert into 表名(列名1,列名2,...列名n) values(值1,值2,...值n);
+    * 注意：
+        1. 列名和值要一一对应。
+        2. 如果表名后，不定义列名，则默认给所有列添加值
+            insert into 表名 values(值1,值2,...值n);
+        3. 除了数字类型，其他类型需要使用引号(单双都可以)引起来
+2. 删除数据：
+    * 语法：
+        * delete from 表名 [where 条件]
+    * 注意：
+        1. 如果不加条件，则删除表中所有记录。
+        2. 如果要删除所有记录
+            1. delete from 表名; -- 不推荐使用。有多少条记录就会执行多少次删除操作
+            2. TRUNCATE TABLE 表名; -- 推荐使用，效率更高 先删除表，然后再创建一张一样的表。
+3. 修改数据：
+    * 语法：
+        * update 表名 set 列名1 = 值1, 列名2 = 值2,... [where 条件];
+
+    * 注意：
+        1. 如果不加任何条件，则会将表中所有记录全部修改。</code></pre><h2 id="DQL：查询表中的记录"><a href="#DQL：查询表中的记录" class="headerlink" title="DQL：查询表中的记录"></a>DQL：查询表中的记录</h2><pre><code>* select * from 表名;
+
+1. 语法：
+    select
+        字段列表
+    from
+        表名列表
+    where
+        条件列表
+    group by
+        分组字段
+    having
+        分组之后的条件
+    order by
+        排序
+    limit
+        分页限定
+
+
+2. 基础查询
+    1. 多个字段的查询
+        select 字段名1，字段名2... from 表名；
+        * 注意：
+            * 如果查询所有字段，则可以使用*来替代字段列表。
+    2. 去除重复：
+        * distinct
+    3. 计算列
+        * 一般可以使用四则运算计算一些列的值。（一般只会进行数值型的计算）
+        * ifnull(表达式1,表达式2)：null参与的运算，计算结果都为null
+            * 表达式1：哪个字段需要判断是否为null
+            * 如果该字段为null后的替换值。
+    4. 起别名：
+        * as：as也可以省略
+
+
+3. 条件查询
+    1. where子句后跟条件
+    2. 运算符
+        * &gt; 、&lt; 、&lt;= 、&gt;= 、= 、&lt;&gt;
+        * BETWEEN...AND  
+        * IN( 集合) 
+        * LIKE：模糊查询
+            * 占位符：
+                * _:单个任意字符
+                * %：多个任意字符
+        * IS NULL  
+        * and  或 &amp;&amp;
+        * or  或 || 
+        * not  或 !
+
+            -- 查询年龄大于20岁
+
+            SELECT * FROM student WHERE age &gt; 20;
+
+            SELECT * FROM student WHERE age &gt;= 20;
+
+            -- 查询年龄等于20岁
+            SELECT * FROM student WHERE age = 20;
+
+            -- 查询年龄不等于20岁
+            SELECT * FROM student WHERE age != 20;
+            SELECT * FROM student WHERE age &lt;&gt; 20;
+
+            -- 查询年龄大于等于20 小于等于30
+
+            SELECT * FROM student WHERE age &gt;= 20 &amp;&amp;  age &lt;=30;
+            SELECT * FROM student WHERE age &gt;= 20 AND  age &lt;=30;
+            SELECT * FROM student WHERE age BETWEEN 20 AND 30;
+
+            -- 查询年龄22岁，18岁，25岁的信息
+            SELECT * FROM student WHERE age = 22 OR age = 18 OR age = 25
+            SELECT * FROM student WHERE age IN (22,18,25);
+
+            -- 查询英语成绩为null
+            SELECT * FROM student WHERE english = NULL; -- 不对的。null值不能使用 = （!=） 判断
+
+            SELECT * FROM student WHERE english IS NULL;
+
+            -- 查询英语成绩不为null
+            SELECT * FROM student WHERE english  IS NOT NULL;
+
+
+
+            -- 查询姓马的有哪些？ like
+            SELECT * FROM student WHERE NAME LIKE '马%';
+            -- 查询姓名第二个字是化的人
+
+            SELECT * FROM student WHERE NAME LIKE "_化%";
+
+            -- 查询姓名是3个字的人
+            SELECT * FROM student WHERE NAME LIKE '___';
+
+
+            -- 查询姓名中包含德的人
+            SELECT * FROM student WHERE NAME LIKE '%德%';</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -696,7 +801,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://x1a0kang.github.io/2020/08/05/bing-fa-rong-qi-zong-jie/">https://x1a0kang.github.io/2020/08/05/bing-fa-rong-qi-zong-jie/</a>
+                    <a href="https://x1a0kang.github.io/2020/09/02/javaee/mysql-ji-chu-ke-tang-bi-ji/">https://x1a0kang.github.io/2020/09/02/javaee/mysql-ji-chu-ke-tang-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -733,15 +838,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
-                                </a>
-                            
-                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                    <span class="chip bg-color">面试</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -911,51 +1008,44 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/linkedlist-yuan-ma-jie-xi/">
+                <a href="/2020/09/02/javaee/mysql-duo-biao-shi-wu-ke-tang-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="LinkedList源码解析">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="JavaEE/MySQL多表&amp;事务课堂笔记">
                         
-                        <span class="card-title">LinkedList源码解析</span>
+                        <span class="card-title">JavaEE/MySQL多表&amp;事务课堂笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            LinkedList 源码解析1. 定义及构造方法源码1. LinkedList 简介
-LinkedList 实现了 List 接口 和 Deque 接口，是一个双端链表，同时也具有队列的性质。
+                            今日内容1. 多表查询
 
-LinkedList 实现了 Clonea
+2. 事务
+
+3. DCL多表查询：* 查询语法：
+    select
+        列名列表
+    from
+        表名列表
+    where....
+* 准备sql
+    # 创建部门表
+ 
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-02
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    Java学习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            巨瑞康
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                        <span class="chip bg-color">面试</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -964,27 +1054,29 @@ LinkedList 实现了 Clonea
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/bing-fa-rong-qi-zong-jie/">
+                <a href="/2020/08/25/java-ji-chu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="并发容器总结">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Java基础">
                         
-                        <span class="card-title">并发容器总结</span>
+                        <span class="card-title">Java基础</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            并发容器总结1. ArrayList 的并发容器 CopyOnWriteArrayList1. CopyOnWriteArrayList 简介public class CopyOnWriteArrayList&lt;E> extends O
+                            Java基础1. Java基础概念与常识1. Java的三大特性封装、继承和多态。
+封装：隐藏具体的属性和细节，仅对外提供公共访问方式。如getter，setter。目的/好处：增强安全性，简化编程，便于使用。
+继承：将多个相同的属性和方法
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
                             </span>
                         <span class="publish-author">
                             
@@ -998,7 +1090,6 @@ LinkedList 实现了 Clonea
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     

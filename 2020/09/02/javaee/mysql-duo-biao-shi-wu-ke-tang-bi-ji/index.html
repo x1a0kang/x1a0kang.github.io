@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并发容器总结, 巨瑞康的个人博客">
+    <meta name="keywords" content="JavaEE/MySQL多表&amp;事务课堂笔记, 巨瑞康的个人博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>并发容器总结 | 巨瑞康的个人博客</title>
+    <title>JavaEE/MySQL多表&amp;事务课堂笔记 | 巨瑞康的个人博客</title>
     <link rel="icon" type="image/png" href="/JRK.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并发容器总结</h1>
+                    <h1 class="description center-align post-title">JavaEE/MySQL多表&amp;事务课堂笔记</h1>
                 </div>
             </div>
         </div>
@@ -429,29 +429,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
-                            </a>
-                        
-                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                <span class="chip bg-color">面试</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                Java学习
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -460,28 +443,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-09-02
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-01-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    14 分
                 </div>
                 
 
@@ -496,164 +479,475 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="并发容器总结"><a href="#并发容器总结" class="headerlink" title="并发容器总结"></a>并发容器总结</h1><h2 id="1-ArrayList-的并发容器-CopyOnWriteArrayList"><a href="#1-ArrayList-的并发容器-CopyOnWriteArrayList" class="headerlink" title="1. ArrayList 的并发容器 CopyOnWriteArrayList"></a>1. ArrayList 的并发容器 CopyOnWriteArrayList</h2><h3 id="1-CopyOnWriteArrayList-简介"><a href="#1-CopyOnWriteArrayList-简介" class="headerlink" title="1. CopyOnWriteArrayList 简介"></a>1. CopyOnWriteArrayList 简介</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CopyOnWriteArrayList</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Object</span>
-    <span class="token keyword">implements</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">,</span> RandomAccess<span class="token punctuation">,</span> Cloneable<span class="token punctuation">,</span> Serializable</code></pre>
-<ul>
-<li>实现了 <strong>RandomAccess 接口</strong>，实现这个接口表明集合是支持<strong>快速随机访问</strong>的。在 CopyOnWriteArrayList 中，可以<strong>通过元素的序号快速获取元素</strong>，这就是快速随机访问。</li>
-<li>实现了 Cloneable 接口，即覆盖了 <code>clone()</code> ，<strong>可以被克隆</strong>。</li>
-<li>实现了 <strong>java.io.serializable</strong> 接口，这表示 CopyOnWriteArrayList <strong>支持序列化，可以通过序列化进行传输</strong>。</li>
-<li><strong>CopyOnWriteArrayList 是线程安全的</strong>。同样线程安全的数组容器还有有 Vector 。</li>
-</ul>
-<hr>
-<h3 id="2-CopyOnWriteArrayList-读取操作的实现"><a href="#2-CopyOnWriteArrayList-读取操作的实现" class="headerlink" title="2. CopyOnWriteArrayList 读取操作的实现"></a>2. CopyOnWriteArrayList 读取操作的实现</h3><pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/** The array, accessed only via getArray/setArray. */</span>
-    <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> E <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> E <span class="token function">get</span><span class="token punctuation">(</span>Object<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>E<span class="token punctuation">)</span> a<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">final</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> array<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>可见，<strong>CopyOnWriteArrayList 读取操作没有任何同步和锁操作</strong>。</li>
-<li>读取操作并不会改变数组，因此对读取操作加锁是一种浪费资源，<strong>读取操作允许多个线程同时访问</strong>。ReentrantReadWriteLock 读写锁的思想是，<strong>读读共享、写写互斥、读写互斥和写读互斥</strong>。而 <strong>CopyOnWriteArrayList 可以做到读写不互斥，只有写写之间需要同步等待</strong>。</li>
-<li>CopyOnWriteArrayList 即使发生修改，<strong>原内部数组也不会改变，而是产生一个新数组，然后将引用指向新数组</strong>，因此可以保证数据安全，读写可以同时进行。</li>
-</ul>
-<hr>
-<h3 id="3-CopyOnWriteArrayList-写入操作的实现"><a href="#3-CopyOnWriteArrayList-写入操作的实现" class="headerlink" title="3. CopyOnWriteArrayList 写入操作的实现"></a>3. CopyOnWriteArrayList 写入操作的实现</h3><p>CopyOnWriteArrayList 写入操作 <code>add()</code> 方法在添加集合的时候加了锁，保证了同步，避免了多线程写的时候会 copy 出多个副本出来。</p>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
-     * Appends the specified element to the end of this list.
-     *
-     * @param e element to be appended to this list e是要加入数组的元素
-     * @return {@code true} (as specified by {@link Collection#add})
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> ReentrantLock lock <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
-        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//加锁</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            Object<span class="token punctuation">[</span><span class="token punctuation">]</span> elements <span class="token operator">=</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> len <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-            Object<span class="token punctuation">[</span><span class="token punctuation">]</span> newElements <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">copyOf</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span> len <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//拷贝新数组，长度+1</span>
-            <span class="token comment" spellcheck="true">//把新元素放在数组的末尾</span>
-            newElements<span class="token punctuation">[</span>len<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
-            <span class="token function">setArray</span><span class="token punctuation">(</span>newElements<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//释放锁</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<ul>
-<li>这里并发控制使用的是 <strong>ReentrantLock</strong>，没有使用 synchronized。</li>
-</ul>
-<hr>
-<h3 id="4-CopyOnWriteArrayList-和-Vector-的对比"><a href="#4-CopyOnWriteArrayList-和-Vector-的对比" class="headerlink" title="4. CopyOnWriteArrayList 和 Vector 的对比"></a>4. CopyOnWriteArrayList 和 Vector 的对比</h3><ol>
-<li>Vector 内增删改查所有的方法都加了 synchronized 关键字，但效率低，每次同步都要获取锁和释放锁。</li>
-<li>CopyOnWriteArrayList 仅在增删改方法上加了锁，查方法没有加锁。可能会导致读取到的不是最新值。</li>
-<li>CopyOnWriteArrayList 使用的是 ReentrantLock。并且在添加过程中复制出一个新数组，不影响原数组的读。</li>
-</ol>
-<hr>
-<h3 id="5-CopyOnWriteArrayList-和-Collections-synchronizedList-的对比"><a href="#5-CopyOnWriteArrayList-和-Collections-synchronizedList-的对比" class="headerlink" title="5. CopyOnWriteArrayList 和 Collections.synchronizedList 的对比"></a>5. CopyOnWriteArrayList 和 Collections.synchronizedList 的对比</h3><ol>
-<li>Collections.synchronizedList 对部分操作加了 synchronized 关键字，<strong>包括读操作</strong>，但遍历操作还是线程不安全的。CopyOnWriteArrayList 使用的是 ReentrantLock，仅在增删改方法上加了锁，<strong>读操作没有加锁</strong>。</li>
-<li>在多线程高并发的条件下，CopyOnWriteArrayList 由于每次都要复制新数组出来，<strong>写操作的效率不如 Collections.synchronizedList</strong>。而由于 Collections.synchronizedList 在读操作上加了锁，<strong>读操作的效率不如 CopyOnWriteArrayList</strong>。</li>
-<li>CopyOnWriteArrayList 适合以读为主的业务，如用作缓存。Collections.synchronizedList 适用于读写操作均衡的情况。</li>
-</ol>
-<hr>
-<h2 id="2-队列的并发容器"><a href="#2-队列的并发容器" class="headerlink" title="2. 队列的并发容器"></a>2. 队列的并发容器</h2><h3 id="1-ConcurrentLinkedQueue-简介"><a href="#1-ConcurrentLinkedQueue-简介" class="headerlink" title="1. ConcurrentLinkedQueue 简介"></a>1. ConcurrentLinkedQueue 简介</h3><p>Java 提供的线程安全的 Queue 可以分为<strong>阻塞队列</strong>和<strong>非阻塞队列</strong>，其中<strong>阻塞队列的典型例子是 BlockingQueue，非阻塞队列的典型例子是 ConcurrentLinkedQueue</strong>，在实际应用中要根据实际需要选用阻塞队列或者非阻塞队列。 <strong>阻塞队列可以通过加锁来实现，非阻塞队列可以通过 CAS 操作实现。</strong></p>
-<p>ConcurrentLinkedQueue 使用链表作为其数据结构，<strong>ConcurrentLinkedQueue 应该算是在高并发环境中性能最好的队列了</strong>。它之所有能有很好的性能，是因为其内部复杂的实现。对于 ConcurrentLinkedQueue 知道<strong>主要使用 CAS 非阻塞算法来实现线程安全</strong>就好了。</p>
-<p>ConcurrentLinkedQueue 适合在<strong>对性能要求相对较高，同时对队列的读写存在多个线程同时进行</strong>的场景。</p>
-<hr>
-<h3 id="2-BlockingQueue-简介"><a href="#2-BlockingQueue-简介" class="headerlink" title="2. BlockingQueue 简介"></a>2. BlockingQueue 简介</h3><ul>
-<li><p>阻塞队列（BlockingQueue）被广泛使用在“生产者-消费者”问题中，其原因是 <strong>BlockingQueue 提供了可阻塞的插入和移除的方法</strong>。当队列容器已满，生产者线程会被阻塞，直到队列未满；当队列容器为空时，消费者线程会被阻塞，直至队列非空时为止。 </p>
-</li>
-<li><p><strong>BlockingQueue 是一个接口</strong>，继承自 Queue，所以<strong>其实现类也可以作为 Queue 的实现来使用（多态）</strong>，而 Queue 又继承自 Collection 接口。 </p>
-</li>
-</ul>
-<p>接下来主要介绍 BlockingQueue 的三个实现类：<strong>ArrayBlockingQueue、LinkedBlockingQueue 和 PriorityBlockingQueue</strong>。</p>
-<hr>
-<h3 id="3-ArrayBlockingQueue-简介"><a href="#3-ArrayBlockingQueue-简介" class="headerlink" title="3. ArrayBlockingQueue 简介"></a>3. ArrayBlockingQueue 简介</h3><ul>
-<li><p><strong>ArrayBlockingQueue</strong> 是 BlockingQueue 接口的有界队列实现类，底层采用<strong>数组</strong>来实现。ArrayBlockingQueue 一旦创建，<strong>容量不能改变</strong>。其并发控制采用<strong>可重入锁</strong>来控制，<strong>不管是插入操作还是读取操作，都需要获取到锁才能进行操作</strong>。当队列容量满时，尝试将元素放入队列将导致操作阻塞；尝试从一个空队列中取一个元素也会同样阻塞。</p>
-</li>
-<li><p>ArrayBlockingQueue 的锁是非公平锁，如果要保证公平性，通常会降低吞吐量。如果需要获得公平的 ArrayBlockingQueue，构造方法中提供了相关参数：</p>
-</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> ArrayBlockingQueue<span class="token operator">&lt;</span>Integer<span class="token operator">></span> blockingQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<hr>
-<h3 id="4-LinkedBlockingQueue-简介"><a href="#4-LinkedBlockingQueue-简介" class="headerlink" title="4. LinkedBlockingQueue 简介"></a>4. LinkedBlockingQueue 简介</h3><ul>
-<li><strong>LinkedBlockingQueue</strong> 底层基于<strong>单向链表</strong>实现的阻塞队列，可以当做无界队列也可以当做有界队列来使用，同样满足 FIFO 的特性，<strong>与 ArrayBlockingQueue 相比起来具有更高的吞吐量</strong>，为了防止 LinkedBlockingQueue 容量迅速增，损耗大量内存。通常在创建 LinkedBlockingQueue 对象时，会指定其大小，<strong>如果未指定，容量等于 Integer.MAX_VALUE</strong>。 </li>
-</ul>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
-     *某种意义上的无界队列，队列容量非常大
-     * Creates a {@code LinkedBlockingQueue} with a capacity of
-     * {@link Integer#MAX_VALUE}.
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+                <h1 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a>今日内容</h1><pre><code>1. 多表查询
 
-    <span class="token comment" spellcheck="true">/**
-     *有界队列
-     * Creates a {@code LinkedBlockingQueue} with the given (fixed) capacity.
-     *
-     * @param capacity the capacity of this queue
-     * @throws IllegalArgumentException if {@code capacity} is not greater
-     *         than zero
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">LinkedBlockingQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>capacity <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-        last <span class="token operator">=</span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">(</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<hr>
-<h3 id="5-PriorityBlockingQueue-简介"><a href="#5-PriorityBlockingQueue-简介" class="headerlink" title="5. PriorityBlockingQueue 简介"></a>5. PriorityBlockingQueue 简介</h3><ul>
-<li><strong>PriorityBlockingQueue</strong> 是一个<strong>支持优先级的无界阻塞队列</strong>。默认情况下元素采用自然顺序进行排序，也可以通过自定义类实现 <code>compareTo()</code> 方法来指定元素排序规则，或者初始化时通过构造器参数 <code>Comparator</code> 来指定排序规则。</li>
-<li>PriorityBlockingQueue 队列为无界队列。ArrayBlockingQueue 是有界队列，LinkedBlockingQueue 可以通过在构造函数中传入 capacity 指定队列最大的容量。但是 PriorityBlockingQueue 只能指定初始的队列大小，后面插入元素的时候，<strong>如果空间不够的话会自动扩容</strong>。</li>
-<li>PriorityBlockingQueue 并发控制采用的是 <strong>ReentrantLock</strong>。</li>
-<li>简单地说，它就是 <strong>PriorityQueue 的线程安全版本</strong>。不可以插入 null 值，同时，插入队列的对象必须是可比较大小的（comparable），否则报 ClassCastException 异常。它的<strong>插入操作 <code>put()</code> 方法不会阻塞，因为它是无界队列。<code>take()</code> 方法在队列为空的时候会阻塞</strong> 。</li>
-</ul>
-<hr>
-<h2 id="3-HashMap-的并发容器-ConcurrenHashMap"><a href="#3-HashMap-的并发容器-ConcurrenHashMap" class="headerlink" title="3. HashMap 的并发容器 ConcurrenHashMap"></a>3. HashMap 的并发容器 ConcurrenHashMap</h2><h3 id="1-ConcurrenHashMap-简介"><a href="#1-ConcurrenHashMap-简介" class="headerlink" title="1. ConcurrenHashMap 简介"></a>1. ConcurrenHashMap 简介</h3><p>在 ConcurrentHashMap 中，<strong>无论是读操作还是写操作都能保证很高的性能</strong>：在进行读操作时(几乎)不需要加锁，而在写操作时，通过<strong>锁分段技术</strong>只对所操作的段加锁，而不影响客户端对其它段的访问。 </p>
-<ul>
-<li>Java7 中 ConcruuentHashMap 使用的分段锁，也就是每一个 Segment 上同时只有一个线程可以操作，每一个 Segment 都是一个类似 HashMap 数组的结构，它可以扩容，它的冲突会转化为链表。但是 Segment 的个数一但初始化就不能改变。 </li>
-<li>Java8 中的 ConcruuentHashMap 使用的 Synchronized 锁加 CAS 的机制。结构也由 Java7 中的 <strong>Segment 数组 + HashEntry 数组 + 链表</strong> 进化成了 <strong>Node 数组 + 链表 / 红黑树</strong>，Node 是类似于一个 HashEntry 的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。</li>
-</ul>
-<hr>
-<h3 id="2-Java-7-和-Java-8-中ConcurrenHashMap-的区别"><a href="#2-Java-7-和-Java-8-中ConcurrenHashMap-的区别" class="headerlink" title="2. Java 7 和 Java 8 中ConcurrenHashMap 的区别"></a>2. Java 7 和 Java 8 中ConcurrenHashMap 的区别</h3><ol>
-<li><strong>Java 7</strong> 中，ConcurrnetHashMap 由很多个 <strong>Segment</strong> 组合，而每一个 Segment 是一个类似于 HashMap 的结构，所以每一个 HashMap 的内部可以进行扩容。但是 Segment 的个数一旦<strong>初始化就不能改变</strong>。</li>
-</ol>
-<p><img src="%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93.assets/5220087-8c5b0cc951e61398.webp" alt=""></p>
-<ul>
-<li>整理：<ul>
-<li><strong>Segment 的个数默认是 16</strong>，也可以认为 ConcurrentHashMap 默认支持最多 16 个线程并发；</li>
-<li>Segment 的个数也会向上取得最近的 2 的整数幂；</li>
-<li>Segment 中的 HashMap 默认容量是 2，负载因子 0.75f，扩容阈值 1.5，插入第二个值时才会扩容；</li>
-<li>Segment 中的 HashMap 扩容机制和 HashMap 相同，容量扩容为原来的 2 倍。<strong>数据迁移后，只可能在原来的位置，或者（原来的位置 + 原来的容量）位置</strong>（HashMap 也是一样）；</li>
-<li><strong>Segment 继承了 ReentrantLock</strong>，所以 Segment 内部可以很方便的获取锁。</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li><strong>Java 8</strong> 中，不再是之前的 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>，非常类似于 Java 8 中的 HashMap</li>
-</ol>
-<p><img src="%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E6%80%BB%E7%BB%93.assets/5220087-63281d7b737f1109.webp" alt=""></p>
-<ul>
-<li>整理：<ul>
-<li>使用 <strong>CAS 和 synchronized 锁</strong>来保证并发安全。不产生哈希冲突时，使用 CAS 进行加入等操作，有哈希冲突时，用 synchronized 锁住头节点保证线程安全；</li>
-<li>关键数据如 value 用 volatile 修饰，保证可见性，但不能保证原子性。</li>
-<li>原子性用锁来保证。<strong>synchronized 只锁定当前链表或红黑二叉树的首节点</strong>，这样只要 hash 不冲突，就不会产生并发，提高效率。</li>
-<li><code>get()</code> 方法没有同步过程。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="3-ConcurrentHashMap-和-HashTable-的对比"><a href="#3-ConcurrentHashMap-和-HashTable-的对比" class="headerlink" title="3. ConcurrentHashMap 和 HashTable 的对比"></a>3. ConcurrentHashMap 和 HashTable 的对比</h3><ol>
-<li>底层数据结构：JDK1.7之前ConcurrentHashMap由<strong>分段的数组+链表</strong>实现，JDK1.8采用的数据结构和HashMap一样，<strong>数组+链表/红黑树</strong>。HashTable和JDK1.8之前的HashMap采用<strong>数组+链表</strong>的形式。</li>
-<li>实现线程安全的方式： <strong>ConcurrentHashMap **在JDK1.7时，对整个桶数组进行了分割分段（segment），每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。</strong>到了 JDK1.8 的时候已经摒弃了 Segment 的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。** 整个看起来就像是优化过且线程安全的 HashMap 。<strong>HashTable</strong> 使用 synchronized 来保证线程安全，所有操作竞争一把锁，效率非常低下。 </li>
-</ol>
-<hr>
-<script>
+2. 事务
+
+3. DCL</code></pre><h2 id="多表查询："><a href="#多表查询：" class="headerlink" title="多表查询："></a>多表查询：</h2><pre><code>* 查询语法：
+    select
+        列名列表
+    from
+        表名列表
+    where....
+* 准备sql
+    # 创建部门表
+    CREATE TABLE dept(
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        NAME VARCHAR(20)
+    );
+    INSERT INTO dept (NAME) VALUES ('开发部'),('市场部'),('财务部');
+    # 创建员工表
+    CREATE TABLE emp (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        NAME VARCHAR(10),
+        gender CHAR(1), -- 性别
+        salary DOUBLE, -- 工资
+        join_date DATE, -- 入职日期
+        dept_id INT,
+        FOREIGN KEY (dept_id) REFERENCES dept(id) -- 外键，关联部门表(部门表的主键)
+    );
+    INSERT INTO emp(NAME,gender,salary,join_date,dept_id) VALUES('孙悟空','男',7200,'2013-02-24',1);
+    INSERT INTO emp(NAME,gender,salary,join_date,dept_id) VALUES('猪八戒','男',3600,'2010-12-02',2);
+    INSERT INTO emp(NAME,gender,salary,join_date,dept_id) VALUES('唐僧','男',9000,'2008-08-08',2);
+    INSERT INTO emp(NAME,gender,salary,join_date,dept_id) VALUES('白骨精','女',5000,'2015-10-07',3);
+    INSERT INTO emp(NAME,gender,salary,join_date,dept_id) VALUES('蜘蛛精','女',4500,'2011-03-14',1);
+* 笛卡尔积：
+    * 有两个集合A,B .取这两个集合的所有组成情况。
+    * 要完成多表查询，需要消除无用的数据
+* 多表查询的分类：
+    1. 内连接查询：
+        1. 隐式内连接：使用where条件消除无用数据
+            * 例子：
+            -- 查询所有员工信息和对应的部门信息
+
+            SELECT * FROM emp,dept WHERE emp.`dept_id` = dept.`id`;
+
+            -- 查询员工表的名称，性别。部门表的名称
+            SELECT emp.name,emp.gender,dept.name FROM emp,dept WHERE emp.`dept_id` = dept.`id`;
+
+            SELECT 
+                t1.name, -- 员工表的姓名
+                t1.gender,-- 员工表的性别
+                t2.name -- 部门表的名称
+            FROM
+                emp t1,
+                dept t2
+            WHERE 
+                t1.`dept_id` = t2.`id`;
+
+
+        2. 显式内连接：
+            * 语法： select 字段列表 from 表名1 [inner] join 表名2 on 条件
+            * 例如：
+                * SELECT * FROM emp INNER JOIN dept ON emp.`dept_id` = dept.`id`;    
+                * SELECT * FROM emp JOIN dept ON emp.`dept_id` = dept.`id`;    
+
+        3. 内连接查询：
+            1. 从哪些表中查询数据
+            2. 条件是什么
+            3. 查询哪些字段
+    2. 外链接查询：
+        1. 左外连接：
+            * 语法：select 字段列表 from 表1 left [outer] join 表2 on 条件；
+            * 查询的是左表所有数据以及其交集部分。
+            * 例子：
+                -- 查询所有员工信息，如果员工有部门，则查询部门名称，没有部门，则不显示部门名称
+                SELECT     t1.*,t2.`name` FROM emp t1 LEFT JOIN dept t2 ON t1.`dept_id` = t2.`id`;
+        2. 右外连接：
+            * 语法：select 字段列表 from 表1 right [outer] join 表2 on 条件；
+            * 查询的是右表所有数据以及其交集部分。
+            * 例子：
+                SELECT     * FROM dept t2 RIGHT JOIN emp t1 ON t1.`dept_id` = t2.`id`;
+    3. 子查询：
+        * 概念：查询中嵌套查询，称嵌套查询为子查询。
+            -- 查询工资最高的员工信息
+            -- 1 查询最高的工资是多少 9000
+            SELECT MAX(salary) FROM emp;
+
+            -- 2 查询员工信息，并且工资等于9000的
+            SELECT * FROM emp WHERE emp.`salary` = 9000;
+
+            -- 一条sql就完成这个操作。子查询
+            SELECT * FROM emp WHERE emp.`salary` = (SELECT MAX(salary) FROM emp);
+
+        * 子查询不同情况
+            1. 子查询的结果是单行单列的：
+                * 子查询可以作为条件，使用运算符去判断。 运算符： &gt; &gt;= &lt; &lt;= =
+                * 
+                -- 查询员工工资小于平均工资的人
+                SELECT * FROM emp WHERE emp.salary &lt; (SELECT AVG(salary) FROM emp);
+            2. 子查询的结果是多行单列的：
+                * 子查询可以作为条件，使用运算符in来判断
+                -- 查询'财务部'和'市场部'所有的员工信息
+                SELECT id FROM dept WHERE NAME = '财务部' OR NAME = '市场部';
+                SELECT * FROM emp WHERE dept_id = 3 OR dept_id = 2;
+                -- 子查询
+                SELECT * FROM emp WHERE dept_id IN (SELECT id FROM dept WHERE NAME = '财务部' OR NAME = '市场部');
+
+            3. 子查询的结果是多行多列的：
+                * 子查询可以作为一张虚拟表参与查询
+                -- 查询员工入职日期是2011-11-11日之后的员工信息和部门信息
+                -- 子查询
+                SELECT * FROM dept t1 ,(SELECT * FROM emp WHERE emp.`join_date` &gt; '2011-11-11') t2
+                WHERE t1.id = t2.dept_id;
+
+                -- 普通内连接
+                SELECT * FROM emp t1,dept t2 WHERE t1.`dept_id` = t2.`id` AND t1.`join_date` &gt;  '2011-11-11'
+
+    * 多表查询练习
+
+            -- 部门表
+            CREATE TABLE dept (
+              id INT PRIMARY KEY PRIMARY KEY, -- 部门id
+              dname VARCHAR(50), -- 部门名称
+              loc VARCHAR(50) -- 部门所在地
+            );
+
+            -- 添加4个部门
+            INSERT INTO dept(id,dname,loc) VALUES 
+            (10,'教研部','北京'),
+            (20,'学工部','上海'),
+            (30,'销售部','广州'),
+            (40,'财务部','深圳');
+
+
+
+            -- 职务表，职务名称，职务描述
+            CREATE TABLE job (
+              id INT PRIMARY KEY,
+              jname VARCHAR(20),
+              description VARCHAR(50)
+            );
+
+            -- 添加4个职务
+            INSERT INTO job (id, jname, description) VALUES
+            (1, '董事长', '管理整个公司，接单'),
+            (2, '经理', '管理部门员工'),
+            (3, '销售员', '向客人推销产品'),
+            (4, '文员', '使用办公软件');
+
+
+
+            -- 员工表
+            CREATE TABLE emp (
+              id INT PRIMARY KEY, -- 员工id
+              ename VARCHAR(50), -- 员工姓名
+              job_id INT, -- 职务id
+              mgr INT , -- 上级领导
+              joindate DATE, -- 入职日期
+              salary DECIMAL(7,2), -- 工资
+              bonus DECIMAL(7,2), -- 奖金
+              dept_id INT, -- 所在部门编号
+              CONSTRAINT emp_jobid_ref_job_id_fk FOREIGN KEY (job_id) REFERENCES job (id),
+              CONSTRAINT emp_deptid_ref_dept_id_fk FOREIGN KEY (dept_id) REFERENCES dept (id)
+            );
+
+            -- 添加员工
+            INSERT INTO emp(id,ename,job_id,mgr,joindate,salary,bonus,dept_id) VALUES 
+            (1001,'孙悟空',4,1004,'2000-12-17','8000.00',NULL,20),
+            (1002,'卢俊义',3,1006,'2001-02-20','16000.00','3000.00',30),
+            (1003,'林冲',3,1006,'2001-02-22','12500.00','5000.00',30),
+            (1004,'唐僧',2,1009,'2001-04-02','29750.00',NULL,20),
+            (1005,'李逵',4,1006,'2001-09-28','12500.00','14000.00',30),
+            (1006,'宋江',2,1009,'2001-05-01','28500.00',NULL,30),
+            (1007,'刘备',2,1009,'2001-09-01','24500.00',NULL,10),
+            (1008,'猪八戒',4,1004,'2007-04-19','30000.00',NULL,20),
+            (1009,'罗贯中',1,NULL,'2001-11-17','50000.00',NULL,10),
+            (1010,'吴用',3,1006,'2001-09-08','15000.00','0.00',30),
+            (1011,'沙僧',4,1004,'2007-05-23','11000.00',NULL,20),
+            (1012,'李逵',4,1006,'2001-12-03','9500.00',NULL,30),
+            (1013,'小白龙',4,1004,'2001-12-03','30000.00',NULL,20),
+            (1014,'关羽',4,1007,'2002-01-23','13000.00',NULL,10);
+
+
+
+            -- 工资等级表
+            CREATE TABLE salarygrade (
+              grade INT PRIMARY KEY,   -- 级别
+              losalary INT,  -- 最低工资
+              hisalary INT -- 最高工资
+            );
+
+            -- 添加5个工资等级
+            INSERT INTO salarygrade(grade,losalary,hisalary) VALUES 
+            (1,7000,12000),
+            (2,12010,14000),
+            (3,14010,20000),
+            (4,20010,30000),
+            (5,30010,99990);
+
+            -- 需求：
+
+            -- 1.查询所有员工信息。查询员工编号，员工姓名，工资，职务名称，职务描述
+            /*
+                分析：
+                    1.员工编号，员工姓名，工资，需要查询emp表  职务名称，职务描述 需要查询job表
+                    2.查询条件 emp.job_id = job.id
+
+            */
+            SELECT 
+                t1.`id`, -- 员工编号
+                t1.`ename`, -- 员工姓名
+                t1.`salary`,-- 工资
+                t2.`jname`, -- 职务名称
+                t2.`description` -- 职务描述
+            FROM 
+                emp t1, job t2
+            WHERE 
+                t1.`job_id` = t2.`id`;
+
+
+
+            -- 2.查询员工编号，员工姓名，工资，职务名称，职务描述，部门名称，部门位置
+            /*
+                分析：
+                    1. 员工编号，员工姓名，工资 emp  职务名称，职务描述 job  部门名称，部门位置 dept
+                    2. 条件： emp.job_id = job.id and emp.dept_id = dept.id
+            */
+
+            SELECT 
+                t1.`id`, -- 员工编号
+                t1.`ename`, -- 员工姓名
+                t1.`salary`,-- 工资
+                t2.`jname`, -- 职务名称
+                t2.`description`, -- 职务描述
+                t3.`dname`, -- 部门名称
+                t3.`loc` -- 部门位置
+            FROM 
+                emp t1, job t2,dept t3
+            WHERE 
+                t1.`job_id` = t2.`id` AND t1.`dept_id` = t3.`id`;
+
+            -- 3.查询员工姓名，工资，工资等级
+            /*
+                分析：
+                    1.员工姓名，工资 emp  工资等级 salarygrade
+                    2.条件 emp.salary &gt;= salarygrade.losalary and emp.salary &lt;= salarygrade.hisalary
+                        emp.salary BETWEEN salarygrade.losalary and salarygrade.hisalary
+            */
+            SELECT 
+                t1.ename ,
+                t1.`salary`,
+                t2.*
+            FROM emp t1, salarygrade t2
+            WHERE t1.`salary` BETWEEN t2.`losalary` AND t2.`hisalary`;
+
+
+
+            -- 4.查询员工姓名，工资，职务名称，职务描述，部门名称，部门位置，工资等级
+            /*
+                分析：
+                    1. 员工姓名，工资 emp ， 职务名称，职务描述 job 部门名称，部门位置，dept  工资等级 salarygrade
+                    2. 条件： emp.job_id = job.id and emp.dept_id = dept.id and emp.salary BETWEEN salarygrade.losalary and salarygrade.hisalary
+
+            */
+            SELECT 
+                t1.`ename`,
+                t1.`salary`,
+                t2.`jname`,
+                t2.`description`,
+                t3.`dname`,
+                t3.`loc`,
+                t4.`grade`
+            FROM 
+                emp t1,job t2,dept t3,salarygrade t4
+            WHERE 
+                t1.`job_id` = t2.`id` 
+                AND t1.`dept_id` = t3.`id`
+                AND t1.`salary` BETWEEN t4.`losalary` AND t4.`hisalary`;
+
+
+
+            -- 5.查询出部门编号、部门名称、部门位置、部门人数
+
+            /*
+                分析：
+                    1.部门编号、部门名称、部门位置 dept 表。 部门人数 emp表
+                    2.使用分组查询。按照emp.dept_id完成分组，查询count(id)
+                    3.使用子查询将第2步的查询结果和dept表进行关联查询
+
+            */
+            SELECT 
+                t1.`id`,t1.`dname`,t1.`loc` , t2.total
+            FROM 
+                dept t1,
+                (SELECT
+                    dept_id,COUNT(id) total
+                FROM 
+                    emp
+                GROUP BY dept_id) t2
+            WHERE t1.`id` = t2.dept_id;
+
+
+            -- 6.查询所有员工的姓名及其直接上级的姓名,没有领导的员工也需要查询
+
+            /*
+                分析：
+                    1.姓名 emp， 直接上级的姓名 emp
+                        * emp表的id 和 mgr 是自关联
+                    2.条件 emp.id = emp.mgr
+                    3.查询左表的所有数据，和 交集数据
+                        * 使用左外连接查询
+
+            */
+            /*
+            select
+                t1.ename,
+                t1.mgr,
+                t2.`id`,
+                t2.ename
+            from emp t1, emp t2
+            where t1.mgr = t2.`id`;
+
+            */
+
+            SELECT 
+                t1.ename,
+                t1.mgr,
+                t2.`id`,
+                t2.`ename`
+            FROM emp t1
+            LEFT JOIN emp t2
+            ON t1.`mgr` = t2.`id`;</code></pre><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><pre><code>1. 事务的基本介绍
+    1. 概念：
+        *  如果一个包含多个步骤的业务操作，被事务管理，那么这些操作要么同时成功，要么同时失败。
+
+    2. 操作：
+        1. 开启事务： start transaction;
+        2. 回滚：rollback;
+        3. 提交：commit;
+    3. 例子：
+        CREATE TABLE account (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            NAME VARCHAR(10),
+            balance DOUBLE
+        );
+        -- 添加数据
+        INSERT INTO account (NAME, balance) VALUES ('zhangsan', 1000), ('lisi', 1000);
+
+
+        SELECT * FROM account;
+        UPDATE account SET balance = 1000;
+        -- 张三给李四转账 500 元
+
+        -- 0. 开启事务
+        START TRANSACTION;
+        -- 1. 张三账户 -500
+
+        UPDATE account SET balance = balance - 500 WHERE NAME = 'zhangsan';
+        -- 2. 李四账户 +500
+        -- 出错了...
+        UPDATE account SET balance = balance + 500 WHERE NAME = 'lisi';
+
+        -- 发现执行没有问题，提交事务
+        COMMIT;
+
+        -- 发现出问题了，回滚事务
+        ROLLBACK;
+    4. MySQL数据库中事务默认自动提交
+
+        * 事务提交的两种方式：
+            * 自动提交：
+                * mysql就是自动提交的
+                * 一条DML(增删改)语句会自动提交一次事务。
+            * 手动提交：
+                * Oracle 数据库默认是手动提交事务
+                * 需要先开启事务，再提交
+        * 修改事务的默认提交方式：
+            * 查看事务的默认提交方式：SELECT @@autocommit; -- 1 代表自动提交  0 代表手动提交
+            * 修改默认提交方式： set @@autocommit = 0;
+
+
+2. 事务的四大特征：
+    1. 原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败。
+    2. 持久性：当事务提交或回滚后，数据库会持久化的保存数据。
+    3. 隔离性：多个事务之间。相互独立。
+    4. 一致性：事务操作前后，数据总量不变
+3. 事务的隔离级别（了解）
+    * 概念：多个事务之间隔离的，相互独立的。但是如果多个事务操作同一批数据，则会引发一些问题，设置不同的隔离级别就可以解决这些问题。
+    * 存在问题：
+        1. 脏读：一个事务，读取到另一个事务中没有提交的数据
+        2. 不可重复读(虚读)：在同一个事务中，两次读取到的数据不一样。
+        3. 幻读：一个事务操作(DML)数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到自己的修改。
+    * 隔离级别：
+        1. read uncommitted：读未提交
+            * 产生的问题：脏读、不可重复读、幻读
+        2. read committed：读已提交 （Oracle）
+            * 产生的问题：不可重复读、幻读
+        3. repeatable read：可重复读 （MySQL默认）
+            * 产生的问题：幻读
+        4. serializable：串行化
+            * 可以解决所有的问题
+
+        * 注意：隔离级别从小到大安全性越来越高，但是效率越来越低
+        * 数据库查询隔离级别：
+            * select @@tx_isolation;
+        * 数据库设置隔离级别：
+            * set global transaction isolation level  级别字符串;
+
+    * 演示：
+        set global transaction isolation level read uncommitted;
+        start transaction;
+        -- 转账操作
+        update account set balance = balance - 500 where id = 1;
+        update account set balance = balance + 500 where id = 2;</code></pre><h2 id="DCL："><a href="#DCL：" class="headerlink" title="DCL："></a>DCL：</h2><pre><code>* SQL分类：
+    1. DDL：操作数据库和表
+    2. DML：增删改表中数据
+    3. DQL：查询表中数据
+    4. DCL：管理用户，授权
+
+* DBA：数据库管理员
+
+* DCL：管理用户，授权
+    1. 管理用户
+        1. 添加用户：
+            * 语法：CREATE USER '用户名'@'主机名' IDENTIFIED BY '密码';
+        2. 删除用户：
+            * 语法：DROP USER '用户名'@'主机名';
+        3. 修改用户密码：
+
+            UPDATE USER SET PASSWORD = PASSWORD('新密码') WHERE USER = '用户名';
+            UPDATE USER SET PASSWORD = PASSWORD('abc') WHERE USER = 'lisi';
+
+            SET PASSWORD FOR '用户名'@'主机名' = PASSWORD('新密码');
+            SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
+
+            * mysql中忘记了root用户的密码？
+                1. cmd -- &gt; net stop mysql 停止mysql服务
+                    * 需要管理员运行该cmd
+
+                2. 使用无验证方式启动mysql服务： mysqld --skip-grant-tables
+                3. 打开新的cmd窗口,直接输入mysql命令，敲回车。就可以登录成功
+                4. use mysql;
+                5. update user set password = password('你的新密码') where user = 'root';
+                6. 关闭两个窗口
+                7. 打开任务管理器，手动结束mysqld.exe 的进程
+                8. 启动mysql服务
+                9. 使用新密码登录。
+        4. 查询用户：
+            -- 1. 切换到mysql数据库
+            USE myql;
+            -- 2. 查询user表
+            SELECT * FROM USER;
+
+            * 通配符： % 表示可以在任意主机使用用户登录数据库
+
+    2. 权限管理：
+        1. 查询权限：
+            -- 查询权限
+            SHOW GRANTS FOR '用户名'@'主机名';
+            SHOW GRANTS FOR 'lisi'@'%';
+
+        2. 授予权限：
+            -- 授予权限
+            grant 权限列表 on 数据库名.表名 to '用户名'@'主机名';
+            -- 给张三用户授予所有权限，在任意数据库任意表上
+
+            GRANT ALL ON *.* TO 'zhangsan'@'localhost';
+        3. 撤销权限：
+            -- 撤销权限：
+            revoke 权限列表 on 数据库名.表名 from '用户名'@'主机名';
+            REVOKE UPDATE ON db3.`account` FROM 'lisi'@'%';</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -696,7 +990,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://x1a0kang.github.io/2020/08/05/bing-fa-rong-qi-zong-jie/">https://x1a0kang.github.io/2020/08/05/bing-fa-rong-qi-zong-jie/</a>
+                    <a href="https://x1a0kang.github.io/2020/09/02/javaee/mysql-duo-biao-shi-wu-ke-tang-bi-ji/">https://x1a0kang.github.io/2020/09/02/javaee/mysql-duo-biao-shi-wu-ke-tang-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -733,15 +1027,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
-                                </a>
-                            
-                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                    <span class="chip bg-color">面试</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -911,51 +1197,42 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/linkedlist-yuan-ma-jie-xi/">
+                <a href="/2020/09/02/javaee/mysql-yue-shu-ke-tang-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="LinkedList源码解析">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="JavaEE/MySQL约束课堂笔记">
                         
-                        <span class="card-title">LinkedList源码解析</span>
+                        <span class="card-title">JavaEE/MySQL约束课堂笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            LinkedList 源码解析1. 定义及构造方法源码1. LinkedList 简介
-LinkedList 实现了 List 接口 和 Deque 接口，是一个双端链表，同时也具有队列的性质。
+                            今日内容1. DQL:查询语句
+    1. 排序查询
+    2. 聚合函数
+    3. 分组查询
+    4. 分页查询
 
-LinkedList 实现了 Clonea
+2. 约束
+3. 多表之间的关系
+4. 范式
+5. 数据库的备份和还原DQL:查询语句1. 排序查询
+    
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-02
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    Java学习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            巨瑞康
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                        <span class="chip bg-color">面试</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -964,52 +1241,53 @@ LinkedList 实现了 Clonea
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/bing-fa-rong-qi-zong-jie/">
+                <a href="/2020/09/02/javaee/mysql-ji-chu-ke-tang-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="并发容器总结">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="JavaEE/MySQL基础课堂笔记">
                         
-                        <span class="card-title">并发容器总结</span>
+                        <span class="card-title">JavaEE/MySQL基础课堂笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            并发容器总结1. ArrayList 的并发容器 CopyOnWriteArrayList1. CopyOnWriteArrayList 简介public class CopyOnWriteArrayList&lt;E> extends O
+                            今日内容
+数据库的基本概念
+
+
+MySQL数据库软件
+
+安装
+卸载
+配置
+
+
+SQL
+
+
+数据库的基本概念1. 数据库的英文单词： DataBase 简称 ： DB
+2. 什么数据库？
+    * 用于存储和管理数据的仓库。
+
+3. 数据库
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-02
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    Java学习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            巨瑞康
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                        <span class="chip bg-color">面试</span>
-                    </a>
-                    
                 </div>
                 
             </div>
