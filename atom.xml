@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://x1a0kang.github.io/"/>
-  <updated>2020-08-22T07:36:26.338Z</updated>
+  <updated>2020-01-19T10:13:39.349Z</updated>
   <id>https://x1a0kang.github.io/</id>
   
   <author>
@@ -15,29 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>选择题常用知识点</title>
-    <link href="https://x1a0kang.github.io/2020/09/02/xuan-ze-ti-chang-yong-zhi-shi-dian/"/>
-    <id>https://x1a0kang.github.io/2020/09/02/xuan-ze-ti-chang-yong-zhi-shi-dian/</id>
-    <published>2020-09-02T10:25:06.637Z</published>
-    <updated>2020-08-22T07:36:26.338Z</updated>
-    
-    <summary type="html">
-    
-      Java学习
-    
-    </summary>
-    
-    
-      <category term="Java学习" scheme="https://x1a0kang.github.io/categories/Java%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Java" scheme="https://x1a0kang.github.io/tags/Java/"/>
-    
-      <category term="笔试" scheme="https://x1a0kang.github.io/tags/%E7%AC%94%E8%AF%95/"/>
-    
-  </entry>
   
   <entry>
     <title>JavaEE/MySQL约束课堂笔记</title>

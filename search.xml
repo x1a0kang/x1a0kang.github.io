@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>选择题常用知识点</title>
-      <link href="/2020/09/02/xuan-ze-ti-chang-yong-zhi-shi-dian/"/>
-      <url>/2020/09/02/xuan-ze-ti-chang-yong-zhi-shi-dian/</url>
-      
-        <content type="html"><![CDATA[<h1 id="选择题常用知识点"><a href="#选择题常用知识点" class="headerlink" title="选择题常用知识点"></a>选择题常用知识点</h1><h2 id="1-二叉树"><a href="#1-二叉树" class="headerlink" title="1. 二叉树"></a>1. 二叉树</h2><h3 id="1-度数和节点数的关系"><a href="#1-度数和节点数的关系" class="headerlink" title="1. 度数和节点数的关系"></a>1. 度数和节点数的关系</h3><ol><li><strong>深度为 k 的二叉树，最多有 2 ^ k - 1 个节点</strong>；</li><li>二叉树的节点<strong>有几个孩子度数就为几</strong>，分别用 n0，n1，n2 表示；</li><li><strong>n0 节点就是叶子节点</strong>；</li><li>度数为 0 的节点个数是度数为 2 的节点个数加一，即 <strong>n0 = n2 + 1</strong>；</li><li>完全二叉树是指叶子节点只在最后一层，并且先有左孩子再有右孩子的树。<strong>完全二叉树度为 1 的节点（n1 节点）只会是 0 个或 1 个</strong>；</li></ol><hr><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      <categories>
-          
-          <category> Java学习 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Java </tag>
-            
-            <tag> 笔试 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>JavaEE/MySQL约束课堂笔记</title>
       <link href="/2020/09/02/javaee/mysql-yue-shu-ke-tang-bi-ji/"/>
       <url>/2020/09/02/javaee/mysql-yue-shu-ke-tang-bi-ji/</url>
