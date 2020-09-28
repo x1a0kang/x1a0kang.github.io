@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.4k
+                    7.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    25 分
+                    26 分
                 </div>
                 
 
@@ -537,8 +537,15 @@
 <hr>
 <h3 id="5-方法区"><a href="#5-方法区" class="headerlink" title="5. 方法区"></a>5. 方法区</h3><ol>
 <li>方法区与 Java 堆一样，是<strong>各个线程共享</strong>的内存区域。</li>
-<li>方法区用于<strong>存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等</strong>数据。如 static 修饰的变量加载类的时候就被加载到方法区中。</li>
-<li><strong>运行时常量池存在于方法区</strong>。</li>
+<li>方法区用于<strong>存储已被虚拟机加载的类信息</strong><ul>
+<li>类的完整有效名，直接父类和修饰符。</li>
+<li>方法信息，名称，修饰符，返回值类型，参数列表，方法字节码等等。</li>
+<li>类加载器的引用。</li>
+<li>Class 类对象的引用。</li>
+<li>常量、静态变量，如 static 修饰的变量加载类的时候就被加载到方法区中。</li>
+</ul>
+</li>
+<li><strong>运行时常量池存在于方法区</strong>，存放类加载后的各种常量和符号引用。</li>
 <li>方法区是一个规定，类似于接口。<strong>永久代</strong>是实现方式，类似于实现了接口的类。JDK 1.8 以后，方法区被彻底移除，取而代之的是<strong>元空间</strong>（MetaSpace）。</li>
 <li><strong>元空间</strong>：元空间使用<strong>直接内存</strong>，受本机可用内存的限制，溢出的几率更小，可以加载的类更多。</li>
 </ol>
@@ -684,7 +691,7 @@
 </li>
 <li><p><strong>G1 收集器</strong>：Garbage First 垃圾优先收集器，面向服务器，主要针对配备多颗处理器和大容量内存的机器。<strong>以极高概率满足 GC 停顿时间的同时，还具备高吞吐量的特征</strong>。</p>
 <ul>
-<li><p>G1 弱化了分代的概念，将 Java 堆分为若干大小相同的 region，并且维护了一个优先列表，每次根据用户允许的实践，<strong>优先选择回收价值最大的 region</strong>。</p>
+<li><p>G1 弱化了分代的概念，将 Java 堆分为若干大小相同的 region，并且维护了一个优先列表，每次根据用户允许的时间，<strong>优先选择回收价值最大的 region</strong>。</p>
 </li>
 <li><p>用户可以规定在一个<strong>长度为 M 毫秒的时间片内，垃圾收集的时间不得超过 N 毫秒</strong>。</p>
 </li>
@@ -1341,7 +1348,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

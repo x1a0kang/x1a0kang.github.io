@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7k
+                    14k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    26 分
+                    51 分
                 </div>
                 
 
@@ -920,11 +920,90 @@ SELECT STU.name, STU.gender,class.name FROM STU (INNER) JOIN class ON STU.'class
 <span class="token keyword">WHERE</span> 
     t1<span class="token punctuation">.</span>id <span class="token operator">=</span> t2<span class="token punctuation">.</span>dept_id<span class="token punctuation">;</span></code></pre>
 <hr>
-<h3 id="9-InnoDB-和-MyISAM-的区别"><a href="#9-InnoDB-和-MyISAM-的区别" class="headerlink" title="9. InnoDB 和 MyISAM 的区别"></a>9. InnoDB 和 MyISAM 的区别</h3><ol>
+<h3 id="9-MySQL-分层架构"><a href="#9-MySQL-分层架构" class="headerlink" title="9. MySQL 分层架构"></a>9. MySQL 分层架构</h3><p>MySQL 可以分为 <strong>server 层和存储引擎层</strong>两层。</p>
+<ol>
+<li><strong>server 层</strong>：包括连接器、查询缓存、分析器、优化器、执行器等，涵盖MySQL的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</li>
+<li><strong>存储引擎层</strong>：负责数据的存储和提取。其架构模式是插件式的，支持 InnoDB、MyISAM、Memory 等多个存储引擎。现在 MySQL 默认的存储引擎是 InnoDB。</li>
+</ol>
+<ul>
+<li>不同的存储引擎共用一个 server 层。</li>
+</ul>
+<p><img src="MySQL.assets/20200127101623119.png" alt=""></p>
+<hr>
+<h3 id="10-server-层"><a href="#10-server-层" class="headerlink" title="10. server 层"></a>10. server 层</h3><ol>
+<li><p><strong>连接器</strong>：负责跟客户端建立连接、获取权限、维持和管理连接。 这里 Java 使用的是 JDBC 连接，同时还可以引申出数据库连接池。连接分为两种：</p>
+<ol>
+<li>短连接：连接时间短，查询几次就断开，再次连接时重新建立新的连接。</li>
+<li>长连接：连接成功后，如果客户端一直有请求，则一直使用同一个连接。</li>
+</ol>
+<ul>
+<li><strong>对比</strong>：短连接经常断开再连接十分浪费资源，建议<strong>尽量使用长连接</strong>。而长连接的缺点是，一直使用长连接内存消耗很大，可能造成 OOM。</li>
+<li>长连接避免 OOM 有两种方式：一是定期断开重连。而是在执行一个比较消耗内存的操作后，执行 mysql_reset_connection 重新初始化连接。</li>
+</ul>
+</li>
+<li><p><strong>查询缓存</strong>：查询时会先查找缓存，如果没有再向下执行查找。MySQL 8.0 后查询缓存已经被移除。</p>
+</li>
+<li><p><strong>分析器</strong>：对 SQL 语句进行分析，首先是<strong>词法分析</strong>，通过空格和逗号等分隔，识别出每个单词的意义。然后是<strong>语法分析</strong>，根据词法分析的结果，判断 SQL 语句是否满足语法。</p>
+</li>
+<li><p><strong>优化器</strong>：对 SQL 语句进行优化，如判断是否使用索引，使用哪个索引，多表查询的联合顺序等。</p>
+</li>
+<li><p><strong>执行器</strong>：执行器执行 SQL 语句，在执行前会先判断是否有权限，如果有，则执行语句。执行器执行时，会根据引擎的定义，去使用引擎提供的接口。</p>
+</li>
+</ol>
+<hr>
+<h3 id="11-存储引擎层：InnoDB"><a href="#11-存储引擎层：InnoDB" class="headerlink" title="11. 存储引擎层：InnoDB"></a>11. 存储引擎层：InnoDB</h3><p>InnoDB主要包括了内存池、后台线程以及存储文件。</p>
+<p><img src="MySQL.assets/205Rb363_0.jpg" alt=""></p>
+<blockquote>
+<p>后台线程：</p>
+</blockquote>
+<ol>
+<li><strong>Master Thread</strong>：主要负责将缓存池中的数据异步刷新到磁盘，保证数据的一致性，包括脏页的刷新、合并插入缓冲（Insert Buffer）、undo页的回收等。</li>
+<li><strong>IO Thread</strong>：在 InnoDB 中大量使用了 AIO 来处理写 IO 请求，而 IO Thread 的工作主要是负责这些 IO 请求的回调处理。IO Thread 分为 <strong>write、read、insert buffer 和 log IO thread</strong> 四种。</li>
+<li><strong>Purge Thread</strong>：事务被提交后，其所使用的 undo log 可能不再需要，因此需要 Purge Thread 来回收已经使用并分配的 undo 页。</li>
+<li><strong>Page Cleaner Thread</strong>：Page Cleaner Thread是一个用于协助Master Thread刷新脏页到磁盘的线程。</li>
+</ol>
+<blockquote>
+<p><strong>Buffer Pool</strong></p>
+</blockquote>
+<p>InnoDB 存储引擎是基于磁盘存储的，而<strong>缓冲池是一块内存区域</strong>，通过内存的速度来弥补磁盘速度较慢对数据库性能的影响。</p>
+<ul>
+<li>在数据库中进行<strong>读取页</strong>的操作，首先将从磁盘读到的页存放在缓冲池中。下一次再读相同的页时，首先判断该页是否在缓冲池中。若在缓冲池中，该页在缓冲池中被命中，直接读取该页。否则，读取磁盘上的页。</li>
+<li>在数据库中进行<strong>修改页</strong>的操作，则首先修改在缓冲池中的页，然后再以一定的频率刷新到磁盘上。页从缓冲池刷新回磁盘的操作并不是在每次页发生更新时触发，而是<strong>通过一种称为 Checkpoint 的机制刷新回磁盘</strong>。</li>
+<li>缓冲池中缓存的数据页类型有：索引页、数据页、undo页、插入缓冲（insert buffer）、自适应哈希索引、InnoDB存储的锁信息、数据字典信息等。</li>
+</ul>
+<blockquote>
+<p><strong>Buffer Pool 管理</strong></p>
+</blockquote>
+<ol>
+<li><strong>LRU List</strong>：基于<strong>最近最少使用算法</strong>，并做了优化。<ol>
+<li>按照 5 ：3 的比例（old 比例 37%）把链表分成 young 和 old 区域，有一个 old 指针指向 old 区的首节点，实际还是一条链表。</li>
+<li><strong>新加入缓存的页放入 old 区域</strong>，可以设置时间，在 x 秒内再次被访问就移动到链表的头部。这个策略是对大表全表扫描的优化，虽然用到了缓存池，但不影响 young 区域，保证正常业务的查询命中率。</li>
+</ol>
+</li>
+<li><strong>Free List</strong>：当需要从缓冲池中分页时，首先从 Free 列表中查找是否有可用的空闲页，若有则将该页从 Free 列表中删除，放入到 LRU 列表中。否则，根据 LRU 算法，淘汰 LRU 列表末尾的页，将该内存空间分配给新的页。</li>
+<li><strong>Flush List</strong>：在 LRU 列表中的页被修改后，称该页为<strong>脏页</strong>，Flush List 即为储存脏页的列表，数据库会通过 Checkpoint 机制将脏页刷新回磁盘。Flush List 中的页也存在于 LRU List。</li>
+</ol>
+<blockquote>
+<p><strong>redo log buffer</strong></p>
+</blockquote>
+<p>InnoDB 首先将 redo log 放入到 redo log buffer，然后按一定频率将其刷新到 redo log file。下列三种情况下会将 redo log buffer 刷新到 redo log file：</p>
+<ol>
+<li>Master Thread 每秒将 redo log buffer 刷新到 redo log file。</li>
+<li>每个事务提交时会将 redo log buffer 刷新到 redo log file。</li>
+<li>当 redo log 缓冲池剩余空间小于1/2 时，会将 redo log buffer 刷新到 redo log file。</li>
+</ol>
+<blockquote>
+<p><strong>Insert Buffer</strong></p>
+</blockquote>
+<p>对于<strong>非主键索引</strong>的插入或更新操作，不是每一次直接插入到索引页中，而是<strong>先判断插入的非主键索引页是否在缓冲池中</strong>，若在，则直接插入；若不在，则先放入到一个 Insert Buffer 对象中，然后再以一定的频率和情况进行 <strong>Insert Buffer 和非主键索引叶子节点的 merge（合并）操作，这时通常能将多个插入合并到一个操作中</strong>（因为在一个索引页中），这就大大提高了对于非主键索引插入的性能。</p>
+<p><strong>InnoDB 对 DML 操作（Insert、Delete、Update）都进行缓冲</strong>，分别是 Insert Buffer、Delete Buffer、Purge Buffer。</p>
+<p>将 Buffer 中的操作应用到原数据页，得到最新结果的过程称为<strong>merge</strong>。除了访问这个数据页会触发 merge 外，系统有后台线程会定期 merge。在数据库正常关闭的过程中，也会执行merge操作。</p>
+<hr>
+<h3 id="12-InnoDB-和-MyISAM-的区别"><a href="#12-InnoDB-和-MyISAM-的区别" class="headerlink" title="12. InnoDB 和 MyISAM 的区别"></a>12. InnoDB 和 MyISAM 的区别</h3><ol>
 <li>InnoDB 支持事务，MyISAM 不支持事务；</li>
 <li>InnoDB 支持外键，MyISAM 不支持外键；</li>
 <li>InnoDB 是聚集索引，MyISAM 是非聚集索引（索引部分中有具体解释）；</li>
-<li>InnoDB 不保存行数，如果使用 COUNT() 还需要全表扫描。MyISAM 保存行数，可以直接返回；</li>
+<li>InnoDB 不保存行数，如果使用 <code>COUNT()</code> 还需要全表扫描。MyISAM 保存行数，可以直接返回；</li>
 <li>InnoDB 支持行锁和表锁，但行锁是锁在索引上的，如果不能命中索引，就会退化为表锁。MyISAM 不支持行锁，仅支持表锁；</li>
 <li>InnoDB 必须有主键，如果没有定义，会自动生成一个（用户不可见）。MyISAM 可以没有主键；</li>
 </ol>
@@ -1015,7 +1094,7 @@ ROLLBACK</code></pre>
 </ul>
 <hr>
 <h2 id="3-索引"><a href="#3-索引" class="headerlink" title="3. 索引"></a>3. 索引</h2><h3 id="1-索引简介"><a href="#1-索引简介" class="headerlink" title="1. 索引简介"></a>1. 索引简介</h3><ul>
-<li>在<strong>不读取整个表</strong>的情况下，<strong>索引使数据库更快的查找数据</strong>，但使得读取相对变慢。</li>
+<li>在<strong>不读取整个表</strong>的情况下，<strong>索引使数据库更快的查找数据</strong>，但使得写相对变慢。</li>
 <li>索引可以分为聚集索引和非聚集索引：<ul>
 <li>聚集索引存储物理上连续存在的记录，如123456；</li>
 <li>非聚集索引存储逻辑上的的连续记录，如某一作家的书可以在第一个和第十个书架上；</li>
@@ -1118,7 +1197,291 @@ ROLLBACK</code></pre>
 <li>MySQL 估计<strong>全表扫描更快时</strong>。</li>
 </ol>
 <hr>
-<h2 id="4-SQL-优化"><a href="#4-SQL-优化" class="headerlink" title="4. SQL 优化"></a>4. SQL 优化</h2><h3 id="1-数据库字段设计规范"><a href="#1-数据库字段设计规范" class="headerlink" title="1. 数据库字段设计规范"></a>1. 数据库字段设计规范</h3><ol>
+<h3 id="11-建立索引的原则"><a href="#11-建立索引的原则" class="headerlink" title="11. 建立索引的原则"></a>11. 建立索引的原则</h3><ol>
+<li>对于经常查询的字段，建立索引；</li>
+<li>频繁增删改的字段，不建议建立索引；</li>
+<li>索引数量适当，不建议建立太多索引；</li>
+<li>数据量小的表不建议建立索引；</li>
+<li>区分度低的列不建议建立索引；</li>
+<li>尽量对字段小的列建立索引，如 INT 肯定比 VARCHAR(100) 字段小；</li>
+</ol>
+<hr>
+<h3 id="12-命中索引但效率低"><a href="#12-命中索引但效率低" class="headerlink" title="12. 命中索引但效率低"></a>12. 命中索引但效率低</h3><ol>
+<li>查询范围太大</li>
+<li>没有用到覆盖索引，造成回表</li>
+<li>查询字段过多</li>
+<li>索引字段太大</li>
+<li>命中的不是最优索引</li>
+</ol>
+<hr>
+<h2 id="4-锁"><a href="#4-锁" class="headerlink" title="4. 锁"></a>4. 锁</h2><h3 id="1-粒度锁"><a href="#1-粒度锁" class="headerlink" title="1. 粒度锁"></a>1. 粒度锁</h3><p>MySQL 不同的存储引擎支持不同的锁机制，所有的<strong>存储引擎</strong>都以自己的方式显现了锁机制，服务器层完全不了解存储引擎中的锁实现： <strong>表级锁和行级锁</strong>。</p>
+<ul>
+<li>MyISAM 采用的是表级锁，InnoDB 采用的是表级锁和行级锁。</li>
+<li>MySQL 在执行 SQL 语句时，会<strong>自动加锁</strong>（表锁一般是透明的，不用手动加锁）。</li>
+<li>在 InnoDB 存储引擎中，如果没有使用索引，<strong>表锁也是自动加的</strong>。</li>
+</ul>
+<ol>
+<li><strong>表级锁</strong>：开销小，加锁快；<strong>不会出现死锁</strong>；发生冲突的概率高，<strong>并发度低</strong>；表锁适合以查询为主，并发用户少的情况。</li>
+<li><strong>行级锁</strong>：开销大，加锁慢；<strong>会出现死锁</strong>；发生冲突的概率低，<strong>并发度高</strong>。行锁适合大量按索引并发，更新少量数据，同时又有并发查询的情况。</li>
+</ol>
+<hr>
+<h3 id="2-表锁"><a href="#2-表锁" class="headerlink" title="2. 表锁"></a>2. 表锁</h3><p>表锁分为两种：表读锁和表写锁。</p>
+<ol>
+<li><strong>表读锁</strong>：不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写请求；</li>
+<li><strong>表写锁</strong>：会阻塞其他用户对同一表的读和写操作。</li>
+</ol>
+<blockquote>
+<p><strong>读读不阻塞、读写阻塞、写写阻塞。读写串行</strong></p>
+</blockquote>
+<ul>
+<li><strong>读读不阻塞</strong>：当前用户在读数据，其他的用户也在读数据，<strong>不会阻塞</strong>；</li>
+<li><strong>读写阻塞</strong>：当前用户在读数据，其他的用户要写数据，<strong>会阻塞</strong>；</li>
+<li><strong>写写阻塞</strong>：当前用户在写数据，其他的用户要写数据，<strong>会阻塞</strong>；</li>
+</ul>
+<blockquote>
+<p><strong>写锁优先于读锁</strong></p>
+</blockquote>
+<ul>
+<li>当一个锁可用时，这个锁会<strong>优先给等待中的写锁</strong>。</li>
+<li>MyISAM 不适合写多的情况，因为会造成读操作的阻塞，每次都把锁给写操作了。</li>
+<li>可以使用 <code>SET LOW_PRIORITY_UPDATES</code> 改变优先级。</li>
+</ul>
+<blockquote>
+<p><strong>读写并行</strong></p>
+</blockquote>
+<ul>
+<li>MyISAM 支持读操作时，在表尾进行写操作。</li>
+<li>当 <code>concurrent_insert</code> 设置为1时，如果 MyISAM 表中没有空洞（即表的中间没有被删除的行），MyISAM 允许在一个线程读表的同时，另一个线程从表尾插入记录。这也是 MySQL 的默认设置。 </li>
+<li>InnoDB 不支持读写并行。</li>
+</ul>
+<hr>
+<h3 id="3-行锁"><a href="#3-行锁" class="headerlink" title="3. 行锁"></a>3. 行锁</h3><p>行锁是 InnoDB 引擎才有的锁，<strong>MyISAM 不支持</strong>。</p>
+<p>InnoDB 实现了两种类型的行锁：</p>
+<ul>
+<li><strong>共享锁</strong>（读锁，S锁）：允许一个事务读一行，阻止其他事务获得相同数据集的<strong>排它锁</strong>。读是共享的，<strong>允许多个事务同时读取同一个资源</strong>，但不允许修改。</li>
+<li><strong>排他锁</strong>（写锁，X锁）：允许事务更新数据，阻止其他事务获得相同数据集的<strong>共享锁和排他锁</strong>。写是排他的，阻止其他的读和写。</li>
+<li><strong>InnoDB 会根据隔离级别在需要的时候自动加锁</strong>，锁只有在 commit 或 rollback 时才会释放，并且所有锁会在同一时刻被释放。</li>
+<li><strong>显式加锁</strong>：用户可以通过 SQL 语句显式加锁</li>
+</ul>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">lock</span> <span class="token operator">in</span> <span class="token keyword">share mode</span> <span class="token comment" spellcheck="true">//共享锁 </span>
+<span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">for</span> <span class="token keyword">update</span> <span class="token comment" spellcheck="true">//排他锁 </span></code></pre>
+<p>为了实现行锁和表锁共存，实现多粒度锁机制，InnoDB还有两种内部使用的意向锁（Intention Locks），这两种意向锁都是<strong>表锁</strong>：意向共享锁和意向排他锁。数据库隐式处理，不用程序员操心。</p>
+<hr>
+<h3 id="4-行锁与索引"><a href="#4-行锁与索引" class="headerlink" title="4. 行锁与索引"></a>4. 行锁与索引</h3><p><strong>InnoDB 行锁是通过给索引上的索引项加锁来实现的</strong>，这一点 MySQL 与 Oracle 不同，后者是通过在数据块中对相应数据行加锁来实现的。 </p>
+<ul>
+<li>只有<strong>通过索引条件检索数据</strong>，InnoDB 才使用行级锁，否则，InnoDB 将使用表锁。</li>
+<li>不论是使用主键索引、唯一索引或普通索引，InnoDB 都会使用行锁来对数据加锁。 </li>
+<li>只有执行计划真正使用了索引，才能使用行锁：即便在条件中使用了索引字段，但是否使用索引来检索数据是由 MySQL 通过判断不同执行计划的代价来决定的，<strong>如果 MySQL 认为全表扫描效率更高，比如对一些很小的表，它就不会使用索引，这种情况下 InnoDB 将使用表锁</strong>，而不是行锁 （可以通过 explain 检查 SQL 的执行计划）。 </li>
+<li>由于 MySQL 的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然多个事务是访问不同行的记录， 但是<strong>如果使用相同的索引键， 是会出现锁冲突的</strong>。</li>
+</ul>
+<hr>
+<h3 id="5-间隙锁"><a href="#5-间隙锁" class="headerlink" title="5. 间隙锁"></a>5. 间隙锁</h3><p>当我们<strong>用范围条件检索数据</strong>而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给<strong>符合范围条件的已有数据记录的索引项加锁</strong>；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”。InnoDB 也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁。 </p>
+<blockquote>
+<p><strong>间隙锁的作用</strong></p>
+</blockquote>
+<ol>
+<li><strong>防止幻读</strong>。</li>
+<li>满足回复和复制的需要：在一个事务未提交前，其他并发事务不能插入满足其锁定条件的任何记录，也就是不允许出现幻读。 </li>
+</ol>
+<ul>
+<li><strong>间隙锁只会在可重复读隔离级别下使用，因此这个级别下已经可以避免幻读了</strong>。</li>
+</ul>
+<hr>
+<h3 id="6-死锁"><a href="#6-死锁" class="headerlink" title="6. 死锁"></a>6. 死锁</h3><p><strong>MyISAM</strong>：在自动加锁的情况下，MyISAM 总是一次获得 SQL 语句所需要的全部锁，所以 MyISAM 表不会出现死锁。 </p>
+<p><strong>InnoDB</strong>：InnoDB 可能会出现死锁，因此需要采取一些方式避免死锁。</p>
+<ul>
+<li><strong>一次获得全部锁</strong>：在同一个事务中，尽可能做到<strong>一次锁定</strong>所需要的所有资源，减少死锁概率。 </li>
+<li>以<strong>固定的顺序</strong>访问表和行：如对两个事务批量更新的情形，应在每个事务中以相同的顺序使用加锁语句。简单方法是对id列表先排序，后执行，这样就<strong>避免了交叉等待锁的情形</strong>；将两个事务的 sql 顺序调整为一致，也能避免死锁。 </li>
+<li><strong>降低隔离级别</strong>。如果业务允许，将隔离级别调低也是较好的选择，比如将隔离级别从可重复读调整为已提交，可以避免掉很多因为 gap 锁造成的死锁。</li>
+<li><strong>为表添加合理的索引</strong>。可以看到如果不走索引将会为表的每一行记录添加上锁，死锁的概率大大增大。 </li>
+<li><strong>大事务拆小</strong>。大事务更倾向于死锁，如果业务允许，将大事务拆小。 </li>
+<li><strong>直接申请足够级别的锁</strong>：在事务中，如果要更新记录，应该直接申请足够级别的锁，即排他锁。而不应先申请共享锁，更新时再申请排他锁，因为这时候当用户再申请排他锁时，其他事务可能又已经获得了相同记录的共享锁，从而造成锁冲突，甚至死锁。</li>
+</ul>
+<hr>
+<h3 id="7-MVCC"><a href="#7-MVCC" class="headerlink" title="7. MVCC"></a>7. MVCC</h3><p>MVCC（Multi-Version Concurrency Control）多版本并发控制，可以简单地认为：<strong>MVCC就是行级锁的一个变种(升级版)</strong>。在加锁时，读写是阻塞的。但基于并发的考虑，<strong>MVCC 一般读写是不阻塞的</strong>，只剩下写写阻塞。</p>
+<p>MVCC 是通过保存数据在某个时间点的<strong>快照</strong>来实现的。InnoDB通过 undo log 保存每条数据的多个版本，并且能够找回数据历史版本提供给用户读，<strong>每个事务读到的数据版本可能是不一样的</strong>。</p>
+<p><strong>在同一个事务中，用户只能看到该事务创建快照之前已经提交的修改和该事务本身做的修改</strong>。</p>
+<ol>
+<li><p><strong>隐藏字段</strong>：InnoDB 存储引擎在每行数据的后面添加了三个隐藏字段，其中只有两个与 MVCC 相关。 </p>
+<ul>
+<li>DB_TRX_ID：<strong>记录上次对改行记录做修改的事务 ID</strong>。delete 操作会更新一个删除位，逻辑删除。</li>
+<li>DB_ROLL_PTR：回滚指针，指向当前记录行的 undo log 信息，即<strong>指向上一个版本的行数据</strong>。</li>
+</ul>
+</li>
+<li><p><strong>快照和Read View</strong>：事务执行普通的 select 语句，会创建一个快照，可以理解为当前数据的拷贝。同时也会产生一个 Read View，其中包括几个变量，主要作用是做可见性判断，也就是判断当前行的版本是否可以被读到。Read View 的重要变量：</p>
+<ul>
+<li>low_limit_id：目前出现过的<strong>最大事务 ID + 1</strong>。也就是下一个新事务的 ID。</li>
+<li>trx_ids：<strong>Read View 创建时其他未提交的活跃事务 ID 列表</strong>，其排列是有序的。</li>
+<li>up_limit_id：<strong>活跃事务列表中的最小 ID</strong>，如果列表为空，则等于 low_limit_id。</li>
+</ul>
+</li>
+<li><p><strong>undo log</strong>：undo log 中存储的是老版本数据，当一个事务需要读取记录行时，如果当前记录行不可见，可以顺着 <strong>undo log 链</strong>找到满足其可见性条件的记录行版本。 <strong>undo log 链的形成过程</strong>如下：</p>
+<p><img src="MySQL.assets/20200701205716343.png" alt=""></p>
+<ol>
+<li>现在事务 A（事务ID为2）对该记录的Honor做出了修改，将Honor改为”fmvp”：<ol>
+<li>事务 A 先对该行加排它锁。</li>
+<li>然后把该行数据拷贝到 undo log 中，作为旧版本。</li>
+<li>拷贝完毕后，修改该行的 Honor 为 “fmvp”，并且修改 DB_TRX_ID 为2（事务 A 的 ID）, 回滚指针指向拷贝到 undo log 的旧版本，还会将修改后的最新数据写入 redo log。</li>
+<li>事务提交，释放排他锁。</li>
+</ol>
+</li>
+</ol>
+<p><img src="MySQL.assets/20200701210046670.png" alt=""></p>
+<ol start="2">
+<li>接着事务 B（事务 ID 为 3）修改同一个记录行，将 Name 修改为 “iguodala”： </li>
+</ol>
+<p><img src="MySQL.assets/2020070121022442.png" alt=""></p>
+<ul>
+<li>可见，事务对同一行数据修改，会使该<strong>行记录的 undo log 形成一条链表，这个链表头部是最新的旧记录，尾部是最老的旧记录</strong>。</li>
+</ul>
+</li>
+<li><p><strong>可见性判断</strong>：根据 Read View 中的变量和行隐藏列中保存的事务 ID（DB_TRX_ID），判断当前行的数据是否可见。</p>
+<ol>
+<li>如果 DB_TRX_ID &lt; up_limit_id（<strong>活跃的最小 ID</strong>），那么一定在当前事务之前就已提交，对当前事务可见。</li>
+<li>如果 DB_TRX_ID &gt; low_limit_id（<strong>现有的最大 ID</strong>），那么一定在当前事务之后提交，对当前事务不可见。需进行回滚。</li>
+<li>如果 up_limit_id &lt;= DB_TRX_ID &lt; low_limit_id（<strong>在活跃事务 ID 范围内</strong>），那么查找活跃事务 ID 列表 trx_ids。<ul>
+<li>如果找到：说明快照创建前该事务还未提交，对当前事务不可见，需进行回滚。</li>
+<li>如果未找到：说明快照创建前已提交，只是事务 ID 在范围内，对当前事务可见。</li>
+</ul>
+</li>
+<li><strong>回滚</strong>：在当前行的隐藏列中获得<strong>回滚指针 DB_ROLL_PTR</strong>，该指针指向 undo log 中的旧版本数据。取得最新的旧事务号，赋值给 DB_TRX_ID，回到步骤一重新判断。</li>
+</ol>
+</li>
+<li><p><strong>可重复度和读取已提交的区别</strong>：主要在于 Read View 的创建。</p>
+<ul>
+<li>在可重复读级别，一个事务只会在第一次 select 时创建一个快照，即<strong>一个 Read View</strong>。不论事务中有多少 select，都使用同一个 Read View，直到事务结束。</li>
+<li>在读取已提交级别，事务中每条 select 都会创建一个快照，即会产生<strong>多个 Read View</strong>，这就会导致幻读。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="8-防止幻读"><a href="#8-防止幻读" class="headerlink" title="8. 防止幻读"></a>8. 防止幻读</h3><p>MySQL 默认事务隔离级别为可重复读，这个隔离级别默认是不可防止幻读的，但 <strong>MySQL 中的可重复读可以防止幻读</strong>。</p>
+<ol>
+<li><strong>MVCC</strong>：MVCC 作为快照读时的处理方案，可以避免不加锁时的幻读。</li>
+<li><strong>间隙锁</strong>：间隙锁作为当前读时的处理方案，可以避免加锁时的幻读。</li>
+<li><strong>注意</strong>：MySQL 防止幻读是两者共同作用的结果，MVCC 并不能保证在加锁时防止幻读。</li>
+</ol>
+<hr>
+<h2 id="5-日志"><a href="#5-日志" class="headerlink" title="5. 日志"></a>5. 日志</h2><h3 id="1-bin-log"><a href="#1-bin-log" class="headerlink" title="1. bin log"></a>1. bin log</h3><ul>
+<li>binlog 中记录了数据库<strong>表结构和表数据的变更</strong>，如 <code>UPDATE/DELETE/INSERT/TRUNCATE/CREAT</code>，但不会记录 <code>SELECT</code>。</li>
+<li>可以简单理解为 <strong>bin log 中存储着每条变更的 SQL 语句</strong>，类似 Redis 持久化中的 AOF。实际上还有事务 ID，时间等。</li>
+</ul>
+<blockquote>
+<p><strong>bin log 的作用</strong></p>
+</blockquote>
+<ol>
+<li><strong>主从复制</strong>：实际使用时，MySQL 往往是一主多从结构，从服务器数据要和主服务器保持一致，这就是通过 bin log 实现的。</li>
+<li><strong>恢复数据</strong>：如果数据库宕机或数据丢失，可以通过 bin log 进行恢复。</li>
+</ol>
+<hr>
+<h3 id="2-redo-log"><a href="#2-redo-log" class="headerlink" title="2. redo log"></a>2. redo log</h3><ol>
+<li>数据库中的数据储存在磁盘里，在对数据修改时，需要先找到数据，将数据读入内存，修改后再写入磁盘（落盘）。</li>
+<li>当内存中已修改成功，但还没有落盘，此时数据库宕机，修改就无法写入，这次更新就会丢失。</li>
+</ol>
+<blockquote>
+<p>如何保证修改不丢失？</p>
+</blockquote>
+<ul>
+<li>MySQL使用了 <strong>redo log 记录修改</strong>，内存修改成功后，会写一份 redo log，记录在某个数据页上做了什么修改。</li>
+<li>redo log 也是要保存在磁盘中的，所以中间会有个 buffer，类似 Redis 的持久化策略。但 redo log 在写磁盘时是<strong>顺序 IO</strong>，速度快。</li>
+</ul>
+<hr>
+<h3 id="3-bin-log-和-redo-log"><a href="#3-bin-log-和-redo-log" class="headerlink" title="3. bin log 和 redo log"></a>3. bin log 和 redo log</h3><p>bin log 和 redo log 都有恢复数据的功能，但在其他方面也有区别和联系：</p>
+<ol>
+<li><strong>内容不同</strong>（类似 Redis 的两种持久化策略）：<ul>
+<li>bin log 中记录的是 <strong>SQL 语句</strong>。</li>
+<li>redo log 中记录的是物理<strong>修改的内容</strong>。</li>
+<li>有说法是 bin log 记录的是数据的<strong>逻辑变化</strong>，redo log 记录的是数据的<strong>物理变化</strong>。</li>
+</ul>
+</li>
+<li><strong>功能不同</strong>：<ul>
+<li>bin log 用于<strong>主从复制和恢复数据，记录着所有的变更</strong>，如果整个数据库被删除了，也可以根据 bin log 恢复。</li>
+<li>redo log 用于<strong>持久化</strong>，为了保证数据的修改会被写进磁盘，也是<strong>事务的持久性的保证</strong>。<strong>redo log 储存的变更在被刷新到磁盘后就会失效</strong>，也就是说 redo log 不会存储所有的历史变更，其内容是会被覆盖的。</li>
+</ul>
+</li>
+<li><strong>写入顺序</strong>：<ul>
+<li>bin log 在事务提交时，才记录数据的变更。</li>
+<li>redo log 在事务开始后，就会记录每次的变更信息。</li>
+<li><strong>问题</strong>：<ul>
+<li>如果在事务提交前，数据库宕机，写了 redo log 但没写 bin log，会造成主数据库更新了数据，但从数据库拿不到，导致主从不一致。</li>
+<li>如果 bin log 写成功了，redo log 还没从 buffer 里落盘，数据库宕机了，如果此时修改的数据也没落盘，主服务器无法恢复数据，但从数据库会从 bin log 同步数据，导致主从不一致。</li>
+</ul>
+</li>
+<li><strong>bin log 和 redo log 必须同时成功或失败</strong>：<ol>
+<li>redo log 写盘，事务进入 prepare 状态；</li>
+<li>bin log写盘，事务进入 commit 状态；</li>
+<li>都写成功，事务才提交成功。有一个不成功，都会回滚事务。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="MySQL.assets/202001271019055.png" alt=""></p>
+<hr>
+<h3 id="4-undo-log"><a href="#4-undo-log" class="headerlink" title="4. undo log"></a>4. undo log</h3><ul>
+<li>在数据修改时，不仅会记录 redo log，也会记录 undo log，目的是记录旧的数据。</li>
+<li>undo log 中记录的是与修改操作相反的操作，如使用 <code>INSERT</code> 操作，undo log 中会记录对应的 <code>DELETE</code> 日志。</li>
+</ul>
+<blockquote>
+<p><strong>undo log 的作用</strong></p>
+</blockquote>
+<ol>
+<li>回滚：事务需要回滚时，通过 undo log 中的记录，将数据恢复成事务开始前的状态。</li>
+<li>MVCC：通过 undo log 中的版本链，寻找可见的数据。</li>
+</ol>
+<hr>
+<h3 id="5-slow-query-log"><a href="#5-slow-query-log" class="headerlink" title="5.  slow query log"></a>5.  slow query log</h3><ul>
+<li>慢查询日志默认不开启，需要手动开启。</li>
+<li>可设置慢查询时间，long_query_time，默认 10s。</li>
+<li>慢查询不只包括 <code>SELECT</code> 语句，还有 <code>INSERT/UPDATE/DELETE</code> 等，只要超过了指定时间，都会被记录到慢查询日志中。 </li>
+</ul>
+<hr>
+<h3 id="6-relay-log"><a href="#6-relay-log" class="headerlink" title="6. relay log"></a>6. relay log</h3><ul>
+<li>这是<strong>主从复制中从库开启的日志</strong>。</li>
+<li>从库从主库的 bin log 中读取内容，会储存在从库的 relay log 中，然后从 relay log 读取 SQL 语句，更新从库，和主库保持一致。</li>
+</ul>
+<hr>
+<h3 id="7-主从复制"><a href="#7-主从复制" class="headerlink" title="7. 主从复制"></a>7. 主从复制</h3><p>主从复制是指建立一个和主数据库完全一样的数据库，称为从数据库，从数据库的数据要从主数据库中复制过来。</p>
+<blockquote>
+<p><strong>为什么要做主从复制</strong></p>
+</blockquote>
+<ol>
+<li><strong>做数据的热备</strong>：从数据库作为备份数据库，如果主数据库宕机，可切换到从数据库工作。</li>
+<li><strong>架构扩展</strong>：当数据量很大时，访问量过高，一个机器无法满足，这时使用多个数据库储存，可以分散请求。</li>
+<li><strong>读写分离</strong>：可以令主写从读，提高并发量。</li>
+</ol>
+<blockquote>
+<p><strong>主从复制的形式</strong></p>
+</blockquote>
+<ol>
+<li>一主一从：一个主数据库，一个从数据库。</li>
+<li><strong>一主多从</strong>：一个主数据库，多个从数据库，这是最常见的主从架构，简单高效，可以实现读写分离。</li>
+<li>多主一从：多个主数据库把数据备份到一台性能较好的服务器上。</li>
+<li>双主复制：两个数据库互为主从。</li>
+<li><strong>级联复制</strong>：当从库较多时，主库用于同步的消耗较大，可以让 3-5 个从库连接到主库，剩下的从库作为二级或三级节点连接到从节点。</li>
+</ol>
+<blockquote>
+<p><strong>主从复制的原理</strong></p>
+</blockquote>
+<ol>
+<li>master 提交完事务后，写入 bin log。</li>
+<li>slave 连接到 master，获取 bin log。</li>
+<li><strong>master 创建 dump 线程</strong>，推送 bing log 到 slave。</li>
+<li><strong>slave 启动一个 IO 线程</strong>读取同步过来的 master 的 bin log，记录到 relay log 中继日志中。</li>
+<li><strong>slave 再开启一个 SQL 线程</strong>读取 relay log 事件并在 slave 执行，完成同步。</li>
+<li>slave 记录自己的 bin log。</li>
+</ol>
+<p><img src="MySQL.assets/640.webp" alt=""></p>
+<blockquote>
+<p><strong>主库是否确认从库同步成功</strong></p>
+</blockquote>
+<p>MySQL 默认的复制方式是<strong>异步</strong>的，主库把日志发送给从库后不确认从库是否已经处理。这样会产生一个问题就是假设主库宕机，从库处理失败了，这时候从库升为主库后，日志就丢失了。</p>
+<ol>
+<li><strong>全同步复制</strong>：主库确认<strong>所有从库</strong>都同步完成，才认为此次操作完成。</li>
+<li><strong>半同步复制</strong>：从库同步完成后返回 ACK 给主库，主库收到<strong>一个从库</strong>的确认就认为操作完成。</li>
+</ol>
+<hr>
+<h2 id="6-SQL-优化"><a href="#6-SQL-优化" class="headerlink" title="6. SQL 优化"></a>6. SQL 优化</h2><h3 id="1-数据库字段设计规范"><a href="#1-数据库字段设计规范" class="headerlink" title="1. 数据库字段设计规范"></a>1. 数据库字段设计规范</h3><ol>
 <li>优先选择符合存储需要的最小数据类型；</li>
 <li>尽可能把所有列都定义为 NOT NULL，因为 <strong>NULL 值需要额外空间保存且比较和计算时要进行特别的处理</strong>；</li>
 <li>用 TIMESTAMP 或 DATETIME 存储时间，不要使用字符串；</li>
@@ -1158,6 +1521,41 @@ ROLLBACK</code></pre>
 <li><strong>表分区</strong>：物理上将表分为多个区域，但逻辑上还是一张表。</li>
 <li><strong>垂直拆分</strong>：按列分为多张表，但会造成主键冗余，引起 JOIN 操作，事务处理复杂等问题。</li>
 <li><strong>水平拆分</strong>：按行拆分成多张表。若在库内分表，只是解决了单一表数据量过大的问题，对于减轻数据库压力来说没有什么作用。这就要通过分库解决。</li>
+</ol>
+<hr>
+<h3 id="5-分库分表"><a href="#5-分库分表" class="headerlink" title="5. 分库分表"></a>5. 分库分表</h3><p>分库分表分为两种方式，水平和垂直。一般拆分的顺序是<strong>先垂直后水平</strong>。</p>
+<ul>
+<li>垂直分库：把不同服务的数据拆分出多个数据库。</li>
+</ul>
+<p><img src="MySQL.assets/640-1599556975508.webp" alt=""></p>
+<ul>
+<li>垂直分表：如果表里字段很多，将不常用的，数据较大的等等做拆分。</li>
+</ul>
+<p><img src="MySQL.assets/640-1599557020579.webp" alt=""></p>
+<ul>
+<li>水平分表：表中数据量过大，查询变慢，将表水平拆分成多个表。使用场景包括：订单表数据量过大，按照<strong>年、月</strong>水平切分。</li>
+</ul>
+<hr>
+<h3 id="6-分表后-ID-唯一性"><a href="#6-分表后-ID-唯一性" class="headerlink" title="6. 分表后 ID 唯一性"></a>6. 分表后 ID 唯一性</h3><ol>
+<li><strong>设定步长</strong>：如 3 张表就分别为 1 4 7…，2 5 8…，3 6 9…。</li>
+<li><strong>ID 生成算法</strong>：如雪花算法。ID 在单机上是递增的，但可能出现不是全局递增的情况。</li>
+<li><strong>UUID</strong>：确保唯一性，但不建议使用。</li>
+<li><strong>新增主键</strong>：分表后从每张表新增一个字段作为唯一主键使用。比如订单表中订单号是唯一的，在分表后以订单号作为查询依据。</li>
+</ol>
+<hr>
+<h3 id="7-非分表字段（sharding-key）查询"><a href="#7-非分表字段（sharding-key）查询" class="headerlink" title="7. 非分表字段（sharding_key）查询"></a>7. 非分表字段（sharding_key）查询</h3><ol>
+<li>做一个<strong>映射表（mapping）</strong>，把分表字段和非分表字段构成映射，查询分分表字段时先从映射表中查询到分表字段，再通过分表字段查询。</li>
+<li>打宽表，一般而言，商户端对数据实时性要求并不是很高，比如查询订单列表，可以把订单表同步到离线（实时）数仓，再基于数仓去做成一张宽表，再基于其他如es提供查询服务。</li>
+<li>数据量不是很大的话，比如后台的一些查询之类的，也可以通过多线程扫表，然后再聚合结果的方式来做。或者异步的形式也是可以的。</li>
+</ol>
+<hr>
+<h3 id="8-为什么不建议使用-UUID-作为主键"><a href="#8-为什么不建议使用-UUID-作为主键" class="headerlink" title="8. 为什么不建议使用 UUID 作为主键"></a>8. 为什么不建议使用 UUID 作为主键</h3><ol>
+<li>UUID虽然能够保证ID的唯一性，但是无法满足业务系统需要的很多其他特性，例如：时间粗略有序性、可反解和可制造性；</li>
+<li>UUID产生时使用完全的时间数据，性能比较差；</li>
+<li>UUID比较长，会占用空间大，间接导致数据库性能下降；</li>
+<li>UUID并不具有有序性，会导致B+树索引在写的时候有过多的随机写操作(连续的ID会产生部分顺序写)；</li>
+<li>在写的时候不能产生有序的append操作，而需要进行insert操作，将读取整个B+树节点到内存，在插入这条记录后会将整个节点写回磁盘，这种操作在记录占用空间比较大的情况下，性能会明显下降；</li>
+<li>UUID目前不是顺序增长，做为主键写入导致，随机IO严重。</li>
 </ol>
 <hr>
 <script>
@@ -1724,7 +2122,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

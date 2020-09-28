@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-28
+                    2020-09-27
                 </div>
                 
 
@@ -565,7 +565,7 @@
 <hr>
 <h3 id="3-Java-和-C-的对比"><a href="#3-Java-和-C-的对比" class="headerlink" title="3. Java 和 C++ 的对比"></a>3. Java 和 C++ 的对比</h3><ol>
 <li>两者都是面向对象的语言，都支持封装、继承和多态；</li>
-<li>Java 不提供<strong>指针</strong>直接访问内存，程序内存更加安全。这里延伸出的一个问题是：<strong>*Java中的引用和C++中的指针有什么区别？</strong></li>
+<li>Java 不提供<strong>指针</strong>直接访问内存，程序内存更加安全。这里延伸出的一个问题是：<strong>Java中的引用和C++中的指针有什么区别？</strong></li>
 <li>Java 中的类是单<strong>继承</strong>的，C++ 中可以多继承。但 Java 中的接口是可以多继承的。</li>
 <li>Java 有<strong>内存管理机制</strong>，不需要程序员手动释放内存。</li>
 <li>C/C++ 中，字符串或字符数组最后都会有一个额外字符 ‘/0’ 来表示结束。但 Java 中没有结束符这个概念。<a href="https://blog.csdn.net/sszgg2006/article/details/49148189" target="_blank" rel="noopener">参考文章</a>。</li>
@@ -645,13 +645,13 @@
 <h3 id="2-包装类和常量池"><a href="#2-包装类和常量池" class="headerlink" title="2. 包装类和常量池"></a>2. 包装类和常量池</h3><p>Java 中大部分基础类型的包装类都实现了<strong>常量池技术</strong>：</p>
 <ol>
 <li><strong>Byte、Short、Integer、Long</strong> 默认创建了数值 [-128,127] 的相应类型的缓存数据；</li>
-<li><strong>Character</strong>创建了数值在 [0,127] 范围的缓存数据；</li>
+<li><strong>Character</strong> 创建了数值在 [0,127] 范围的缓存数据；</li>
 <li><strong>Boolean</strong> 直接返回 true or false；</li>
 </ol>
 <ul>
 <li>如果数值<strong>不属于</strong>缓存的范围，会创建新的对象。</li>
 <li>两种浮点类型的包装类 <strong>Float</strong> 和 <strong>Double</strong> 没有实现常量池技术。</li>
-<li><code>Integer i1=40</code>；Java 在编译的时候会直接将代码封装成 <code>Integer i1=Integer.valueOf(40);</code>，从而使用常量池中的对象。 </li>
+<li><code>Integer i1 = 40</code>；Java 在编译的时候会直接将代码封装成 <code>Integer i1=Integer.valueOf(40);</code>，从而使用常量池中的对象。 </li>
 <li><code>Integer i1 = new Integer(40);</code> 这种情况下会创建新的对象。 </li>
 </ul>
 <pre class=" language-java"><code class="language-java">  Integer i1 <span class="token operator">=</span> <span class="token number">40</span><span class="token punctuation">;</span>
@@ -687,7 +687,7 @@ i4<span class="token operator">=</span>i5<span class="token operator">+</span>i6
 <h3 id="4-Java-泛型，类型擦除"><a href="#4-Java-泛型，类型擦除" class="headerlink" title="4. Java 泛型，类型擦除"></a>4. Java 泛型，类型擦除</h3><ul>
 <li><p>泛型提供了编译时<strong>类型安全检测机制</strong>，该机制允许程序员在编译时检测到非法的类型。<strong>泛型的本质是参数化类型</strong>，也就是说所操作的数据类型被指定为一个参数。 </p>
 </li>
-<li><p><strong>Java 的泛型是伪泛型，这是因为Java在编译期间，所有的泛型信息都会被擦掉，这也就是通常所说类型擦除。</strong><a href="https://www.cnblogs.com/wuqinglong/p/9456193.html" target="_blank" rel="noopener">Java 泛型类型擦除</a></p>
+<li><p><strong>Java 的泛型是伪泛型，这是因为 Java 在编译期间，所有的泛型信息都会被擦掉，这也就是通常所说类型擦除。</strong><a href="https://www.cnblogs.com/wuqinglong/p/9456193.html" target="_blank" rel="noopener">Java 泛型类型擦除</a></p>
 </li>
 <li><p>泛型一般有三种使用方式：<strong>泛型类</strong>、<strong>泛型接口</strong>和<strong>泛型方法</strong>。</p>
 <ol>
@@ -1420,50 +1420,52 @@ String methodName <span class="token operator">=</span> methodEat<span class="to
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/09/02/javaee/mysql-ji-chu-ke-tang-bi-ji/">
+                <a href="/2020/09/28/xuan-ze-ti-chang-yong-zhi-shi-dian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="JavaEE/MySQL基础课堂笔记">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="选择题常用知识点">
                         
-                        <span class="card-title">JavaEE/MySQL基础课堂笔记</span>
+                        <span class="card-title">选择题常用知识点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            今日内容
-数据库的基本概念
-
-
-MySQL数据库软件
-
-安装
-卸载
-配置
-
-
-SQL
-
-
-数据库的基本概念1. 数据库的英文单词： DataBase 简称 ： DB
-2. 什么数据库？
-    * 用于存储和管理数据的仓库。
-
-3. 数据库
+                            选择题常用知识点1. 二叉树1. 度数和节点数的关系
+深度为 k 的二叉树，最多有 2 ^ k - 1 个节点；
+二叉树的节点有几个孩子度数就为几，分别用 n0，n1，n2 表示；
+n0 节点就是叶子节点；
+度数为 0 的节点个数是度数为 
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-02
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-28
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            巨瑞康
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    Java学习
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%AC%94%E8%AF%95/">
+                        <span class="chip bg-color">笔试</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1727,7 +1729,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

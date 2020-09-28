@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.8k
+                    4.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    18 分
                 </div>
                 
 
@@ -554,6 +554,7 @@
 </ul>
 <hr>
 <h3 id="4-hashcode-和-equals-的区别和联系"><a href="#4-hashcode-和-equals-的区别和联系" class="headerlink" title="4. hashcode 和 equals 的区别和联系"></a>4. hashcode 和 equals 的区别和联系</h3><ul>
+<li><strong><code>equals()</code> 是判断逻辑相等，通俗点说就是内容是否相等</strong>。而 hashcode 是用哈希函数计算出的 32 位 int 值，一般情况下用不到，只有在使用 HashSet 或 HashMap 的时候才会用到，<strong>目的是为了判断对象在列表中的位置</strong>。</li>
 <li>两个<strong>不同对象</strong>的 hashcode 值可能相等，但 <code>equals()</code> 值不可能相等。</li>
 <li>HashSet 在检查重复时，会先检查 hashcode，如果hashcode 值已存在，则调用 <code>equals()</code> 方法检查hashcode相等的对象是否真的相等。</li>
 </ul>
@@ -567,8 +568,8 @@
 </ul>
 <hr>
 <h3 id="5-和-equals-的区别"><a href="#5-和-equals-的区别" class="headerlink" title="5. == 和 equals 的区别"></a>5. == 和 equals 的区别</h3><ol>
-<li>== 如果作用于基本数据类型的变量，则直接比较其值是否相等；如果作用于引用类型的变量，则比较其指向对象的地址值是否相等。</li>
-<li><code>equals()</code> 方法不能作用于基本数据类型的变量，因为其是Object类中的方法。<strong>如果没有重写 <code>equals()</code> 方法，则比较其指向对象的地址值是否相等</strong>；如果重写了 <code>equals()</code> 方法，如String等类，则比较其所指向对象的内容是否相等。</li>
+<li>== 如果作用于基本数据类型的变量，则直接比较其值是否相等；<strong>如果作用于引用类型的变量，则比较其指向对象的地址值是否相等</strong>。</li>
+<li><code>equals()</code> 方法的目的是判断逻辑相等，通俗点说就是内容是否相等。<strong>不能作用于基本数据类型的变量，因为其是Object类中的方法</strong>。<strong>如果没有重写 <code>equals()</code> 方法，则比较其指向对象的地址值是否相等</strong>；如果重写了 <code>equals()</code> 方法，如String等类，则比较其所指向对象的内容是否相等。例如包装类 Integer 在缓存池外的数 256，两个等于 256 的 Integer 对象使用 “==” 判断是不相等的，因为这是两个不同的对象，地址值不同。但其实逻辑上来说，这两个值应该相等，于是就使用 <code>equals()</code> 方法进行判断，Integer 类重写了 <code>equals()</code> 方法，比较其内容是否相等，这是符合逻辑的判断。</li>
 </ol>
 <hr>
 <h2 id="2-其他常用类"><a href="#2-其他常用类" class="headerlink" title="2. 其他常用类"></a>2. 其他常用类</h2><h3 id="1-String-的不变性"><a href="#1-String-的不变性" class="headerlink" title="1. String 的不变性"></a>1. String 的不变性</h3><ol>
@@ -578,6 +579,16 @@
 <ul>
 <li>因为 String 具有不变性，所以 <strong>String 的大多数操作方法，都会返回新的 String</strong>。如<code>replace()</code> <code>substring()</code>等。</li>
 </ul>
+<blockquote>
+<p><strong>String 为什么设置成不可改变的</strong></p>
+</blockquote>
+<ol>
+<li>安全性：许多参数都是字符串的形式，比如通过反射传入全类名，数据库的用户名密码等都是字符串形式，如果可以改变，导致参数错误，会造成安全问题。</li>
+<li>多线程：字符串不可改变因此也就不用担心多线程共享的问题，不需要为了线程安全进行同步。</li>
+<li>用在 hashmap 或 hashset 中，由于不可改变，一个字符串的 hashcode 值是唯一不变的。如果可以改变，已放进 map 中的字符串需要重新调整位置，造成问题。</li>
+<li>类加载器用到字符串，不可变性提供了安全保障。</li>
+<li>使字符串常量池成为可能，如果可以改变，那当多个字符串指向常量池中的同一对象时，一个字符串进行了改变，其他字符串也会跟着改变，造成问题。</li>
+</ol>
 <hr>
 <h3 id="2-String-判断相等"><a href="#2-String-判断相等" class="headerlink" title="2. String 判断相等"></a>2. String 判断相等</h3><ol>
 <li>String 判断相等有两种方法，<code>equals()</code> 和 <code>equalsIgnoreCase()</code>，后者判断相等时，会忽略大小写。<strong>String 判断相等不可以用 <code>==</code></strong>，这只是比较地址是否相等。</li>
@@ -588,6 +599,7 @@
 </ul>
 <hr>
 <h3 id="3-String-常量池"><a href="#3-String-常量池" class="headerlink" title="3. String 常量池"></a>3. String 常量池</h3><ul>
+<li>之前位于方法区，方法区在堆中。现在方法区移到元空间，<strong>字符串常量池仍然留在堆中</strong>。</li>
 <li>创建字符串的两种方式</li>
 </ul>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//直接用双引号创建</span>
@@ -783,6 +795,31 @@ Iterator<span class="token operator">&lt;</span>Integer<span class="token operat
 <li>在使用 Iterator 遍历容器的同时又对容器进行<strong>增加或者删除</strong>操作的话，会抛出版本号不符的异常。由于容器增加或删除会更新版本号，但迭代器中的版本号和容器初始状态的版本号相同，中途不会更新，当容器和迭代器版本号不同时， <strong><code>next()</code> 方法会抛出异常</strong>。</li>
 <li>迭代器中的 <code>remove()</code> 方法可以避免上述两种情况。<strong>在迭代器的 <code>remove()</code> 方法中，同步了容器和迭代器的版本号</strong>，因此删除时不会漏删，删除后使用 <code>next()</code> 方法也不会抛出异常。</li>
 </ol>
+<hr>
+<h3 id="4-fail-fast-机制"><a href="#4-fail-fast-机制" class="headerlink" title="4. fail-fast 机制"></a>4. fail-fast 机制</h3><blockquote>
+<p>fail-fast 原理</p>
+</blockquote>
+<ul>
+<li>快速失败（fail-fast）是 Java 集合中的一种机制， 在用迭代器遍历一个集合对象时，如果遍历过程中对集合对象的<strong>结构</strong>进行了修改（增加、删除），<strong>修改内容不算结构修改</strong>。则会抛出 Concurrent Modification Exception。</li>
+<li>迭代器在遍历时直接访问集合中的内容，并且在遍历过程中使用一个 <strong>modCount</strong> 变量。集合在被遍历期间如果<strong>结构</strong>发生变化，就会改变 modCount 的值。每当迭代器使用 <code>hashNext()/next()</code> 遍历下一个元素之前，都会检测 <strong>modCount 变量是否为 expectedmodCount 值</strong>，是的话就返回遍历；否则抛出异常，终止遍历。</li>
+</ul>
+<blockquote>
+<p><strong>解决方法</strong></p>
+</blockquote>
+<ol>
+<li><strong>加锁</strong>：对迭代器和添加、删除等影响集合结构的操作加同一把锁，当迭代器迭代时，使这些操作阻塞。粒度更小的锁可以加在改变 modCount 的方法上，其他操作不能在迭代器运行时修改 modCount。</li>
+<li><strong>使用 COW</strong>：首先 COW 没有 fail-fast 机制，就不可能抛出 Concurrent Modification Exception。其实现原理是 copy on write，<strong>迭代器拿到的只是快照</strong>，如果有其他线程修改集合结构，会拷贝一份数据出去修改，不会影响迭代器中的内容。但缺点也很明显：<ul>
+<li><strong>开销大</strong>：每次修改都会拷贝数组，会创建很多数组，占用内存，给 GC 造成压力。</li>
+<li><strong>实时性</strong>：由于迭代器拿到的只是快照，如果过程中其他线程修改了集合，迭代器无法获得最新的数据。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>fail-safe 机制</p>
+</blockquote>
+<ul>
+<li>JUC 包下的集合采用的都是 fail-safe 机制，这种机制的原理就是<strong>复制-修改</strong>。集合的修改会首先复制出一个新的集合，在新的集合上修改，也就是 COW 采用的机制。</li>
+</ul>
 <hr>
 <h2 id="5-比较器"><a href="#5-比较器" class="headerlink" title="5. 比较器"></a>5. 比较器</h2><h3 id="1-Comparable-接口"><a href="#1-Comparable-接口" class="headerlink" title="1. Comparable 接口"></a>1. Comparable 接口</h3><p>让目标类实现 Comparable 接口，覆盖重写 <code>compareTo()</code> 方法。这个类在 <code>sort()</code> 等方法比较时，会根据重写的比较规律进行比较。<strong>在 java.lang 包中，不需要导包</strong>。</p>
 <ol>
@@ -1401,7 +1438,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

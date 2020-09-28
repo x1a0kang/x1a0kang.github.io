@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    13 分
                 </div>
                 
 
@@ -648,7 +648,69 @@
 </li>
 </ul>
 <hr>
-<h3 id="3-ConcurrentHashMap-和-HashTable-的对比"><a href="#3-ConcurrentHashMap-和-HashTable-的对比" class="headerlink" title="3. ConcurrentHashMap 和 HashTable 的对比"></a>3. ConcurrentHashMap 和 HashTable 的对比</h3><ol>
+<h3 id="3-ConcurrentHashMap-的-put-方法"><a href="#3-ConcurrentHashMap-的-put-方法" class="headerlink" title="3. ConcurrentHashMap 的 put 方法"></a>3. ConcurrentHashMap 的 put 方法</h3><ol>
+<li>检查 val 是否为 null，如果是，抛出空指针异常；</li>
+<li>求 key 的哈希值，这里不想 hashmap 做了判读，如果 key 为 null，也会返回空指针异常；</li>
+<li>判断哈希表是否初始化，如果没有，进行初始化；</li>
+<li>定位当前位置，如果是空，CAS 写入；</li>
+<li>如果是 MOVED == -1，表示正在扩容，帮助扩容；</li>
+<li>如果当前节点有值，判断是链表还是红黑树，链表则遍历，红黑树则调用树的方法遍历；</li>
+<li>调用 addCount 方法，修改 baseCount 值，这里又涉及到 <code>size()</code> 方法和一个 CounterCell 类。</li>
+</ol>
+<hr>
+<h3 id="4-ConcurrentHashMap-键值均不能为空"><a href="#4-ConcurrentHashMap-键值均不能为空" class="headerlink" title="4. ConcurrentHashMap 键值均不能为空"></a>4. ConcurrentHashMap 键值均不能为空</h3><blockquote>
+<p><strong>思想原因</strong></p>
+</blockquote>
+<ol>
+<li>如果 key 和 val 可以等于 null，那无法判断是 <strong>get 不到返回的 null，还是就是 get 到了 null</strong>；</li>
+<li>ConcurrentHashMap 应用于并发之下，不能再调用 contains 方法进行判断。因为可能出现的情况是：<strong>原本键值就是 null，想要判断是上述哪一种情况下的 null，但并发下被另一线程删除了，再调用 contains 发现并没有这个值返回 false，就会出现问题</strong>。</li>
+<li>HashTable 同理，不能为 null 值。</li>
+</ol>
+<blockquote>
+<p><strong>代码层面</strong></p>
+</blockquote>
+<ol>
+<li>put 时对 value 判断，为 null 直接抛出空指针异常；</li>
+<li>对 key 不判断，直接求哈希值，如果 key 为 null，也会返回空指针异常；</li>
+</ol>
+<blockquote>
+<p><strong>HashMap 的处理</strong></p>
+</blockquote>
+<ol>
+<li>put 时对 value 不判断，可以为 null；</li>
+<li>对 key 判断，如果 key 为 null，哈希值直接设为 0；</li>
+</ol>
+<hr>
+<h3 id="5-Forwarding-节点和-CounterCell-类"><a href="#5-Forwarding-节点和-CounterCell-类" class="headerlink" title="5. Forwarding 节点和 CounterCell 类"></a>5. Forwarding 节点和 CounterCell 类</h3><blockquote>
+<p><strong>Forwarding 节点</strong></p>
+</blockquote>
+<ol>
+<li>哈希表扩容时会在每个桶的首节点插入 Forwarding 节点，且设定其哈希值为 MOVED = -1；</li>
+<li>当 put 时发现首节点哈希值是 -1，则说明哈希表正在扩容。</li>
+</ol>
+<blockquote>
+<p><strong>CounterCell 类</strong></p>
+</blockquote>
+<ol>
+<li><code>addCount()</code> 方法：修改 baseCount 值，每次 put 操作后都要调用。方法使用的是 CAS 操作进行更新，如果更新失败，就会将新加入的节点封装为 <strong>CounterCell 类</strong>（其实还调用了 fulladdcount() 方法），其方法内部维护了一个 CounterCell 类数组。</li>
+<li>简单的例子就是一个线程添加了一个元素，调用了 addcount 方法，这时另一个线程的 addcount 方法刚结束，使 basecount 值和期望值不同，导致 CAS 操作失败。</li>
+<li><code>size()</code> 方法其实是调用了 <code>sumCount()</code> 方法，并不是直接返回 basecount 值，而是 basecount + CounterCell 类数组长度。</li>
+</ol>
+<hr>
+<h3 id="6-ConcurrentHashMap-的-fail-safe-机制"><a href="#6-ConcurrentHashMap-的-fail-safe-机制" class="headerlink" title="6. ConcurrentHashMap 的 fail-safe 机制"></a>6. ConcurrentHashMap 的 fail-safe 机制</h3><ol>
+<li>ConcurrentHashMap 并不向 COWArrayList 那样每次都 COW。</li>
+<li>只是在迭代器类中实现了 copy，其迭代器类中维护了一个成员变量 ConcurrentHashMap map，生成迭代器时会将 map 初始化为当前 map，就是生成了一份快照。</li>
+</ol>
+<hr>
+<h3 id="7-为什么-get-方法不需要加锁"><a href="#7-为什么-get-方法不需要加锁" class="headerlink" title="7. 为什么 get 方法不需要加锁"></a>7. 为什么 get 方法不需要加锁</h3><ul>
+<li>ConcurrentHashMap 的 Node 中，<strong>value 是 volatile 修饰的</strong>，保证了修改的可见性。</li>
+</ul>
+<blockquote>
+<p>volatile</p>
+</blockquote>
+<p>JMM 中的 happens-before 原则：其中有 volatile，被 volatile 修饰的变量，写操作会保证在后续读写操作之前，防止指令重排序，保证有序性，也可以保证 get 到的是最新值。</p>
+<hr>
+<h3 id="8-ConcurrentHashMap-和-HashTable-的对比"><a href="#8-ConcurrentHashMap-和-HashTable-的对比" class="headerlink" title="8. ConcurrentHashMap 和 HashTable 的对比"></a>8. ConcurrentHashMap 和 HashTable 的对比</h3><ol>
 <li>底层数据结构：JDK1.7之前ConcurrentHashMap由<strong>分段的数组+链表</strong>实现，JDK1.8采用的数据结构和HashMap一样，<strong>数组+链表/红黑树</strong>。HashTable和JDK1.8之前的HashMap采用<strong>数组+链表</strong>的形式。</li>
 <li>实现线程安全的方式： <strong>ConcurrentHashMap **在JDK1.7时，对整个桶数组进行了分割分段（segment），每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。</strong>到了 JDK1.8 的时候已经摒弃了 Segment 的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。** 整个看起来就像是优化过且线程安全的 HashMap 。<strong>HashTable</strong> 使用 synchronized 来保证线程安全，所有操作竞争一把锁，效率非常低下。 </li>
 </ol>
@@ -1214,7 +1276,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

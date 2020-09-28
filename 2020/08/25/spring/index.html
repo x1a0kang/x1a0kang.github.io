@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-25
+                    2020-09-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    4.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    17 分
                 </div>
                 
 
@@ -506,8 +506,8 @@
 <hr>
 <h3 id="2-IoC-再理解"><a href="#2-IoC-再理解" class="headerlink" title="2. IoC 再理解"></a>2. IoC 再理解</h3><ol>
 <li>传统方法中，两个类直接发生关系（在类 A 中 new 一个 B 的对象），耦合度高；使用 IoC 思想开发，两个类不产生直接关系，对象的控制权由第三方 IoC 托管，<strong>降低了耦合性</strong>；</li>
-<li>当代码的需求产生改变时，新的需求实现类变成了 C，这时需要将 A 类中 new 的对象由 B 改为 C，如果还有其他很多地方也需要新的实现类，代码的修改非常繁琐。<strong>使用 IoC 思想开发后，修改一处配置（配置文件），即可完成修改</strong>。<ul>
-<li>小例子：在红警中，传统方法就是根据需求的不同造出了灰熊坦克、幻影坦克等；使用 IoC 思想开发后，就像红警中的多功能步兵车（A 类），根据需求不同，向其中注入不同的对象（B / C 类），就会产生不同的效果。</li>
+<li>当代码的需求产生改变时，新的需求实现类变成了 C，这时需要将 A 类中 new 的对象由 B 改为 C，如果还有其他很多地方也需要新的实现类，代码的修改非常繁琐。<strong>使用 IoC 思想开发后，对象集中管理，便于修改和配置。修改一处配置（配置文件），即可完成修改</strong>。<ul>
+<li>小例子：类似<strong>自动售货机</strong>，其中已经存放了各种货物（实例对象），选择要什么就会给你方法什么。</li>
 </ul>
 </li>
 </ol>
@@ -522,6 +522,171 @@
 <li><strong>基于构造器注入</strong>：通过 A 类中的构造器注入被调用者的实例。</li>
 </ol>
 <hr>
+<h3 id="4-容器"><a href="#4-容器" class="headerlink" title="4. 容器"></a>4. 容器</h3><ul>
+<li>BeanFactory 是一个接口，提供了 IoC 容器的简单实现，其下有许多接口和子类实现了更多的功能。</li>
+<li>ApplicationContext 功能更加强大，其子类分别有 <ul>
+<li><strong>ClassPathXmlApplicationContext</strong></li>
+<li><strong>FileSystemXmlApplicationContext</strong></li>
+<li><strong>基于注解的 AnnotationConfigApplicationContext</strong></li>
+<li><strong>专门为 web 应用准备的 WebApplicationContext</strong> 等等</li>
+</ul>
+</li>
+<li><strong>Spring 装配 Bean</strong> 的方式常用的有三种：<ol>
+<li>XML 配置：在 XML 文件中通过 <code>&lt;bean&gt; id class等属性 &lt;/bean&gt;</code> 的方式配置 bean，在程序中通过 ClassPathXmlApplicationContext 读取配置文件，获取实例对象即可。</li>
+<li>注解配置</li>
+<li>Java config 配置。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="5-注解方式装配-Bean"><a href="#5-注解方式装配-Bean" class="headerlink" title="5. 注解方式装配 Bean"></a>5. 注解方式装配 Bean</h3><p>使用注解方式的前提条件。</p>
+<ol>
+<li>引入 context 名称空间；</li>
+<li>开启注解扫描器。</li>
+</ol>
+<blockquote>
+<p><strong>常用注解</strong></p>
+</blockquote>
+<ol>
+<li>@Component：加在类上，指定把该类对象加入 IoC 容器。</li>
+<li>@Repository：作用同 @Component，在持久层使用。</li>
+<li>@Service：作用同 @Component，在业务层使用。</li>
+<li>@Controller：作用同 @Component，在控制层使用。</li>
+<li>@Resource：加载类中的变量上，表示依赖关系。<strong>如果不指定值，根据类型查找</strong>，相同类型在 IoC 容器中不能有两个。<strong>如果指定了值，那么根据名字查找</strong>。</li>
+<li>@Configuration：加在类上，表明该类是配置类，<strong>在 Java config 方式中会用到</strong>。</li>
+</ol>
+<blockquote>
+<p><strong>代码示例</strong></p>
+</blockquote>
+<ul>
+<li>持久层</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Repository<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//把对象添加到容器中,首字母会小写</span>
+<span class="token annotation punctuation">@Repository</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserDao</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"DB:保存用户"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li>业务层</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Resource<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//把UserService对象添加到IOC容器中,首字母会小写</span>
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">//如果@Resource不指定值，那么就根据类型来找--->UserDao....当然了，IOC容器不能有两个UserDao类型的对象</span>
+    <span class="token comment" spellcheck="true">//如果指定了值，那么Spring就在IOC容器找有没有id为userDao的对象。</span>
+    <span class="token annotation punctuation">@Resource</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"userDao"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> UserDao userDao<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//调用持久层方法</span>
+        userDao<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li>控制层</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Resource<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//把对象添加到IOC容器中,首字母会小写</span>
+<span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserAction</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Resource</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"userService"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> UserService userService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> String <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//调用业务层方法</span>
+        userService<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li>测试</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>ApplicationContext<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>support<span class="token punctuation">.</span>ClassPathXmlApplicationContext<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//创建容器对象，不管是否是XML配置，都要读取XML文件</span>
+        ApplicationContext ac <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"aa/applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//获得bean实例</span>
+        UserAction userAction <span class="token operator">=</span> <span class="token punctuation">(</span>UserAction<span class="token punctuation">)</span> ac<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"userAction"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//调用方法</span>
+        userAction<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>输出：</p>
+<pre><code>DB:保存用户</code></pre><hr>
+<h3 id="6-Java-config-方式装配-Bean"><a href="#6-Java-config-方式装配-Bean" class="headerlink" title="6. Java config 方式装配 Bean"></a>6. Java config 方式装配 Bean</h3><ul>
+<li>Spring In Action 作者首推使用自动装配的功能，而后是通过 Java 代码配置 bean，最后才用 XML 文件配置的方式。</li>
+</ul>
+<blockquote>
+<p><strong>配置方式</strong></p>
+</blockquote>
+<ol>
+<li>编写一个 Java 类用于显式配置，<strong>用 @Configuration 注解修饰该类</strong>，即表明该类是配置类。</li>
+<li><strong>使用 @Bean 来修饰类中的方法</strong>，该方法返回一个对象，spring 会获得这个方法返回的对象，并加入 IoC 容器中。容器中该对象的 ID 默认为方法名。</li>
+</ol>
+<blockquote>
+<p><strong>代码示例</strong></p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@org</span><span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Configuration
+<span class="token comment" spellcheck="true">//这一行就是@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Configuration</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> UserDao <span class="token function">userDao</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        UserDao userDao <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserDao</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"我是在configuration中的userDao"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> userDao<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<ul>
+<li>测试代码：要使用 @ContextConfiguration 加载配置类的信息【引入test包】 </li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>Test<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>ApplicationContext<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>support<span class="token punctuation">.</span>ClassPathXmlApplicationContext<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>test<span class="token punctuation">.</span>context<span class="token punctuation">.</span>ContextConfiguration<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//加载配置类的信息</span>
+<span class="token annotation punctuation">@ContextConfiguration</span><span class="token punctuation">(</span>classes <span class="token operator">=</span> Configuration<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test2</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test33</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        ApplicationContext ac <span class="token operator">=</span>
+                <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"bb/bean.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        UserDao userDao <span class="token operator">=</span> <span class="token punctuation">(</span>UserDao<span class="token punctuation">)</span> ac<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"userDao"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>输出：</p>
+<pre><code>我是在configuration中的userDao</code></pre><hr>
+<h3 id="7-三种方式的混合使用"><a href="#7-三种方式的混合使用" class="headerlink" title="7. 三种方式的混合使用"></a>7. 三种方式的混合使用</h3><ul>
+<li><strong>注解和 XML 配置是可以混合使用的，Java Config和 XML 也是可以混合使用的</strong> </li>
+</ul>
+<ol>
+<li>如果 Java Config 的配置类是分散的，我们一般再创建一个更高级的配置类（root），然后<strong>使用 @Import 来将配置类进行组合</strong>。</li>
+<li>如果XML的配置文件是分散的，我们也是创建一个更高级的配置文件（root），然后<strong>使用 @Import 来将配置类进行组合</strong>。</li>
+<li><strong>在 JavaConfig 引用 XML，使用 @ImportResource()</strong>。</li>
+<li><strong>在 XML 引用 Java Config，在文件中使用 <code>&lt;bean&gt;</code> 节点即可</strong> 。</li>
+</ol>
+<hr>
 <h2 id="2-AOP-面向切面编程"><a href="#2-AOP-面向切面编程" class="headerlink" title="2. AOP 面向切面编程"></a>2. AOP 面向切面编程</h2><h3 id="1-什么是-AOP"><a href="#1-什么是-AOP" class="headerlink" title="1. 什么是 AOP"></a>1. 什么是 AOP</h3><p>AOP（Aspect-Oriented Programming）：面向切面编程。能够将那些<strong>不影响业务逻辑，却为业务模块所调用的逻辑或功能（例如事务处理、日志管理、权限控制等）抽取并封装起来，形成切面，再根据业务流程的要求，把切面切入流程的特定位置</strong>。</p>
 <p>这样做可以<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
 <hr>
@@ -530,7 +695,7 @@
 <li><strong>AOP</strong>：从多个业务模块中抽取出通用的逻辑或功能，封装为一个类。<ul>
 <li><strong>这些逻辑和功能并不一定在每一个业务模块中都出现</strong>。如业务一需要事务处理，业务二需要日志管理，业务三需要权限控制，业务四需要……<strong>业务可能需要这些功能，但不是一定要，也不一定全都要</strong>。</li>
 <li>这些与业务无关，但是业务间通用的功能，可以提取封装在一个类中，<strong>既有事务处理，也有日志管理等功能</strong>。</li>
-<li>当业务流程中需要这些功能时，将其在特定的位置切入，</li>
+<li>当业务流程中需要这些功能时，将其在特定的位置切入。</li>
 </ul>
 </li>
 </ol>
@@ -546,6 +711,61 @@
 <li><strong>动态代理</strong>：动态代理类的源码是<strong>在程序运行期间由 JVM 根据反射等机制动态的生成</strong>，所以不存在代理类的字节码文件。代理类和委托类的关系是在程序运行时确定。</li>
 </ol>
 <p>具体参考：<a href="https://www.jianshu.com/p/9cdcf4e5c27d" target="_blank" rel="noopener">设计模式之——代理模式</a></p>
+<hr>
+<h3 id="4-常用注解"><a href="#4-常用注解" class="headerlink" title="4. 常用注解"></a>4. 常用注解</h3><ol>
+<li><strong>@Aspect</strong>：指定当前类为切面类，加在类上。</li>
+<li><strong>@Before(“pointCut()”)</strong>：指定当前方法为前置方法，加在 @Aspect 指定类中的方法上。</li>
+<li><strong>@After(“pointCut()”)</strong>：指定当前方法为后置方法，加在 @Aspect 指定类中的方法上。<strong>目标方法之后执行（始终执行）</strong>。</li>
+<li><strong>@Pointcut(“execution(表达式)”)</strong>：指定切入点表达式，即要拦截什么方法。</li>
+<li><strong>@AfterReturning(“pointCut()”)</strong>：返回后通知，<strong>执行方法结束前执行（返回时，可以拿到返回值），异常不执行</strong>。</li>
+<li><strong>@AfterThrowing(“pointCut()”)</strong>：异常通知，<strong>出现异常时执行</strong>。</li>
+<li><strong>@Around(“pointCut()”)</strong>：环绕通知，环绕目标方法执行。</li>
+</ol>
+<blockquote>
+<p><strong>代码示例</strong></p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>   <span class="token comment" spellcheck="true">//加入容器</span>
+<span class="token annotation punctuation">@Aspect</span>   <span class="token comment" spellcheck="true">//指定为切面类</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AOP</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">// 指定切入点表达式，拦截哪个类的哪些方法</span>
+    <span class="token annotation punctuation">@Pointcut</span><span class="token punctuation">(</span><span class="token string">"execution(* aa.*.*(..))"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">pointCut</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 前置通知 : 在执行目标方法之前执行</span>
+    <span class="token annotation punctuation">@Before</span><span class="token punctuation">(</span><span class="token string">"pointCut_()"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开始事务/异常"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 后置/最终通知：在执行目标方法之后执行  【无论是否出现异常最终都会执行】</span>
+    <span class="token annotation punctuation">@After</span><span class="token punctuation">(</span><span class="token string">"pointCut_()"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">after</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"提交事务/关闭"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 返回后通知： 在调用目标方法结束后执行 【出现异常不执行】</span>
+    <span class="token annotation punctuation">@AfterReturning</span><span class="token punctuation">(</span><span class="token string">"pointCut_()"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterReturning</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"afterReturning()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 异常通知： 当目标方法执行异常时候执行此关注点代码</span>
+    <span class="token annotation punctuation">@AfterThrowing</span><span class="token punctuation">(</span><span class="token string">"pointCut_()"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterThrowing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"afterThrowing()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 环绕通知：环绕目标方式执行</span>
+    <span class="token annotation punctuation">@Around</span><span class="token punctuation">(</span><span class="token string">"pointCut_()"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">around</span><span class="token punctuation">(</span>ProceedingJoinPoint pjp<span class="token punctuation">)</span> <span class="token keyword">throws</span> Throwable<span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"环绕前...."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        pjp<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 执行目标方法</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"环绕后...."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <hr>
 <h2 id="3-Bean"><a href="#3-Bean" class="headerlink" title="3. Bean"></a>3. Bean</h2><h3 id="1-什么是-Bean"><a href="#1-什么是-Bean" class="headerlink" title="1. 什么是 Bean"></a>1. 什么是 Bean</h3><p>Spring Bean 可复用的组件，由 Spring IoC 容器实例化、组装和管理。</p>
 <p>配置方案：</p>
@@ -564,8 +784,168 @@
 <li>websocket：该 bean 仅在当前 WebSocket 内有效。</li>
 </ol>
 <hr>
-<h3 id="3-Bean-的生命周期"><a href="#3-Bean-的生命周期" class="headerlink" title="3. Bean 的生命周期"></a>3. Bean 的生命周期</h3><hr>
-<h2 id="4-Spring-事务"><a href="#4-Spring-事务" class="headerlink" title="4. Spring 事务"></a>4. Spring 事务</h2><script>
+<h3 id="3-Bean-的生命周期"><a href="#3-Bean-的生命周期" class="headerlink" title="3. Bean 的生命周期"></a>3. Bean 的生命周期</h3><p>主要是初始化的过程比较长，首先根据类来划分：</p>
+<ul>
+<li><strong>Bean自身的方法</strong>：如调用 Bean 构造函数实例化 Bean，调用 Setter 设置 Bean 的属性值以及 init-method 和 destroy-method 所指定的方法；</li>
+<li><strong>Bean级生命周期接口方法</strong>：如 BeanNameAware、 BeanFactoryAware、 InitializingBean 和 DisposableBean，这些接口方法由 Bean 类直接实现；</li>
+<li><strong>容器级生命周期接口方法</strong>：由 <strong>InstantiationAwareBean PostProcessor</strong> 和 <strong>BeanPostProcessor(BPP)</strong> 这两个接口实现，一般称它们的实现类为“ <strong>后处理器</strong>” 。 后处理器接口一般不由 Bean 本身实现，它们独立于 Bean，实现类以容器附加装置的形式注册到Spring容器中并通过接口反射为 Spring 容器预先识别。当 Spring 容器创建任何 Bean 的时候，这些后处理器都会发生作用，所以这些后处理器的影响是全局性的。当然，用户可以通过合理地编写后处理器，让其仅对感兴趣 Bean 进行加工处理。</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li>ResouceLoader 加载配置信息</li>
+<li>BeanDefintionReader 解析配置信息，生成一个一个的 BeanDefintion</li>
+<li>BeanDefintion 由 BeanDefintionRegistry 管理起来</li>
+<li>BeanFactoryPostProcessor 对配置信息进行加工(也就是处理配置的信息，一般通过PropertyPlaceholderConfigurer来实现)</li>
+<li><strong>实例化Bean</strong></li>
+<li>如果该Bean<code>配置/实现</code>了 InstantiationAwareBean，则调用对应的方法</li>
+<li><strong>使用 BeanWarpper 来完成对象之间的属性配置(依赖)</strong></li>
+<li>如果该Bean<code>配置/实现了</code> Aware 接口，则调用对应的方法</li>
+<li>如果该Bean配置了 <strong>BeanPostProcessor 的 before 方法</strong>，则调用</li>
+<li>如果该Bean配置了 <strong><code>init-method</code></strong> 或者实现 InstantiationBean，则调用对应的方法</li>
+<li>如果该Bean配置了 <strong>BeanPostProcessor 的 after 方法</strong>，则调用</li>
+<li>将对象放入到 HashMap 中</li>
+<li>最后如果配置了 destroy 或者 DisposableBean 的方法，则执行销毁操作</li>
+</ol>
+<p>简要总结：</p>
+<ul>
+<li>BeanDefinitionReader<strong>读取Resource所指向的配置文件资源</strong>，然后解析配置文件。配置文件中每一个``解析成一个<strong>BeanDefinition对象</strong>，并<strong>保存</strong>到BeanDefinitionRegistry中；</li>
+<li>容器扫描BeanDefinitionRegistry中的BeanDefinition；调用InstantiationStrategy<strong>进行Bean实例化的工作</strong>；使用<strong>BeanWrapper完成Bean属性的设置</strong>工作；</li>
+<li>单例Bean缓存池：Spring 在DefaultSingletonBeanRegistry类中提供了一个用于缓存单实例 Bean 的<strong>缓存器</strong>，它是一个用HashMap实现的缓存器，单实例的Bean<strong>以beanName为键保存在这个HashMap</strong>中。</li>
+</ul>
+<p><img src="Spring.assets/640.webp" alt=""></p>
+<hr>
+<h2 id="4-Spring-事务"><a href="#4-Spring-事务" class="headerlink" title="4. Spring 事务"></a>4. Spring 事务</h2><h3 id="1-Spring-事务简介"><a href="#1-Spring-事务简介" class="headerlink" title="1. Spring 事务简介"></a>1. Spring 事务简介</h3><ul>
+<li><strong>Spring 事务控制是属于 Spring  DAO 模块的</strong>，因为事务还是针对持久层也就是数据库的。</li>
+<li>而一般的，<strong>Spring 的事务控制都是在 service 层做的</strong>。因为当 service 层调用了多个 DAO 层的方法，而事务控制在 DAO 层，会造成只会回滚出错的方法，其他方法不会回滚。而如果没有出错，会导致多次 commit，影响性能。</li>
+<li>事务控制分为两种：<ul>
+<li><strong>编程式事务控制</strong>：手动控制事务。</li>
+<li><strong>声明式事务控制</strong>：Spring 提供的对事务的控制管理。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-声明式事务控制"><a href="#2-声明式事务控制" class="headerlink" title="2. 声明式事务控制"></a>2. 声明式事务控制</h3><blockquote>
+<p><strong>简介</strong></p>
+</blockquote>
+<ul>
+<li>用户想要使用声明式事务控制，只需要<strong>配置</strong>即可。</li>
+<li><strong>Spring 事务控制是基于 AOP 实现的</strong>。</li>
+<li>Spring 事务控制的<strong>粒度</strong>可以是整个类，也可以是方法，但<strong>不可以是方法中的某几行</strong>。因为基于 AOP 实现，AOP 拦截的是方法。</li>
+<li>Spring 声明式事务管理器类：<ul>
+<li><strong>JDBC：DataSourceTransactionManager</strong></li>
+<li>Hibernate：HibernateTransactionManager </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>XML 方式实现声明式事务控制</strong></p>
+</blockquote>
+<ol>
+<li>配置事务管理器类：DataSourceTransactionManager</li>
+</ol>
+<pre class=" language-xml"><code class="language-xml">    <span class="token comment" spellcheck="true">&lt;!--1.配置事务的管理器类:JDBC--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>txManage<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.jdbc.datasource.DataSourceTransactionManager<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+        <span class="token comment" spellcheck="true">&lt;!--引用数据库连接池--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span></code></pre>
+<ol start="2">
+<li>配置事务管理器类如何管理事务：</li>
+</ol>
+<pre class=" language-xml"><code class="language-xml">    <span class="token comment" spellcheck="true">&lt;!--2.配置如何管理事务--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">tx:</span>advice</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>txAdvice<span class="token punctuation">"</span></span> <span class="token attr-name">transaction-manager</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>txManage<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+        <span class="token comment" spellcheck="true">&lt;!--配置事务的属性--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">tx:</span>attributes</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!--所有的方法，并不是只读--></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">tx:</span>method</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>*<span class="token punctuation">"</span></span> <span class="token attr-name">read-only</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">tx:</span>attributes</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">tx:</span>advice</span><span class="token punctuation">></span></span></code></pre>
+<ol start="3">
+<li>配置拦截哪些方法：基于 AOP，<strong>事务一般使用 advisor</strong>。</li>
+</ol>
+<pre class=" language-java"><code class="language-java">    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span><span class="token number">3</span><span class="token punctuation">.</span>配置拦截哪些方法<span class="token operator">+</span>事务的属性<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>aop<span class="token operator">:</span>config<span class="token operator">></span>
+        <span class="token comment" spellcheck="true">//拦截UserService的所有方法</span>
+        <span class="token operator">&lt;</span>aop<span class="token operator">:</span>pointcut id<span class="token operator">=</span><span class="token string">"pt"</span> expression<span class="token operator">=</span><span class="token string">"execution(* bb.UserService.*(..) )"</span><span class="token operator">/</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>aop<span class="token operator">:</span>advisor advice<span class="token operator">-</span>ref<span class="token operator">=</span><span class="token string">"txAdvice"</span> pointcut<span class="token operator">-</span>ref<span class="token operator">=</span><span class="token string">"pt"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>aop<span class="token operator">:</span>advisor<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>aop<span class="token operator">:</span>config<span class="token operator">></span></code></pre>
+<blockquote>
+<p><strong>注解方式实现声明式事务控制</strong></p>
+</blockquote>
+<ol>
+<li>配置事务管理器类：DataSourceTransactionManager</li>
+</ol>
+<pre class=" language-xml"><code class="language-xml">    <span class="token comment" spellcheck="true">&lt;!--1.配置事务的管理器类:JDBC--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>txManage<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.jdbc.datasource.DataSourceTransactionManager<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+        <span class="token comment" spellcheck="true">&lt;!--引用数据库连接池--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span></code></pre>
+<ol start="2">
+<li>开启注解方法配置事务</li>
+</ol>
+<pre class=" language-xml"><code class="language-xml">    <span class="token comment" spellcheck="true">&lt;!--开启以注解的方式实现事务控制--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">tx:</span>annotation-driven</span> <span class="token attr-name">transaction-manager</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>txManage<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span></code></pre>
+<ol start="3">
+<li>使用 <strong>@Transactional</strong> 注解进行事务控制，如果需要控制整个类的事务，就加在类上。</li>
+</ol>
+<pre class=" language-java"><code class="language-java">    <span class="token annotation punctuation">@Transactional</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        userDao<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//抛出异常，检测回滚</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        userDao<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<hr>
+<h3 id="3-事务的属性"><a href="#3-事务的属性" class="headerlink" title="3. 事务的属性"></a>3. 事务的属性</h3><p>使用事务控制时，需要设置事务的属性：</p>
+<ol>
+<li>事务的传播行为：默认 Propagation.REQUIRED。</li>
+<li>数据库的隔离级别：默认数据库的默认，加上 Spring 中自定义的四个级别（和数据库中一样）共 5 中隔离级别。</li>
+<li>超时：默认 -1</li>
+<li>只读：默认 false</li>
+<li>遇到什么异常回滚</li>
+<li>遇到什么异常不回滚</li>
+</ol>
+<hr>
+<h3 id="4-事务的传播行为"><a href="#4-事务的传播行为" class="headerlink" title="4. 事务的传播行为"></a>4. 事务的传播行为</h3><p>简单的说，当一个事务方法被另一个方法调用（可以不是事务方法），这个事务方法应该如何进行。</p>
+<blockquote>
+<p><strong>事务的七种传播行为</strong></p>
+</blockquote>
+<ol>
+<li><strong>Propagation_REQUIRED</strong>：默认的传播行为。<strong>如果当前没有事务，就新建一个事务；如果已经存在在一个事务中，就加入这个事务</strong>。外围方法和内部方法同属一个事务，不管哪个方法回滚，整个事务均回滚。</li>
+<li>Propagation_SUPPORTS：如果当前有事务，则加入事务；如果当前没有事务，则以非事务的方式运行。</li>
+<li>Propagation_MANDATORY：使用当前事务，如果没有当前事务，则抛出异常。</li>
+<li><strong>Propagation_REQUIRES_NEW</strong>：新建事务，如果存在当前事务，则将当前事务挂起。<strong>内部方法之间，内部方法与外围方法之间事务均独立</strong>。</li>
+<li>Propagation_NOT_SUPPORTED：以非事务的方式运行，如果存在当前事务，则将当前事务挂起。</li>
+<li>Propagation_NEVER：以非事务的方式运行，如果存在当前事务，则抛出异常。</li>
+<li><strong>Propagation_NESTED</strong>：如果当前没有事务，则新建事务；<strong>如果当前存在事务，新建事务属于外围事务的子事务，可以独立回滚，不影响外围事务，但外围事务回滚，子事务一定回滚</strong>。</li>
+</ol>
+<blockquote>
+<p><strong>REQUIRED、REQUIRES_NEW 和 NESTED 对比</strong></p>
+</blockquote>
+<ul>
+<li>当前不存在事务：<ul>
+<li>REQUIRED：新建事务。</li>
+<li>REQUIRES_NEW：新建事务。</li>
+<li>NESTED：新建事务。</li>
+</ul>
+</li>
+<li>当前存在事务，且内部事务异常：<ul>
+<li>REQUIRED：加入当前事务，外部事务和内部事务一起回滚。</li>
+<li>REQUIRES_NEW：新建事务，内部事务回滚，和外部事务独立，互补干扰。</li>
+<li>NESTED：新建事务，作为外部事务的子事务。内部事务异常，内部事务回滚，不影响外部事务。</li>
+</ul>
+</li>
+<li>当前存在事务，且外部事务异常：<ul>
+<li>REQUIRED：加入当前事务，外部事务和内部事务一起回滚。</li>
+<li>REQUIRES_NEW：新建事务，和外部事务独立，互补干扰，内部事务不回滚。</li>
+<li>NESTED：新建事务，作为外部事务的子事务。外部事务异常，外部事务和内部事务一起回滚。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1124,7 +1504,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

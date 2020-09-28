@@ -467,7 +467,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-08-28
+                    2020-09-23
                 </div>
                 
 
@@ -904,7 +904,7 @@
 <h3 id="3-HashMap和HashTable的区别"><a href="#3-HashMap和HashTable的区别" class="headerlink" title="3. HashMap和HashTable的区别"></a>3. HashMap和HashTable的区别</h3><ol>
 <li>线程安全：HashMap是非线程安全的；HashTable是线程安全的。如果需要线程安全建议使用ConcurrentHashMap。</li>
 <li>效率：HashTable在线程安全上会花费时间，因此HashMap效率更高。</li>
-<li>对Null key 和Null value的支持：HashMap中，null可以作为键，键是唯一的，但可以有多个键对应的值是null；HashTable中，null既不可以作为键，也不可以作为值，否则抛出NullPointerException。</li>
+<li><strong>对Null key 和Null value的支持</strong>：HashMap中，null可以作为键，键是唯一的，但可以有多个键对应的值是null；HashTable中，null既不可以作为键，也不可以作为值，否则抛出NullPointerException。</li>
 <li>容量：<ol>
 <li>创建时不指定容量值：HashMap默认初始化大小为16，每次扩充变为原来的2倍；HashTable默认初始化大小为11，每次扩充变为原来的2n + 1；</li>
 <li>创建时指定容量值：HashMap会将其扩充为2的幂次方大小；HashTable直接使用给定的大小。也就是说 HashMap 总是使用2的幂作为哈希表的大小。</li>
@@ -1199,24 +1199,26 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
+                <a href="/2020/08/25/wang-luo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="网络">
                         
-                        <span class="card-title">ArrayList源码解析</span>
+                        <span class="card-title">网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
+                            网络1. OSI 和 TCP/IP 的分层结构1. 分层介绍
+OSI的体系结构分为七层，TCP/IP 的体系结构分为四层；
+学习计算机网络使用的是一种折中的办法，分为五层的体系结构，从下到上分别为：物理层、数据链路层、网络层、运输层和应用层
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
                         </span>
                         <span class="publish-author">
                             
@@ -1252,22 +1254,19 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/linkedlist-yuan-ma-jie-xi/">
+                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="LinkedList源码解析">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
                         
-                        <span class="card-title">LinkedList源码解析</span>
+                        <span class="card-title">ArrayList源码解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            LinkedList 源码解析1. 定义及构造方法源码1. LinkedList 简介
-LinkedList 实现了 List 接口 和 Deque 接口，是一个双端链表，同时也具有队列的性质。
-
-LinkedList 实现了 Clonea
+                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
                         
                     </div>
                     <div class="publish-info">
@@ -1501,7 +1500,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

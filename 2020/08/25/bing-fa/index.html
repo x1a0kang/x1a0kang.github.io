@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9.5k
+                    10.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    35 分
+                    41 分
                 </div>
                 
 
@@ -527,13 +527,13 @@
 </ol>
 <hr>
 <h3 id="4-进程间通信的方式"><a href="#4-进程间通信的方式" class="headerlink" title="4. 进程间通信的方式"></a>4. 进程间通信的方式</h3><ol>
-<li>管道/匿名管道(pipes)</li>
-<li>命名管道(name pipes)</li>
+<li>管道/匿名管道(pipes)：实际是内核中的一段缓存，效率低，只能父子进程间通信。</li>
+<li>命名管道(name pipes)：实际是内核中的一段缓存，效率低，可以无关进程间通信。</li>
 <li>信号(signal)</li>
-<li>消息队列(message queuing)</li>
-<li>信号量(semaphores)</li>
-<li>共享内存(shared memory)</li>
-<li>套接字(sockets)</li>
+<li>消息队列(message queuing)：不适合大数据传输，有用户态和内核态之间拷贝的开销。</li>
+<li>信号量(semaphores)：实现进程间的互斥和同步。</li>
+<li>共享内存(shared memory)：进程间共享，所有进程都能看到。</li>
+<li>套接字(sockets)：不同主机间的进程通信。</li>
 </ol>
 <hr>
 <h3 id="5-线程间的同步方式"><a href="#5-线程间的同步方式" class="headerlink" title="5. 线程间的同步方式"></a>5. 线程间的同步方式</h3><ol>
@@ -647,15 +647,89 @@
 <li><strong>使用 volatile 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行</strong>。 </li>
 </ul>
 <hr>
-<h3 id="3-synchronized-关键字的底层原理"><a href="#3-synchronized-关键字的底层原理" class="headerlink" title="3. synchronized 关键字的底层原理"></a>3. synchronized 关键字的底层原理</h3><ul>
-<li><strong>synchronized 关键字的底层原理属于 JVM 层面</strong>。</li>
-<li>JDK 1.6 对锁的实现引入了大量的优化，<a href="https://gitee.com/SnailClimb/JavaGuide/blob/master/docs/java/Multithread/synchronized.md" target="_blank" rel="noopener">详细信息参考</a></li>
-<li>synchronized 锁在 1.6 之后有一个升级的过程，状态分别为<strong>无锁、偏向锁、轻量级锁和重量级锁</strong>。</li>
-<li>无锁：不需要加锁的情况，没有线程抢占资源。</li>
-<li><strong>偏向锁</strong>：大多数情况下只有一个线程访问同步资源，这时采用偏向锁，每次验证来访问的是不是这个线程，如果是则不需要加锁解锁操作。偏向锁只需要一次判断，可以减少系统开销。拿到偏向锁的线程不会主动释放锁，如果有另一个线程竞争资源，则会释放偏向锁，升级为轻量级锁。</li>
-<li><strong>轻量级锁</strong>：参与竞争的线程数不多且占用时间短，这时如果让竞争的线程阻塞，可能 CPU 阻塞和唤醒线程的时间比占用线程的时间还长，得不偿失。因此当有一个线程占用资源，而有另一个线程来竞争时，让这个线程自旋等待一段时间，如果在这段时间内占用资源的线程释放了锁，自旋的线程即可获得锁，提高了效率。JDK 1.6 后引入了自适应自旋锁，更加智能，不是只等待固定时间，而是可以根据情况调整。当等待线程自旋结束还没有获得锁时，轻量级锁就会升级为重量级锁，另外当一个线程占用资源，一个线程在自旋等待，这时又有第三个线程来竞争资源时，也会升级为重量级锁。</li>
-<li><strong>重量级锁</strong>：参与竞争的线程多，占用时间长。当资源被一个线程占用时，其他来参与竞争的线程进入阻塞状态。即控制权交给了操作系统，由操作系统控制线程的阻塞和唤醒，这个过程需要操作系统在用户态和内核态之间反复切换，会消耗大量系统资源，导致性能低下。</li>
+<h3 id="3-synchronized-关键字的底层原理"><a href="#3-synchronized-关键字的底层原理" class="headerlink" title="3. synchronized 关键字的底层原理"></a>3. synchronized 关键字的底层原理</h3><p>在使用 synchronized 来同步代码块的时候，经编译后，会在代码块的起始位置插入 <strong>monitorenter 指令</strong>，在结束或异常处插入 <strong>monitorexit 指令。</strong>当执行到 monitorenter 指令时，将会尝试获取对象所对应的 <strong>monitor</strong> 的所有权，即尝试获得对象的锁。而 synchronized 用的锁是存放在 <strong>Java对象头</strong> 中的。 </p>
+<blockquote>
+<p><strong>对象头和 monitor</strong></p>
+</blockquote>
+<ol>
+<li><p>对象头：</p>
+<p><strong>Mark Word</strong>：默认存储对象的 HashCode，分代年龄和锁标志位信息，<strong>会随着锁的变化而变化</strong>。</p>
+<p><strong>Klass Point</strong>：对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。 </p>
+</li>
+</ol>
+<p><img src="%E5%B9%B6%E5%8F%91.assets/2492081-09ff0d7367cc90d8.webp" alt=""></p>
+<ol start="2">
+<li>monitor：</li>
+</ol>
+<ul>
+<li><p>Monitor 可以理解为一个同步工具或一种同步机制，Monitor 监视器源码是 C++ 写的，通常被描述为一个对象。</p>
+</li>
+<li><p><strong>每一个被锁住的对象都会和一个 monitor 关联</strong>，同时 monitor 中有一个 Owner 字段存放拥有该锁的线程的唯一标识，表示该锁被这个线程占用。 </p>
+</li>
 </ul>
+<p><img src="%E5%B9%B6%E5%8F%91.assets/640-1601257307080.webp" alt=""></p>
+<p>Monitor 源码：</p>
+<pre class=" language-java"><code class="language-java">
+  <span class="token function">ObjectMonitor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    _header       <span class="token operator">=</span> NULL<span class="token punctuation">;</span>
+    _count        <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    _waiters      <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    _recursions   <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 线程重入次数</span>
+    _object       <span class="token operator">=</span> NULL<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 存储Monitor对象</span>
+    _owner        <span class="token operator">=</span> NULL<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 持有当前线程的owner</span>
+    _WaitSet      <span class="token operator">=</span> NULL<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// wait状态的线程列表</span>
+    _WaitSetLock  <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span>
+    _Responsible  <span class="token operator">=</span> NULL <span class="token punctuation">;</span>
+    _succ         <span class="token operator">=</span> NULL <span class="token punctuation">;</span>
+    _cxq          <span class="token operator">=</span> NULL <span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 单向列表</span>
+    FreeNext      <span class="token operator">=</span> NULL <span class="token punctuation">;</span>
+    _EntryList    <span class="token operator">=</span> NULL <span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 处于等待锁状态block状态的线程列表</span>
+    _SpinFreq     <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span>
+    _SpinClock    <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span>
+    OwnerIsThread <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span>
+    _previous_owner_tid <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span></code></pre>
+<hr>
+<blockquote>
+<p><strong>锁升级</strong></p>
+</blockquote>
+<p>synchronized 锁在 1.6 之后有一个升级的过程，状态分别为<strong>无锁、偏向锁、轻量级锁和重量级锁</strong>。</p>
+<ul>
+<li><p>无锁：不需要加锁的情况，没有线程抢占资源。</p>
+</li>
+<li><p><strong>偏向锁</strong>：大多数情况下只有一个线程访问同步资源，这时采用偏向锁。当一个新线程要获得锁时，步骤如下：</p>
+<ol>
+<li>查看 Mark Word 中偏向锁标志位是否为 0，如果是 0，用 CAS 操作将线程 ID 改为自己的线程 ID。</li>
+<li>如果标志位不是 0，查看线程 ID 是否和本线程 ID 相同，如果是，则本线程已经拿到了锁，不需要再进行额外操作。</li>
+<li>如果线程 ID 和本线程 ID 不同，则说明偏向锁被其他线程占用，升级为轻量级锁。</li>
+</ol>
+<ul>
+<li>偏向锁只有在获得锁的时候使用了一次 CAS 操作，消耗很小。</li>
+</ul>
+</li>
+<li><p><strong>轻量级锁</strong>：如果参与竞争的线程数不多且占用时间短，<strong>当有一个线程占用资源，而有另一个线程来竞争时，让这个线程自旋等待一段时间</strong>，如果在这段时间内占用资源的线程释放了锁，自旋的线程即可获得锁，提高了效率。步骤如下：</p>
+<ol>
+<li>首先在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的 Mark Word 的拷贝，然后将对象头中的 Mark Word 复制到锁记录中。</li>
+<li>拷贝成功后，虚拟机将使用 CAS 操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针，并将 Lock Record 里的 owner 指针指向对象的 Mark Word。如果成功，则获得轻量级锁，标志位为 00。</li>
+</ol>
+<ul>
+<li><strong>当等待线程自旋结束还没有获得锁时，轻量级锁就会升级为重量级锁，另外当一个线程占用资源，一个线程在自旋等待，这时又有第三个线程来竞争资源时，也会升级为重量级锁</strong>。</li>
+</ul>
+</li>
+<li><p><strong>重量级锁</strong>：参与竞争的线程多，占用时间长。当资源被一个线程占用时，其他来参与竞争的线程进入阻塞状态。即控制权交给了操作系统，由操作系统控制线程的阻塞和唤醒，这个过程需要操作系统在用户态和内核态之间反复切换，会消耗大量系统资源，导致性能低下。步骤如下：</p>
+<ul>
+<li><strong>重量级锁的状态下，对象的 mark word 为指向一个 monitor 对象的指针</strong>。 </li>
+<li>已知 monitor 中维护了三个列表，一个重入次数和一个 owner。</li>
+</ul>
+</li>
+</ul>
+<p><img src="%E5%B9%B6%E5%8F%91.assets/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f31312f32382f313637353964643162306164346662653f773d3131303126683d34303026663d7765627026733d3135363832.png" alt=""></p>
+<ol>
+<li>参与竞争的队列会首先进入 ContentionList，这是一个先进后出的结构，每次加入是在队首。</li>
+<li>当 owner 线程要释放锁时，把 ContentionList 中的等待线程加入 EntryList，并选择一个线程作为 onedeck，使其有竞争锁的权利。</li>
+<li>但 onedeck 不是一定会获取锁，这时如果有新的线程来尝试获取锁，是会和其竞争的，所以 synchronized 是非公平锁。</li>
+<li>如果 owner 线程调用了 wait 方法，则加入 waitset 中，直到调用 notify/notifyAll 被唤醒，再重新加入 EntryList。</li>
+</ol>
 <hr>
 <h3 id="4-synchronized-和-ReentrantLock-的对比"><a href="#4-synchronized-和-ReentrantLock-的对比" class="headerlink" title="4. synchronized 和 ReentrantLock 的对比"></a>4. synchronized 和 ReentrantLock 的对比</h3><ol>
 <li>两者都是<strong>可重入锁</strong>：“可重入锁”概念是：<strong>自己可以再次获取自己的内部锁</strong>。比如一个线程获得了某个对象的锁，此时这个对象锁还没有释放，当其再次想要获取这个对象的锁的时候还是可以获取的，如果不可锁重入的话，就会造成死锁。同一个线程每次获取锁，锁的<strong>计数器</strong>都自增1，所以要等到锁的计数器下降为0时才能释放锁。 </li>
@@ -668,13 +742,52 @@
 </li>
 </ol>
 <hr>
-<h3 id="5-volatile-关键字"><a href="#5-volatile-关键字" class="headerlink" title="5. volatile 关键字"></a>5. volatile 关键字</h3><ul>
-<li>Java 的内存模型：当前 Java 内存模型下，线程可以把变量读取到<strong>本地内存</strong>（如机器寄存器）中，而不是在主存中进行读写。因此可能导致一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成<strong>数据的不一致</strong>。</li>
-<li><strong>计算机的主存，寄存器等硬件知识还需要补充</strong>。</li>
-<li>要解决数据不一致的问题，就需要把变量声明为 <strong>volatile</strong>，这就指示 JVM，这个变量是不稳定的，每次使用它都到主存中进行读取。 </li>
-<li><strong>volatile 保证变量的可见性</strong>：被 volatile 修饰的变量，在写操作时会在前加一个 lock 信号，将主存内的变量锁定，其他线程拿不到变量。写操作结束之后，会调用 store 信号强行将修改后的变量刷新进主存。主存内被 volatile 修饰的变量被修改后，会检查已经将修改前的数据读入工作内存的线程，通知其读取新的变量值，废弃之前读取的变量值。</li>
-<li><strong>防止指令重排序</strong>，使用内存屏障。写之前加 StoreStore 屏障 ，写之后加 StoreLoad 屏障。读操作前加 LoadLoad 屏障，读操作后加 LoadStore 屏障。</li>
+<h3 id="5-volatile-关键字"><a href="#5-volatile-关键字" class="headerlink" title="5. volatile 关键字"></a>5. volatile 关键字</h3><blockquote>
+<p><strong>JMM（ Java 内存模型）</strong></p>
+</blockquote>
+<p>描述 Java 中各种变量的访问规则。线程有自己的工作内存，<strong>线程对变量的所有的操作(读，取)都必须在工作内存中完成，而不能直接读写主内存中的变量。</strong>因此可能导致一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在工作内存中的变量值的拷贝，造成<strong>数据的不一致</strong>。</p>
+<p><img src="%E5%B9%B6%E5%8F%91.assets/640.webp" alt=""></p>
+<blockquote>
+<p><strong>缓存一致性和嗅探</strong></p>
+</blockquote>
+<ul>
+<li><strong>缓存一致性</strong>是指，当 CPU 写数据时，如果发现操作的变量是共享变量，会发出信号通知其他 CPU 将该变量的缓存置为无效状态，因此其他 CPU 需要读取这个变量时，就会从内存重新读取。 </li>
+<li><strong>嗅探</strong>机制是指，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的数据被修改，就会将当前处理器的缓存行设置成无效状态。</li>
 </ul>
+<blockquote>
+<p><strong>happens-before</strong></p>
+</blockquote>
+<p><strong>如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须存在 happens-before 关系</strong>。 </p>
+<ol>
+<li><strong>程序次序规则</strong>：在<strong>一个线程内</strong>一段代码的<strong>执行结果是有序的。</strong>就是还会指令重排，但是随便它怎么排，结果是按照我们代码的顺序生成的不会变。</li>
+<li><strong>锁定规则</strong>：就是无论是在单线程环境还是多线程环境，对于<strong>同一个锁</strong>来说，一个线程对这个锁解锁之后，另一个线程获取了这个锁都能看到前一个线程的操作结果。</li>
+<li><strong>volatile变量规则</strong>：就是如果一个线程先去写一个 volatile 变量，然后一个线程去读这个变量，那么这个写操作的结果一定对读的这个线程可见。</li>
+<li><strong>线程启动规则</strong>：在主线程A执行过程中，启动子线程B，那么线程A在启动子线程B之前对共享变量的修改结果对线程B可见。 </li>
+<li><strong>线程终止规则</strong>：在主线程A执行过程中，子线程B终止，那么线程B在终止之前对共享变量的修改结果在线程A中可见。 </li>
+<li><strong>线程中断规则</strong>：对线程interrupt()方法的调用先行发生于被中断线程代码检测到中断事件的发生，可以通过Thread.interrupted()检测到是否发生中断。 </li>
+<li><strong>传递规则</strong>：这个简单的，就是 happens-before 原则具有传递性，即 A happens-before B ， B happens-before C，那么 A happens-before C。 </li>
+</ol>
+<blockquote>
+<p><strong>内存屏障</strong></p>
+</blockquote>
+<p>volatile 满足 happens-before 规则，其实现是用<strong>内存屏障</strong>。分为读（load）和写（store），屏障的实现在不同的处理器中不一定一样，比如 Intel 就定义了 4 个内存屏障，效果并不和以下说的一样。</p>
+<ul>
+<li><strong>LoadLoad</strong>：对于这样的语句 <code>Load1; LoadLoad; Load2</code>，在 Load2 及后续所有读取操作被执行前，保证 Load1 要读取的数据被读取完毕。 </li>
+<li><strong>LoadStore</strong>：对于这样的语句 <code>Load1; LoadStore; Store2</code>，在 Store2 及后续写入操作被执行前，保证Load1 要读取的数据被读取完毕。 </li>
+<li><strong>StoreStore</strong>：对于这样的语句 <code>Store1; StoreStore; Store2</code>，在 Store2 及后续写入操作执行前，保证Store1 的写入操作对其它处理器可见。 </li>
+<li><strong>StoreLoad</strong>：对于这样的语句 <code>Store1; StoreLoad; Load2</code>，在 Load2 及后续所有读取操作执行前，保证Store1 的写入对其他处理器可见。</li>
+</ul>
+<blockquote>
+<p><strong>volatile 实现</strong></p>
+</blockquote>
+<p> volatile 写是在前面和后面<strong>分别插入内存屏障</strong>，而 volatile 读操作是在<strong>后面插入两个内存屏障</strong>。</p>
+<ul>
+<li>volatile 在写之前加入 StoreStore，在写之后加入 StoreLoad。</li>
+<li>volatile 在读之后加入 LoadLoad 和 LoadStore。</li>
+<li><strong>理解</strong>：这样可以保证<strong>不论读写是什么顺序，都不会重排序</strong>。</li>
+</ul>
+<p><img src="%E5%B9%B6%E5%8F%91.assets/640-1601218059639.webp" alt=""></p>
+<p><img src="%E5%B9%B6%E5%8F%91.assets/640-1601218074021.webp" alt=""></p>
 <hr>
 <h3 id="6-并发编程的三个重要特性"><a href="#6-并发编程的三个重要特性" class="headerlink" title="6. 并发编程的三个重要特性"></a>6. 并发编程的三个重要特性</h3><ol>
 <li><strong>原子性</strong>：表示一个操作或多次操作，是<strong>不可中断的</strong>，这种操作一旦开始，就一直运行到结束，中间不会有任何线程上下文切换。<code>synchronized</code> 可以保证代码片段的原子性。 </li>
@@ -692,6 +805,7 @@
 <li><strong>volatile</strong> 关键字主要用于解决<strong>变量</strong>在多个线程之间的<strong>可见性</strong>，而 <strong>synchronized</strong> 关键字解决的是多个线程之间访问资源的<strong>同步性</strong>。</li>
 </ol>
 <hr>
+<h3 id="8-用户态和内核态"><a href="#8-用户态和内核态" class="headerlink" title="8. 用户态和内核态"></a>8. 用户态和内核态</h3><hr>
 <h2 id="3-ThreadLocal-和-线程池"><a href="#3-ThreadLocal-和-线程池" class="headerlink" title="3. ThreadLocal 和 线程池"></a>3. ThreadLocal 和 线程池</h2><h3 id="1-ThreadLocal-简介"><a href="#1-ThreadLocal-简介" class="headerlink" title="1. ThreadLocal 简介"></a>1. ThreadLocal 简介</h3><p>通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。<strong>如果想实现每一个线程都有自己的专属本地变量该如何解决呢？</strong>JDK 中提供的 <code>ThreadLocal</code> 类正是为了解决这样的问题。 </p>
 <p><code>ThreadLocal</code> 类主要解决的就是让<strong>每个线程绑定自己的值</strong>。如果创建了一个 <code>ThreadLocal</code> 变量，那么访问这个变量的每个线程都会有这个变量的<strong>本地副本</strong>。<strong>他们可以使用 <code>get()</code> 和 <code>set()</code> 方法来获取默认值或将其值更改为当前线程所存的副本的值</strong>，从而避免了线程安全问题。</p>
 <hr>
@@ -836,7 +950,11 @@
 <h3 id="9-ThreadPoolExecutor-类分析"><a href="#9-ThreadPoolExecutor-类分析" class="headerlink" title="9.  ThreadPoolExecutor 类分析"></a>9.  ThreadPoolExecutor 类分析</h3><ol>
 <li><p>重要参数（7大参数）分析</p>
 <ol>
-<li><strong>corePoolSize</strong>：核心线程数。定义了<strong>最小可以同时运行的线程数量</strong>。</li>
+<li><strong>corePoolSize</strong>：核心线程数。定义了<strong>最小可以同时运行的线程数量</strong>。<ol>
+<li>CPU 密集型：可以设置为 CPU 核数 + 1；</li>
+<li>IO 密集型：可以设置为 CPU 核数 * 2；</li>
+</ol>
+</li>
 <li><strong>maximumPoolSize</strong>：最大线程数。当队列中存放的任务达到队列容量时，当前可以运行的线程数变成最大线程数。</li>
 <li><strong>workQueue</strong>：等待队列，一般使用 BlockingQueue，如 ArrayBlockingQueue，LinkedBlockingQueue。当前运行的线程数到达<strong>核心线程数</strong>时，新来的任务就会被存放在队列中。 </li>
 <li><strong>keepAliveTime</strong>：当线程池中的线程数大于 <strong>corePoolSize</strong> 时，又没有新任务提交，<strong>核心线程外的线程</strong>会等待 keepAliveTime 后被回收销毁。</li>
@@ -1069,9 +1187,9 @@ pool<span class="token operator">-</span><span class="token number">1</span><spa
 <h3 id="4-CAS"><a href="#4-CAS" class="headerlink" title="4. CAS"></a>4. CAS</h3><hr>
 <h3 id="5-AQS-Abstract-Queued-Synchronizer"><a href="#5-AQS-Abstract-Queued-Synchronizer" class="headerlink" title="5. AQS(Abstract Queued Synchronizer)"></a>5. AQS(Abstract Queued Synchronizer)</h3><p>AQS核心思想是，如果被请求的共享资源<strong>空闲</strong>，则将当前请求资源的线程设置为有效的工作线程，并且将共享资源设置为<strong>锁定状态</strong>。如果被请求的共享资源被<strong>占用</strong>，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是用CLH队列锁实现的，即将<strong>暂时获取不到锁的线程加入到队列中</strong>。</p>
 <ul>
-<li>CLH(Craig,Landin,and Hagersten)队列是一个<strong>虚拟</strong>的双向队列（<strong>虚拟的双向队列即不存在队列实例，仅存在结点之间的关联关系</strong>）。AQS是将每条请求共享资源的线程封装成一个CLH锁队列的一个结点（Node）来实现锁的分配。 </li>
+<li>CLH(Craig,Landin,and Hagersten)队列是一个<strong>虚拟</strong>的双向队列（<strong>虚拟的双向队列即不存在队列实例，仅存在结点之间的关联关系</strong>）。AQS 是将每条请求共享资源的线程封装成一个CLH 锁队列的一个结点（Node）来实现锁的分配。 </li>
 </ul>
-<p>AQS使用一个 <strong>int 成员变量 state</strong> 来表示同步状态，通过内置的 FIFO 队列来完成获取资源线程的排队工作。AQS使用 CAS 对该同步状态进行原子操作实现对其值的修改。状态信息通过 protected 类型的 getState，setState，compareAndSetState 进行操作。</p>
+<p>AQS使用一个 <strong>int volatile 成员变量 state</strong> 来表示同步状态，通过内置的 FIFO 队列来完成获取资源线程的排队工作。AQS使用 CAS 对该同步状态进行原子操作实现对其值的修改。状态信息通过 protected 类型的 getState，setState，compareAndSetState 进行操作。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> state<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//共享变量，使用volatile修饰保证线程可见性</span>
 
 <span class="token comment" spellcheck="true">//返回同步状态的当前值</span>
@@ -1099,8 +1217,8 @@ pool<span class="token operator">-</span><span class="token number">1</span><spa
 <hr>
 <h3 id="7-AQS-组件"><a href="#7-AQS-组件" class="headerlink" title="7. AQS 组件"></a>7. AQS 组件</h3><ul>
 <li><strong>Semaphore</strong>（信号量）：允许多个线程同时访问。synchronized 和 ReentrantLock 都是一次只允许一个线程访问某个资源，Semaphore(信号量)可以指定多个线程同时访问某个资源。</li>
-<li><strong>CountDownLatch</strong>（倒计时器）：CountDownLatch是一个同步工具类，用来协调多个线程之间的同步。这个工具通常用来控制线程等待，它可以让某一个线程等待直到倒计时结束，再开始执行。</li>
-<li><strong>CyclicBarrier</strong>（循环栅栏）：CyclicBarrier 和 CountDownLatch 非常类似，它也可以实现线程间的技术等待，但是它的功能比 CountDownLatch 更加复杂和强大。主要应用场景和 CountDownLatch 类似。CyclicBarrier 的字面意思是可循环使用（Cyclic）的屏障（Barrier）。它要做的事情是，让一组线程到达一个屏障（也可以叫同步点）时被阻塞，直到最后一个线程到达屏障时，屏障才会开门，所有被屏障拦截的线程才会继续干活。</li>
+<li><strong>CountDownLatch</strong>（倒计时器）：CountDownLatch是一个同步工具类，用来协调多个线程之间的同步。这个工具通常用来控制线程等待，它可以用 await 方法让某一个线程等待直到倒计时结束，再开始执行，倒计时方法为 countDown。</li>
+<li><strong>CyclicBarrier</strong>（循环栅栏）：CyclicBarrier 和 CountDownLatch 非常类似，它也可以实现线程间的技术等待，但是它的功能比 CountDownLatch 更加复杂和强大。主要应用场景和 CountDownLatch 类似。CyclicBarrier 的字面意思是可循环使用（Cyclic）的屏障（Barrier）。它要做的事情是，调用 await 方法让一组线程阻塞，直到线程数量达到设定的值时，屏障才会开门，所有被屏障拦截的线程才会继续工作。并且这个屏障是可以循环使用的。</li>
 </ul>
 <hr>
 <p>AQS原理和相关源码分析的文章：</p>
@@ -1672,7 +1790,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             

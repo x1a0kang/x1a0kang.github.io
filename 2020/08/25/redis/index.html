@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.8k
+                    4.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    18 分
+                    19 分
                 </div>
                 
 
@@ -501,6 +501,7 @@
 <hr>
 <h2 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="1. 数据结构"></a>1. 数据结构</h2><h3 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a>1. String</h3><ol>
 <li><strong>String 数据结构是简单的 key-value 类型</strong>。Redis 的 String 不光可以保存文本数据，还可以保存二进制数据，并且获取字符串长度复杂度为 O(1)。</li>
+<li><strong>底层实现</strong>：简单动态字符串 SDS。</li>
 <li><strong>常用命令</strong>：<code>set,get,strlen,exists,dect,incr,setex</code> 等等。 </li>
 <li><strong>应用场景</strong>：一般常用在需要计数的场景，比如用户的访问次数、热点文章的点赞转发数量等等。</li>
 </ol>
@@ -530,6 +531,7 @@ OK
 <hr>
 <h3 id="2-List"><a href="#2-List" class="headerlink" title="2. List"></a>2. List</h3><ol>
 <li>Redis 中 List 的实现为一个 <strong>双向链表</strong>，可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销。</li>
+<li><strong>底层实现</strong>：数据量小的时候用 ziplist，一个类似 Python 里 list 的结构，用一段连续的内存储存。数据量大的时候用 linkedlist 双向链表。</li>
 <li><strong>常用命令</strong>： <code>rpush,lpop,lpush,rpop,lrange、llen</code> 等。</li>
 <li><strong>应用场景</strong>：发布与订阅或者说消息队列、慢查询。 </li>
 </ol>
@@ -559,6 +561,7 @@ OK
 <hr>
 <h3 id="3-Hash"><a href="#3-Hash" class="headerlink" title="3. Hash"></a>3. Hash</h3><ol>
 <li>Hash 类似于 JDK1.8 前的 HashMap，内部实现也差不多(数组 + 链表)。Hash 是一个 String 类型的 field 和 value 的映射表，其中 field 可以有多个，<strong>特别适合用于存储对象</strong>。比如可以用 Hash 数据结构来存储用户信息，商品信息等等。</li>
+<li><strong>底层实现</strong>：数据量小的时候用 ziplist，数据量大的时候用 hashtable。</li>
 <li><strong>常用命令：</strong> <code>hset,hmset,hexists,hget,hgetall,hkeys,hvals</code> 等。 </li>
 <li><strong>应用场景:</strong> 系统中对象数据的存储。 </li>
 </ol>
@@ -591,6 +594,7 @@ OK
 <hr>
 <h3 id="4-Set"><a href="#4-Set" class="headerlink" title="4. Set"></a>4. Set</h3><ol>
 <li>Set 类似于 Java 中的 HashSet。Redis 中的 Set 类型是一种无序集合，集合中的元素没有先后顺序。Set 提供了判断某个成员是否在一个 Set 集合内的重要接口，<strong>可以基于 Set 轻易实现交集、并集、差集的操作</strong>。Redis 可以非常方便的实现如共同关注、共同粉丝、共同喜好等功能。这个过程也就是求交集的过程。</li>
+<li><strong>底层实现</strong>：数据量小的时候用整数集合，数据量大的时候用 hashtable。</li>
 <li><strong>常用命令：</strong> <code>sadd,spop,smembers,sismember,scard,sinterstore,sunion</code> 等。 </li>
 <li><strong>应用场景:</strong> 需要存放的数据不能重复以及需要获取多个数据源交集和并集等场景 </li>
 </ol>
@@ -614,6 +618,7 @@ OK
 <hr>
 <h3 id="5-Sorted-Set"><a href="#5-Sorted-Set" class="headerlink" title="5. Sorted Set"></a>5. Sorted Set</h3><ol>
 <li>和 Set 相比，Sorted Set 增加了一个权重参数 score，使得集合中的元素能够按 score 进行有序排列，还可以通过 score 的范围来获取元素的列表。</li>
+<li><strong>底层实现</strong>：数据量小的时候用 ziplist，数据量大的时候用跳表，zskiplist 和 zskiplistnode。</li>
 <li><strong>常用命令：</strong> <code>zadd,zcard,zscore,zrange,zrevrange,zrem</code> 等。 </li>
 <li><strong>应用场景：</strong> 需要对数据根据某个权重进行排序的场景。比如在直播系统中，实时排行信息包含直播间在线用户列表，各种礼物排行榜。</li>
 </ol>
@@ -782,7 +787,7 @@ OK
 <p><strong>优点</strong>：</p>
 <ol>
 <li>写入的是紧凑的数据，文件占用空间小，全量复制，适合用作备份和灾难恢复。</li>
-<li>恢复数据速度快，在大数据量时，比 AoF快很多。</li>
+<li>恢复数据速度快，在大数据量时，比 AoF 快很多。</li>
 <li><code>bgsave</code> 不会影响其他命令，异步处理。</li>
 </ol>
 <p><strong>缺点</strong></p>
@@ -1365,7 +1370,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.4k</span>&nbsp;字
+                class="white-color">81.8k</span>&nbsp;字
             
             
             
