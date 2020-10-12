@@ -1,0 +1,1742 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Linux, 巨瑞康的个人博客">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Linux | 巨瑞康的个人博客</title>
+    <link rel="icon" type="image/png" href="/JRK.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="巨瑞康的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">巨瑞康的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">巨瑞康的个人博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Linux</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                <span class="chip bg-color">面试</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                Java学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-12
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-10-12
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    27 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="top-命令"><a href="#top-命令" class="headerlink" title="top 命令"></a>top 命令</h3><ol>
+<li><p>第一行：系统运行时间，用户数量，1分钟、5分钟和15分钟的负载情况。</p>
+</li>
+<li><p>第二行：总进程、运行、睡眠、停止和僵尸进程数。</p>
+</li>
+<li><p>第三行：CPU 信息</p>
+<ol>
+<li>us：user space——用户空间占 CPU 的百分比；</li>
+<li>sy：内核空间占 CPU 的百分比；</li>
+<li>ni：改变过优先级的进程占用CPU的百分比；</li>
+<li>id：空闲进程占 CPU 百分比；</li>
+<li>wa：IO 等待占 CPU 百分比；</li>
+<li>hi/si：硬中断和软中断占 CPU 百分比。</li>
+</ol>
+</li>
+<li><p>第四行：内存状态。</p>
+</li>
+<li><p>第五行：swap 交换区信息。</p>
+</li>
+<li><p>第七行以下：各进程状态监控（持续刷新），可用 Ctrl+C 停止后再观察。</p>
+<ol>
+<li><strong>PID：进程 ID</strong></li>
+<li>user：进程所有者</li>
+<li>PR：进程优先级</li>
+<li>NI：负值表示高优先级，正值表示低优先级</li>
+<li>VIRT：进程使用虚拟内存总量，单位 KB，VIRT=SWAP+RES </li>
+<li>RES： 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA </li>
+<li>SHR：共享内存大小</li>
+<li>S：进程状态。D=不可中断的睡眠状态 <strong>R=运行 S=睡眠</strong> T=跟踪/停止 Z=僵尸进程 </li>
+<li><strong>%CPU：上次更新到现在的CPU时间占用百分比</strong></li>
+<li><strong>%MEM：进程使用的物理内存百分比</strong></li>
+<li>TIME：进程占用 CPU 总时间</li>
+<li>COMMAND：进程名称（命令如 Java、MySQL 和 top 等）</li>
+</ol>
+<ul>
+<li><strong>默认按 CPU 占用比由高到低排序</strong>。</li>
+</ul>
+</li>
+</ol>
+<p><img src="Linux.assets/image-20200926173836955.png" alt="image-20200926173836955"></p>
+<hr>
+<ul>
+<li>在获得占用 CPU 高的进程 ID 后，可以通过 top -Hp 进程ID 查看特定进程，如下：</li>
+</ul>
+<p><img src="Linux.assets/image-20200926185225184.png" alt="image-20200926185225184"></p>
+<p>会显示出当前进程中的所有线程信息，参数参考上述参数。</p>
+<ul>
+<li><strong>也可以用 ps -ef | grep PID 看详细信息</strong>。</li>
+</ul>
+<hr>
+<h3 id="load-average-平均负载"><a href="#load-average-平均负载" class="headerlink" title="load average 平均负载"></a>load average 平均负载</h3><p>在 top 命令第一行，或 uptime 命令中，都会显示系统的平均负载，分别为 <strong>1 分钟，5 分钟和 15 分钟内的平均负载</strong>。</p>
+<ul>
+<li>系统负载：系统负载是指系统运行队列中的进程数。</li>
+<li><strong>平均负载</strong>：系统在特定时间间隔内，运行队列中的平均进程数。即处于 running/runnable（R） 状态的进程数。</li>
+</ul>
+<hr>
+<h3 id="netstat-命令"><a href="#netstat-命令" class="headerlink" title="netstat 命令"></a>netstat 命令</h3><p>执行 netstat 命令后输出如下：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@sy-suz-srv51 ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># netstat</span>
+
+Active Internet connections <span class="token punctuation">(</span>w/o servers<span class="token punctuation">)</span>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 k8sdev.sui:sun-sr-https k8sdev.suiyi.com.:34880 SYN_RECV
+tcp        0      0 k8sdev.suiyi.com.c:2379 10.1.62.21:47910        ESTABLISHED
+tcp        0      0 k8sdev.suiyi.com.c:2379 k8sdev.suiyi.com.:37790 ESTABLISHED
+tcp        0      0 sy-suz-srv:pcsync-https 10.1.62.162:49200     
+
+Active UNIX domain sockets <span class="token punctuation">(</span>w/o servers<span class="token punctuation">)</span>
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  3      <span class="token punctuation">[</span> <span class="token punctuation">]</span>         DGRAM                    18442    /run/systemd/notify
+unix  2      <span class="token punctuation">[</span> <span class="token punctuation">]</span>         DGRAM                    18444    /run/systemd/cgroups-agent
+unix  2      <span class="token punctuation">[</span> <span class="token punctuation">]</span>         DGRAM                    23822    /var/run/chrony/chronyd.sock</code></pre>
+<p>分为两部分：<strong>Active Internet connections</strong> 和 Active UNIX domain sockets。</p>
+<p>每一列分别是：</p>
+<ol>
+<li>Proto：协议，如 TCP 和 UDP。</li>
+<li>本地地址</li>
+<li>连接外部地址</li>
+<li>状态：TCP 三次握手和四次回收中的状态。<ul>
+<li>LISTEN：侦听来自远方的TCP端口的连接请求。</li>
+<li>SYN-SENT：再发送连接请求后等待匹配的连接请求（如果有大量这样的状态包，检查是否中招了）</li>
+<li>SYN-RECEIVED：再收到和发送一个连接请求后等待对方对连接请求的确认（如有大量此状态，估计被flood攻击了）</li>
+<li>ESTABLISHED：代表一个打开的连接</li>
+<li>FIN-WAIT-1：等待远程TCP连接中断请求，或先前的连接中断请求的确认</li>
+<li>FIN-WAIT-2：从远程TCP等待连接中断请求</li>
+<li>CLOSE-WAIT：等待从本地用户发来的连接中断请求</li>
+<li>CLOSING：等待远程TCP对连接中断的确认</li>
+<li>LAST-ACK：等待原来的发向远程TCP的连接中断请求的确认（不是什么好东西，此项出现，检查是否被攻击）</li>
+<li>TIME-WAIT：等待足够的时间以确保远程TCP接收到连接中断请求的确认</li>
+<li>CLOSED：没有任何连接状态</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>参数</p>
+</blockquote>
+<ul>
+<li>-a：显示所有。</li>
+<li>-t：显示 TCP 连接。</li>
+<li>-u：显示 UDP 连接。</li>
+<li>-n：使用 IP 地址。</li>
+<li>-p：显示正在使用 socket 的程序识别码（PID）和名称。</li>
+<li>-l：正在监听的连接。</li>
+<li>-s：显示统计信息。</li>
+<li>-c：持续输出。</li>
+</ul>
+<blockquote>
+<p><strong>常用命令</strong></p>
+</blockquote>
+<ol>
+<li>netstat -at/au：显示所有 TCP / UDP连接。</li>
+<li>netstat -lntup：显示所有正在监听的 TCP / UDP 连接，并显示进程信息。</li>
+<li>netstat -tunp | grep 8080：查看某一端口状态。</li>
+<li>netstat -tunp | grep PID：查看进程对应的端口。</li>
+</ol>
+<hr>
+<h3 id="jstack-命令"><a href="#jstack-命令" class="headerlink" title="jstack 命令"></a>jstack 命令</h3><p>jstack 用于生成 java 虚拟机当前时刻的线程快照。 </p>
+<pre class=" language-bash"><code class="language-bash">jstack PID + <span class="token string">"其他命令如grep"</span>
+jstack -l PID + <span class="token string">"其他命令如grep"</span> //可以查看出锁信息，查找死锁</code></pre>
+<pre class=" language-bash"><code class="language-bash">jstack 17850<span class="token operator">|</span><span class="token function">grep</span> 45d8 -A 30
+
+<span class="token string">"pool-1-thread-11"</span> <span class="token comment" spellcheck="true">#20 prio=5 os_prio=0 tid=0x00007fc860352800 nid=0x45d8 runnable [0x00007fc8417d2000]</span>
+   java.lang.Thread.State: RUNNABLE
+        at java.io.FileOutputStream.writeBytes<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+        at java.io.FileOutputStream.write<span class="token punctuation">(</span>FileOutputStream.java:326<span class="token punctuation">)</span>
+        at java.io.BufferedOutputStream.flushBuffer<span class="token punctuation">(</span>BufferedOutputStream.java:82<span class="token punctuation">)</span>
+        at java.io.BufferedOutputStream.flush<span class="token punctuation">(</span>BufferedOutputStream.java:140<span class="token punctuation">)</span>
+        - locked <span class="token operator">&lt;</span>0x00000006c6c2e708<span class="token operator">></span> <span class="token punctuation">(</span>a java.io.BufferedOutputStream<span class="token punctuation">)</span>
+        at java.io.PrintStream.write<span class="token punctuation">(</span>PrintStream.java:482<span class="token punctuation">)</span>
+        - locked <span class="token operator">&lt;</span>0x00000006c6c10178<span class="token operator">></span> <span class="token punctuation">(</span>a java.io.PrintStream<span class="token punctuation">)</span>
+        at sun.nio.cs.StreamEncoder.writeBytes<span class="token punctuation">(</span>StreamEncoder.java:221<span class="token punctuation">)</span>
+        at sun.nio.cs.StreamEncoder.implFlushBuffer<span class="token punctuation">(</span>StreamEncoder.java:291<span class="token punctuation">)</span>
+        at sun.nio.cs.StreamEncoder.flushBuffer<span class="token punctuation">(</span>StreamEncoder.java:104<span class="token punctuation">)</span>
+        - locked <span class="token operator">&lt;</span>0x00000006c6c26620<span class="token operator">></span> <span class="token punctuation">(</span>a java.io.OutputStreamWriter<span class="token punctuation">)</span>
+        at java.io.OutputStreamWriter.flushBuffer<span class="token punctuation">(</span>OutputStreamWriter.java:185<span class="token punctuation">)</span>
+        at java.io.PrintStream.write<span class="token punctuation">(</span>PrintStream.java:527<span class="token punctuation">)</span>
+        - eliminated <span class="token operator">&lt;</span>0x00000006c6c10178<span class="token operator">></span> <span class="token punctuation">(</span>a java.io.PrintStream<span class="token punctuation">)</span>
+        at java.io.PrintStream.print<span class="token punctuation">(</span>PrintStream.java:597<span class="token punctuation">)</span>
+        at java.io.PrintStream.println<span class="token punctuation">(</span>PrintStream.java:736<span class="token punctuation">)</span>
+        - locked <span class="token operator">&lt;</span>0x00000006c6c10178<span class="token operator">></span> <span class="token punctuation">(</span>a java.io.PrintStream<span class="token punctuation">)</span>
+        at com.demo.guava.HardTask.call<span class="token punctuation">(</span>HardTask.java:18<span class="token punctuation">)</span>
+        at com.demo.guava.HardTask.call<span class="token punctuation">(</span>HardTask.java:9<span class="token punctuation">)</span>
+        at java.util.concurrent.FutureTask.run<span class="token punctuation">(</span>FutureTask.java:266<span class="token punctuation">)</span>
+        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="token punctuation">(</span>ThreadPoolExecutor.java:1142<span class="token punctuation">)</span>
+        at java.util.concurrent.ThreadPoolExecutor<span class="token variable">$Worker</span>.run<span class="token punctuation">(</span>ThreadPoolExecutor.java:617<span class="token punctuation">)</span>
+        at java.lang.Thread.run<span class="token punctuation">(</span>Thread.java:745<span class="token punctuation">)</span>
+
+<span class="token string">"pool-1-thread-10"</span> <span class="token comment" spellcheck="true">#19 prio=5 os_prio=0 tid=0x00007fc860345000 nid=0x45d7 waiting on condition [0x00007fc8418d3000]</span>
+   java.lang.Thread.State: WAITING <span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+        at sun.misc.Unsafe.park<span class="token punctuation">(</span>Native Method<span class="token punctuation">)</span>
+        - parking to <span class="token function">wait</span> <span class="token keyword">for</span>  <span class="token operator">&lt;</span>0x00000006c6c14178<span class="token operator">></span> <span class="token punctuation">(</span>a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="token variable">$ConditionObject</span><span class="token punctuation">)</span>
+        at java.util.concurrent.locks.LockSupport.park<span class="token punctuation">(</span>LockSupport.java:175<span class="token punctuation">)</span></code></pre>
+<p>查找指定 PID 的堆栈信息，可以查出死锁。</p>
+<hr>
+<h3 id="jstat-命令"><a href="#jstat-命令" class="headerlink" title="jstat 命令"></a>jstat 命令</h3><p>jstat 命令可以查看堆内存各部分的使用量，以及加载类的数量。 </p>
+<ol>
+<li>类加载统计</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">C:\Users\Administrator<span class="token operator">></span>jstat -class 2060
+Loaded  Bytes  Unloaded  Bytes     Time
+ 15756 17355.6        0     0.0      11.29</code></pre>
+<ol start="2">
+<li>堆内各个区域内存大小及使用大小统计（<strong>显示的是每个区域的大小</strong>），垃圾回收次数和所用时间统计</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">C:\Users\Administrator<span class="token operator">></span>jstat -gc 2060
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU          MC     MU    CCSC      CCSU   YGC     YGCT    FGC    FGCT     GCT
+20480.0 20480.0  0.0   13115.3 163840.0 113334.2  614400.0   436045.7  63872.0 61266.5  0.0    0.0      149    3.440   8      0.295    3.735</code></pre>
+<ol start="3">
+<li>堆内存统计</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">C:\Users\Administrator<span class="token operator">></span>jstat -gccapacity 2060
+ NGCMN    NGCMX     NGC     S0C     S1C       EC      OGCMN      OGCMX       OGC         OC          MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC
+204800.0 204800.0 204800.0 20480.0 20480.0 163840.0   614400.0   614400.0   614400.0   614400.0      0.0    63872.0  63872.0      0.0      0.0      0.0    149     8</code></pre>
+<ol start="4">
+<li>总结垃圾回收统计（<strong>显示的是每个区域使用的比例</strong>）</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">C:\Users\Administrator<span class="token operator">></span>jstat -gcutil 7172
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
+ 62.12   0.00  81.36  28.82  95.68      -     12    0.736     0    0.000    0.736</code></pre>
+<p>打印 GC 信息，可以看到各个区域如 Eden、survivor 和老年代等的占用情况，GC 时间等等。</p>
+<hr>
+<h3 id="jmap-命令"><a href="#jmap-命令" class="headerlink" title="jmap 命令"></a>jmap 命令</h3><p>输出某个 java进程（使用pid）内存内的，<strong>所有对象的情况</strong>（如：产生那些对象，及其数量）。它的用途是为了展示 java 进程的内存映射信息，或者堆内存详情。  </p>
+<pre class=" language-bash"><code class="language-bash">jmap -heap PID //打印堆信息，如堆的大小，空闲比例，new old 大小等，和使用情况 new generation、Eden等
+
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># jmap -heap 27900</span>
+Attaching to process ID 27900, please wait<span class="token punctuation">..</span>.
+Debugger attached successfully.
+Client compiler detected.
+JVM version is 20.45-b01
+using thread-local object allocation.
+Mark Sweep Compact GC
+Heap Configuration: <span class="token comment" spellcheck="true">#堆内存初始化配置</span>
+   MinHeapFreeRatio <span class="token operator">=</span> 40     <span class="token comment" spellcheck="true">#-XX:MinHeapFreeRatio设置JVM堆最小空闲比率  </span>
+   MaxHeapFreeRatio <span class="token operator">=</span> 70   <span class="token comment" spellcheck="true">#-XX:MaxHeapFreeRatio设置JVM堆最大空闲比率  </span>
+   MaxHeapSize <span class="token operator">=</span> 100663296 <span class="token punctuation">(</span>96.0MB<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#-XX:MaxHeapSize=设置JVM堆的最大大小</span>
+   NewSize <span class="token operator">=</span> 1048576 <span class="token punctuation">(</span>1.0MB<span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">#-XX:NewSize=设置JVM堆的‘新生代’的默认大小</span>
+   MaxNewSize <span class="token operator">=</span> 4294901760 <span class="token punctuation">(</span>4095.9375MB<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#-XX:MaxNewSize=设置JVM堆的‘新生代’的最大大小</span>
+   OldSize <span class="token operator">=</span> 4194304 <span class="token punctuation">(</span>4.0MB<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#-XX:OldSize=设置JVM堆的‘老生代’的大小</span>
+   NewRatio <span class="token operator">=</span> 2    <span class="token comment" spellcheck="true">#-XX:NewRatio=:‘新生代’和‘老生代’的大小比率</span>
+   SurvivorRatio <span class="token operator">=</span> 8  <span class="token comment" spellcheck="true">#-XX:SurvivorRatio=设置年轻代中Eden区与Survivor区的大小比值</span>
+   PermSize <span class="token operator">=</span> 12582912 <span class="token punctuation">(</span>12.0MB<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#-XX:PermSize=&lt;value>:设置JVM堆的‘持久代’的初始大小  </span>
+   MaxPermSize <span class="token operator">=</span> 67108864 <span class="token punctuation">(</span>64.0MB<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#-XX:MaxPermSize=&lt;value>:设置JVM堆的‘持久代’的最大大小  </span>
+Heap Usage:
+New Generation <span class="token punctuation">(</span>Eden + 1 Survivor Space<span class="token punctuation">)</span>: <span class="token comment" spellcheck="true">#新生代区内存分布，包含伊甸园区+1个Survivor区</span>
+   capacity <span class="token operator">=</span> 30212096 <span class="token punctuation">(</span>28.8125MB<span class="token punctuation">)</span>
+   used <span class="token operator">=</span> 27103784 <span class="token punctuation">(</span>25.848182678222656MB<span class="token punctuation">)</span>
+   <span class="token function">free</span> <span class="token operator">=</span> 3108312 <span class="token punctuation">(</span>2.9643173217773438MB<span class="token punctuation">)</span>
+   89.71169693092462% used
+Eden Space: <span class="token comment" spellcheck="true">#Eden区内存分布</span>
+   capacity <span class="token operator">=</span> 26869760 <span class="token punctuation">(</span>25.625MB<span class="token punctuation">)</span>
+   used <span class="token operator">=</span> 26869760 <span class="token punctuation">(</span>25.625MB<span class="token punctuation">)</span>
+   <span class="token function">free</span> <span class="token operator">=</span> 0 <span class="token punctuation">(</span>0.0MB<span class="token punctuation">)</span>
+   100.0% used
+From Space: <span class="token comment" spellcheck="true">#其中一个Survivor区的内存分布</span>
+   capacity <span class="token operator">=</span> 3342336 <span class="token punctuation">(</span>3.1875MB<span class="token punctuation">)</span>
+   used <span class="token operator">=</span> 234024 <span class="token punctuation">(</span>0.22318267822265625MB<span class="token punctuation">)</span>
+   <span class="token function">free</span> <span class="token operator">=</span> 3108312 <span class="token punctuation">(</span>2.9643173217773438MB<span class="token punctuation">)</span>
+   7.001809512867647% used
+To Space: <span class="token comment" spellcheck="true">#另一个Survivor区的内存分布</span>
+   capacity <span class="token operator">=</span> 3342336 <span class="token punctuation">(</span>3.1875MB<span class="token punctuation">)</span>
+   used <span class="token operator">=</span> 0 <span class="token punctuation">(</span>0.0MB<span class="token punctuation">)</span>
+   <span class="token function">free</span> <span class="token operator">=</span> 3342336 <span class="token punctuation">(</span>3.1875MB<span class="token punctuation">)</span>
+   0.0% used
+tenured generation:   <span class="token comment" spellcheck="true">#当前的Old区内存分布  </span>
+   capacity <span class="token operator">=</span> 67108864 <span class="token punctuation">(</span>64.0MB<span class="token punctuation">)</span>
+   used <span class="token operator">=</span> 67108816 <span class="token punctuation">(</span>63.99995422363281MB<span class="token punctuation">)</span>
+   <span class="token function">free</span> <span class="token operator">=</span> 48 <span class="token punctuation">(</span>4.57763671875E-5MB<span class="token punctuation">)</span>
+   99.99992847442627% used
+Perm Generation:     <span class="token comment" spellcheck="true">#当前的 “持久代” 内存分布</span>
+   capacity <span class="token operator">=</span> 14417920 <span class="token punctuation">(</span>13.75MB<span class="token punctuation">)</span>
+   used <span class="token operator">=</span> 14339216 <span class="token punctuation">(</span>13.674942016601562MB<span class="token punctuation">)</span>
+   <span class="token function">free</span> <span class="token operator">=</span> 78704 <span class="token punctuation">(</span>0.0750579833984375MB<span class="token punctuation">)</span>
+   99.45412375710227% used</code></pre>
+<pre class=" language-bash"><code class="language-bash">jmap -histo PID //打印堆中的对象、数量、对象占用的内存大小和classname
+
+num     <span class="token comment" spellcheck="true">#instances（实例）   #bytes（字节大小）  class name（类名）</span>
+
+----------------------------------------------
+
+   1:         65220        9755240  　　　　<span class="token operator">&lt;</span>constMethodKlass<span class="token operator">></span>
+   2:         65220        8880384  　　　　<span class="token operator">&lt;</span>methodKlass<span class="token operator">></span>
+   3:         11721        8252112  　　　　<span class="token punctuation">[</span>B
+   4:          6300        6784040  　　　　<span class="token operator">&lt;</span>constantPoolKlass<span class="token operator">></span>
+   5:         75224        6218208  　　　　<span class="token punctuation">[</span>C
+   6:         93969        5163280  　　　　<span class="token operator">&lt;</span>symbolKlass<span class="token operator">></span>
+   7:          6300        4854440  　　　　<span class="token operator">&lt;</span>instanceKlassKlass<span class="token operator">></span>
+   8:          5482        4203152  　　　　<span class="token operator">&lt;</span>constantPoolCacheKlass<span class="token operator">></span>
+   9:         72097        2307104  　　　　java.lang.String
+  10:         15102        2289912  　　　　<span class="token punctuation">[</span>I
+  11:          4089        2227728  　　　　<span class="token operator">&lt;</span>methodDataKlass<span class="token operator">></span>
+  12:         28887        1386576 　　　　 org.apache.velocity.runtime.parser.Token
+  13:          6792         706368          java.lang.Class
+  14:          7445         638312          <span class="token punctuation">[</span>Ljava.util.HashMap<span class="token variable">$Entry</span><span class="token punctuation">;</span>
+
+4380:             1             16          com.sun.proxy.<span class="token variable">$Proxy208</span>
+4381:             1             16          sun.reflect.GeneratedMethodAccessor198
+4382:             1             16          com.sun.proxy.<span class="token variable">$Proxy46</span>
+4383:             1             16          org.apache.ibatis.ognl.SetPropertyAccessor
+4384:             1             16          oracle.jdbc.driver.OracleDriver
+4385:             1             16          com.sun.proxy.<span class="token variable">$Proxy181</span>
+4386:             1             16          com.sun.proxy.<span class="token variable">$Proxy82</span>
+4387:             1             16          java.util.jar.JavaUtilJarAccessImpl
+4388:             1             16          com.sun.proxy.<span class="token variable">$Proxy171</span>
+4389:             1             16          sun.reflect.GeneratedMethodAccessor136
+4390:             1             16            sun.reflect.GeneratedConstructorAccessor22
+4391:             1             16          org.elasticsearch.action.search.SearchAction
+4392:             1             16          org.springframework.core.annotation.AnnotationAwareOrderComparator
+Total       1756265      162523736</code></pre>
+<hr>
+<h3 id="tail-命令"><a href="#tail-命令" class="headerlink" title="tail 命令"></a>tail 命令</h3><p>查看日志的最优解，使用 cat 或 vim 打开日志文件可能会因为日志文件过大导致慢。</p>
+<p>tail 可以选择打印日志文件的最后 xx 行，并可以跟踪打印，有日志写入就打印。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">tail</span> service.log //打印日志文件最后十行
+<span class="token function">tail</span> -f service.log //跟踪打印打印日志文件最后十行
+<span class="token function">tail</span> -n 20 service.log //打印日志文件最后二十行
+<span class="token function">tail</span> +20 service.log //打印日志文件第二十行到最后一行</code></pre>
+<ul>
+<li>也可以用 cat service.log | grep xx 查找文件中特定的字符串</li>
+</ul>
+<hr>
+<h3 id="kill-命令"><a href="#kill-命令" class="headerlink" title="kill 命令"></a>kill 命令</h3><p>kill 命令的作用是杀死进程，其后可以跟信号编号</p>
+<ol>
+<li>kill -1：重新加载进程。</li>
+<li>kill -9：强制杀死一个进程，不能被捕获或忽略，不管进程是什么状态，直接杀死。</li>
+<li>kill -15：正常停止一个进程，进程会正常释放资源，然后停止。</li>
+</ol>
+<ul>
+<li>Ctrl + C 关闭进程是发送了一个 SIGINT 信号，其实作用相当于 kill -2 的效果，</li>
+</ul>
+<hr>
+<h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><ul>
+<li><strong>先来先服务</strong>：非抢占式，公平，考虑等待时间，不会导饥饿。</li>
+<li><strong>最短作业优先</strong>：非抢占式，不公平，考虑服务时间，会导致饥饿。</li>
+<li>最短剩余时间优先：抢占式，可以理解为最短作业优先的抢占式版本。不公平，考虑服务时间，会导致饥饿。</li>
+<li><strong>高响应比优先</strong>：响应比 = （等待时间 + 要求服务时间）/ 要求服务时间。非抢占式，综合了等待时间和服务时间，不会导致饥饿。</li>
+</ul>
+<hr>
+<ul>
+<li><strong>时间片轮转</strong>：抢占式，由时钟装置发出时钟中断通知 CPU，公平，不会产生饥饿。当时间片的大小很大，每个时间片内都可以执行完一个进程，就会退化为先来先服务方式。</li>
+<li><strong>优先级调度算法</strong>：可能是抢占也可能是抢占式，根据优先级由高到低调，可能产生饥饿。<ul>
+<li>非抢占式：每次都把一个进程处理完，再在剩下的进程中比较优先级大小，选择优先级高的进行执行。</li>
+<li>抢占式：每次有进程请求 CPU，就比较优先级，优先级高的可以抢占当前进程的 CPU。</li>
+</ul>
+</li>
+<li><strong>多级反馈队列调度算法</strong>：抢占式，</li>
+<li><strong>虚拟轮询</strong>：</li>
+<li><strong>最短进程优先</strong>：</li>
+</ul>
+<hr>
+<h3 id="虚拟地址"><a href="#虚拟地址" class="headerlink" title="虚拟地址"></a>虚拟地址</h3><p>物理地址的容量有限，会出现不够用的情况，因此引入了虚拟地址，用来扩大使用的容量。</p>
+<p><img src="Linux.assets/640.webp" alt=""></p>
+<ul>
+<li>我们程序所使用的内存地址叫做<strong>虚拟内存地址</strong>（<em>Virtual Memory Address</em>）</li>
+<li>实际存在硬件里面的空间地址叫<strong>物理内存地址</strong>（<em>Physical Memory Address</em>）。</li>
+</ul>
+<blockquote>
+<p><strong>分页</strong></p>
+</blockquote>
+<p><strong>分页是把整个虚拟和物理内存空间切成一段段固定尺寸的大小</strong>。这样一个连续并且尺寸固定的内存空间，我们叫<strong>页</strong>（<em>Page</em>）。在 Linux 下，每一页的大小为 <code>4KB</code>。虚拟地址与物理地址之间通过<strong>页表</strong>来映射，如下图： </p>
+<p><img src="Linux.assets/640-1601270617768.webp" alt=""></p>
+<p>如果内存空间不够，操作系统会把其他正在运行的进程中的「最近没被使用」的内存页面给释放掉，也就是暂时写在硬盘上，称为<strong>换出</strong>（<em>Swap Out</em>）。一旦需要的时候，再加载进来，称为<strong>换入</strong>（<em>Swap In</em>）。 </p>
+<p>分页的方式使得我们在加载程序的时候，不再需要一次性都把程序加载到物理内存中。我们完全可以在进行虚拟内存和物理内存的页之间的映射之后，并不真的把页加载到物理内存里，而是<strong>只有在程序运行中，需要用到对应虚拟内存页里面的指令和数据时，再加载到物理内存里面去。</strong> </p>
+<p>在分页机制下，虚拟地址分为两部分，<strong>页号</strong>和<strong>页内偏移</strong>。页号作为页表的索引，<strong>页表</strong>包含物理页每页所在<strong>物理内存的基地址</strong>，这个基地址与页内偏移的组合就形成了物理内存地址，见下图。 </p>
+<p><img src="Linux.assets/640-1601270840840.webp" alt=""></p>
+<hr>
+<h3 id="内核态和用户态"><a href="#内核态和用户态" class="headerlink" title="内核态和用户态"></a>内核态和用户态</h3><blockquote>
+<p>什么是内核态和用户态</p>
+</blockquote>
+<ul>
+<li>内核态：内核态就是拥有最高权限，可以访问所有的系统资源，执行所有的系统命令。</li>
+<li>用户态：用户态拥有受限的权限，只能访问部分系统资源，无法执行高权限的指令。</li>
+</ul>
+<blockquote>
+<p>为什么要区分内核态和用户态</p>
+</blockquote>
+<ol>
+<li><strong>资源的访问权限</strong>：部分资源不能令所有用户都可以访问和修改，可能会造成系统的崩溃。</li>
+<li><strong>指令的访问权限</strong>：有许多重要的指令，如清空内存，设置时钟等，如果每个用户都可以随意调用，会使系统十分危险。</li>
+</ol>
+<blockquote>
+<p>内核态和用户态的交互</p>
+</blockquote>
+<ol>
+<li>内核向用户提供了系统调用 SystemCall，用户可以通过系统调用请求内核进行处理。</li>
+</ol>
+<hr>
+<h3 id="操作系统给进程分配的内存结构"><a href="#操作系统给进程分配的内存结构" class="headerlink" title="操作系统给进程分配的内存结构"></a>操作系统给进程分配的内存结构</h3><blockquote>
+<p>组成</p>
+</blockquote>
+<p><img src="Linux.assets/2730963-a9b56e995f755767.webp" alt=""></p>
+<ul>
+<li><p>由高地址至低地址依次为：栈、共享内存映射区、堆、BSS 段、数据段和代码段。</p>
+</li>
+<li><p>另外，每个线程都有一个 PCB（程序控制块）作为进程的唯一标志。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>分段介绍</strong></p>
+</blockquote>
+<ol>
+<li>栈：栈是实现函数调用的核心结构，通常在用户空间的最高地址分配，<strong>用户程序临时创建的局部变量储存在栈中</strong>。</li>
+<li>堆：<strong>堆是用于存放进程运行中被动态分配的内存段</strong>，它的大小并不固定，可动态扩张或缩减。当进程调用 malloc 等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）。</li>
+<li>BSS：未初始化数据段，储存静态数据，即被 static 修饰的数据（可以是成员变量，<strong>也可以是局部变量</strong>），但没有显式赋初值，会被初始化为默认值。<strong>被赋值为默认初值的数据也会被放在这个区域</strong>，如 <code>static int x = 0;</code> 中显式赋值为 0，但 int 的默认值也是 0，所以会被放在 BSS 段中。</li>
+<li>数据段：初始化数据段，<strong>被显式赋初值的静态变量</strong>（可以是成员变量，<strong>也可以是局部变量</strong>）储存在这个段中。其还可以细分为只读段和读写段，常量放在只读段，不是常量的放在读写段。</li>
+<li>代码段：存放可执行的指令，高级语言编译汇编成二进制指令。通常是共享的。</li>
+</ol>
+<hr>
+<h3 id="进程的-PCB"><a href="#进程的-PCB" class="headerlink" title="进程的 PCB"></a>进程的 PCB</h3><ul>
+<li>PCB 中记录了操作系统所需的，用于描述进程的当前情况以及控制进程运行的全部信息。 </li>
+<li>PCB 可以分为调度信息和现场信息（选择题考点）。</li>
+<li>PCB 保存在内核中，有线性、<strong>链式</strong>和索引三种组织方式。</li>
+</ul>
+<p>PCB 一般包括以下部分：</p>
+<ol>
+<li>进程 ID：每个进程唯一的 ID，即 ps 或 top 命令中看到的 PID。</li>
+<li>特征信息：分为用户进程和内核进程等。</li>
+<li>进程状态：运行、就绪和阻塞等。</li>
+<li>优先级：标志进程的优先级大小。</li>
+<li>地址：进程程序块和数据块的地址。</li>
+<li>通信机制：实现进程同步和通信的机制，如信号量，消息队列等。</li>
+<li>处理机状态：处理机状态信息主要是由<strong>处理机的各种寄存器中的内容</strong>组成的。处理机在运行时，许多信息都放在寄存器中。当处理机被中断时，所有这些信息都必须保存在 PCB 中，以便在该进程重新执行时，能从断点继续执行。这些寄存器包括：<ol>
+<li>通用寄存器：用户可视寄存器，用于暂存信息。</li>
+<li>指令寄存器：存放要执行的下一条指令。</li>
+<li>程序状态字 PSW：含状态信息，如条件码、执行方式和中断屏蔽标志等。</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 id="共享内存的实现"><a href="#共享内存的实现" class="headerlink" title="共享内存的实现"></a>共享内存的实现</h3><p><img src="Linux.assets/20180416112848158" alt=""></p>
+<p>操作系统中采用了虚拟内存技术，每个内存都有自己的 PCB 和地址空间，并且有一个页表将虚拟地址和物理地址进行映射。</p>
+<p><strong>两个不同进程中的虚拟地址映射到同一块物理地址</strong>，这块区域就成为了这两个进程的<strong>共享内存</strong>。</p>
+<p><strong>相关函数</strong>：mmap？</p>
+<ol>
+<li>shmget()：创建共享内存。</li>
+<li>shmctl()：操作共享内存，可删除共享内存。</li>
+<li>shmat()：关联共享内存，与进程关联。</li>
+<li>shmdt()：去关联共享内存。</li>
+</ol>
+<p>优点：速度快。</p>
+<p>缺点：<strong>没有同步机制</strong>，不能保证一个进程在写的同时不会有另一个进程来读写，所以<strong>需要使用信号量来进行同步</strong>。</p>
+<hr>
+<h3 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h3><p>三种，五种，七种，之间的状态转移。</p>
+<hr>
+<h3 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h3><p>守护进程是一个<strong>在后台运行并且不受任何终端控制</strong>的进程。 </p>
+<p>用户使守护进程独立于所有终端是因为，在守护进程从一个终端启动的情况下，这同一个终端可能被其他的用户使用。</p>
+<p>例如一个终端被重复使用时，后者可能收到前者守护进程的错误信息，或者后者由终端键入的某些信号会影响前者守护进程的运行。</p>
+<blockquote>
+<p><strong>守护进程的作用</strong></p>
+</blockquote>
+<ol>
+<li>后台运行。</li>
+<li>不受任何终端控制。</li>
+</ol>
+<ul>
+<li>如启动了一个 Tomcat，但关闭终端后网页也就无法访问了，使用守护进程可以使其一直存在。</li>
+<li>或如把 Redis 设置为守护进程，在后台运行不依赖启动终端。</li>
+</ul>
+<blockquote>
+<p>创建一个守护进程</p>
+</blockquote>
+<ol>
+<li>创建子进程，终止父进程，使子进程成为一个僵尸进程，在形式上做到与终端的分离。</li>
+<li><strong>在子进程中创建新会话</strong>：这个步骤是创建守护进程中最重要的一步，在这里<strong>使用的是系统函数 setsid</strong>。 <ul>
+<li>setsid 函数用于创建一个新的会话，并担任该会话组的组长。调用 setsid 的三个作用：让进程摆脱<strong>原会话</strong>的控制、让进程摆脱<strong>原进程组</strong>的控制，和让进程摆脱<strong>原控制终端</strong>的控制。 </li>
+<li>在调用fork函数时，子进程全盘拷贝父进程的会话期(session，是一个或多个进程组的集合)、进程组、控制终端等，虽然父进程退出了，但原先的会话期、进程组、控制终端等并没有改变，因此，那还不是真正意义上使两者独立开来。setsid 函数能够使进程完全独立出来，从而脱离所有其他进程的控制。 </li>
+</ul>
+</li>
+<li>改变工作目录：使用 fork 创建的子进程也继承了父进程的当前工作目录。由于在进程运行过程中，当前目录所在的文件系统不能卸载，因此，把当前工作目录换成其他的路径，如 “/” 或 “/tmp” 等。<strong>改变工作目录的常见函数是 chdir</strong>。 </li>
+<li>重设文件创建掩码：文件创建掩码是指屏蔽掉文件创建时的对应位。由于使用 fork 函数新建的子进程继承了父进程的文件创建掩码，这就给该子进程使用文件带来了诸多的麻烦。因此，把文件创建掩码设置为 0，可以大大增强该守护进程的灵活性。设置文件创建掩码的函数是 umask，通常的使用方法为umask(0)。 </li>
+<li>关闭文件描述符：用 fork 新建的子进程会从父进程那里继承一些已经打开了的文件。这些被打开的文件可能永远不会被守护进程读或写，但它们一样消耗系统资源，可能导致所在的文件系统无法卸载。 </li>
+</ol>
+<hr>
+<h3 id="fork-父子进程"><a href="#fork-父子进程" class="headerlink" title="fork 父子进程"></a>fork 父子进程</h3><p><code>fork()</code> 函数用于从一个<strong>已经存在</strong>的进程内创建一个新的进程，新的进程称为“子进程”，相应地称创建子进程的进程为“父进程”。</p>
+<p>使用 <code>fork()</code> 函数得到的子进程是父进程的复制品，<strong>子进程完全复制了父进程的资源，包括进程上下文、代码区、数据区、堆区、栈区、内存信息、打开文件的文件描述符、信号处理函数、进程优先级、进程组号、当前工作目录、根目录、资源限制和控制终端等信息</strong>，而<strong>子进程与父进程的区别有进程号、资源使用情况和计时器等</strong>。 </p>
+<p>注意：<strong>父子进程的运行先后顺序是完全随机的（取决于系统的调度）</strong>，也就是说在使用 <code>fork()</code> 函数的默认情况下，无法控制父进程在子进程前进行还是子进程在父进程前进行。 </p>
+<hr>
+<h3 id="IO-模型"><a href="#IO-模型" class="headerlink" title="IO 模型"></a>IO 模型</h3><p>IO 模型共有五种：阻塞、非阻塞、多路复用、信号驱动和异步 IO。</p>
+<p>假设应用进程通过系统调用 recvfrom 接收数据：</p>
+<ol>
+<li>阻塞 IO：阻塞 I/O 是最简单的 I/O 模型，一般表现为进程或线程等待某个条件，如果条件不满足，则一直等下去。条件满足，则进行下一步操作。 <strong>缺点</strong>：比较耗费时间，适合并发低，时效性要求低的情况。</li>
+<li>非阻塞 IO：应用进程与内核交互，目的未达到之前，不再一味的等着，而是直接返回。然后<strong>通过轮询的方式，不停的去问内核数据准备有没有准备好</strong>。如果某一次轮询发现数据已经准备好了，那就把数据拷贝到用户空间中。 <strong>缺点</strong>：需要一直轮询，消耗大。</li>
+<li>信号驱动 IO：应用进程在读取文件时通知内核，如果某个 socket 的某个事件发生时，请向我发一个信号。在收到信号后，信号对应的处理函数会进行后续处理。</li>
+<li><strong>多路复用 IO</strong>：多个进程的 IO 可以注册到同一个管道上，这个管道会统一和内核进行交互。当管道中的某一个请求需要的数据准备好之后，进程再把对应的数据拷贝到用户空间中。 <strong>多路复用是阻塞的</strong>。</li>
+<li>异步 IO：应用进程把 IO 请求传给内核后，<strong>完全由内核去操作文件拷贝</strong>。内核完成相关操作后，会发信号告诉应用进程本次 IO 已经完成。 </li>
+</ol>
+<ul>
+<li><strong>同步和异步</strong>：以上五种模型，前四种都是同步模型，这里的同步是指<strong>将数据从内核拷贝至用户的过程</strong>是谁处理的，如果是用户复制的，就是同步，如果是内核帮忙复制的，就是异步。</li>
+</ul>
+<hr>
+<h3 id="从内核到用户的拷贝"><a href="#从内核到用户的拷贝" class="headerlink" title="从内核到用户的拷贝"></a>从内核到用户的拷贝</h3><ol>
+<li>从硬盘/磁盘将数据拷贝至内核缓冲区。</li>
+<li>从内核缓冲区拷贝到用户缓冲区。</li>
+<li>从用户缓冲区进入内核拷贝到 socket 缓冲区（在内核中）。</li>
+</ol>
+<blockquote>
+<p><strong>零拷贝</strong></p>
+</blockquote>
+<p>sendfile 命令可以实现零拷贝。</p>
+<ol>
+<li>从硬盘/磁盘将数据拷贝至内核缓冲区。</li>
+<li>从内核缓冲区拷贝到 socket 缓冲区（在内核中）。</li>
+</ol>
+<ul>
+<li>省去了两次状态转换和复制，效率更高。</li>
+</ul>
+<hr>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><blockquote>
+<p>select 和 poll 简介</p>
+</blockquote>
+<ol>
+<li>select：文件描述符数量有限，默认1024 个，每次都要复制所有的 FD，并且每次都要轮询，效率低。</li>
+<li>poll：封装了结构，文件描述符数量不受限，其他和 select 一样。</li>
+</ol>
+<blockquote>
+<p><strong>epoll 的三个关键要素</strong></p>
+</blockquote>
+<ol>
+<li>mmap：<strong>共享内存</strong>。将用户空间和内核空间中的一块地址映射到同一块物理地址上，减少内核和用户之间的数据交换，节省时间，效率更高。</li>
+<li>红黑树：将所有 FD 以红黑树的结构储存起来，在添加或删除时红黑树的时间复杂度都是 O(logN)。</li>
+<li>链表：将由事件发生的 FD 加入一个链表，返回时不用再在所有 FD 中轮询，只要处理链表中的 FD 即可。</li>
+</ol>
+<blockquote>
+<p>epoll 的三个函数</p>
+</blockquote>
+<ol>
+<li>epoll_create：创建文件描述符，即在共享内存中创建了一个红黑树的头结点（个人理解）。</li>
+<li>epoll_ctl：操作描述符，可以是添加、修改和删除描述符。</li>
+<li>epoll_wait：等待返回。</li>
+</ol>
+<blockquote>
+<p><strong>水平触发和边缘触发</strong></p>
+</blockquote>
+<p><strong>水平触发</strong>：监测到有事件发生的 FD，只要数据还没有被读取完/还没有写完，每次都会通知处理。</p>
+<p><strong>边缘触发</strong>：监测到有事件发生的 FD，只有第一次会通知处理，之后只有新的事件发生才会再次通知，不然就不会通知。</p>
+<p>例如：没有事件时是 0，有事件是 1。只要状态是 1，水平触发就会一直通知；但边缘触发只有由 0 变成 1 才会通知。水平触发像是水平线一样，边缘触发是那个上升的边缘。</p>
+<p><strong>对比</strong>：</p>
+<ol>
+<li><strong>效率</strong>：水平触发在高并发，大流量情况下效率不如边缘触发。</li>
+<li><strong>事件丢失</strong>：水平触发比较简单，不会造成事件丢失。边缘触发可能会造成事件丢失，如果一次没有读完，以后再也没有事件发生，剩下的数据就永远都拿不到了。</li>
+</ol>
+<blockquote>
+<p>实现方式</p>
+</blockquote>
+<p>内核返回链表 rdlist 后，里面的 FD 都会被取出，调用对应的函数，rdlist 清空。</p>
+<p>水平触发下，没有读完数据的 FD 会重新加入 rdlist，因此下一次还会通知。</p>
+<p>边缘触发下，所有 FD 都不会再加入 rdlist，因此不会再通知。</p>
+<hr>
+<h3 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h3><p>同步：发出调用后，一直等待结果的返回，再去执行其他内容。</p>
+<p>异步：发出调用后，去执行其他内容，结构返回后再进行处理。</p>
+<blockquote>
+<p><strong>优缺点</strong></p>
+</blockquote>
+<p><strong>同步的优点</strong>：</p>
+<ol>
+<li>流程简单。</li>
+<li>容易捕获、处理异常。</li>
+</ol>
+<p><strong>同步的缺点</strong>：</p>
+<ul>
+<li>每次调用后都需要等待，如果耗时长会造成用户体验不好。</li>
+</ul>
+<p><strong>异步的优点</strong>：</p>
+<ol>
+<li>在等待结果期间可以做额外工作。</li>
+<li>可以在执行过程中释放一些资源，避免阻塞，等到结果返回再重新获取。</li>
+<li>可以等多个结果返回后，统一返回结果集，提高效率。</li>
+</ol>
+<p><strong>异步的缺点</strong></p>
+<ol>
+<li>缺乏顺序性。</li>
+<li>调试困难，不易捕获、处理异常。</li>
+</ol>
+<hr>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">巨瑞康</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://x1a0kang.github.io/2020/10/12/linux/">https://x1a0kang.github.io/2020/10/12/linux/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">巨瑞康</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                                    <span class="chip bg-color">面试</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/10/12/linux/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Linux">
+                        
+                        <span class="card-title">Linux</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            top 命令
+第一行：系统运行时间，用户数量，1分钟、5分钟和15分钟的负载情况。
+
+第二行：总进程、运行、睡眠、停止和僵尸进程数。
+
+第三行：CPU 信息
+
+us：user space——用户空间占 CPU 的百分比；
+sy：内核空间占 
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    Java学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/28/she-ji-mo-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="设计模式">
+                        
+                        <span class="card-title">设计模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            设计模式1. 单例模式1. 单例模式简介单例模式就是保证一个类只有一个实例。
+目的：频繁的创建一个类的对象、管理对象和销毁对象是十分耗费资源的，只创建一个对象来避免这些消耗。某些特殊情况下，要求一个类的对象只能有一个。
+特点：关键在于构造器
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    Java学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">巨瑞康</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">94.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/x1a0kang" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:18810298505@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=976372548" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 976372548" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

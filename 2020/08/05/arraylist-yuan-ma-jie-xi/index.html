@@ -467,14 +467,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-10-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.7k
                 </div>
                 
 
@@ -615,7 +615,7 @@
 <li><strong>判断是否需要扩容还要再看文章理解</strong>。</li>
 </ul>
 <hr>
-<h3 id="3-ArrayList-中方法部分源码"><a href="#3-ArrayList-中方法部分源码" class="headerlink" title="3. ArrayList 中方法部分源码"></a>3. ArrayList 中方法部分源码</h3><pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
+<h3 id="4-ArrayList-中方法部分源码"><a href="#4-ArrayList-中方法部分源码" class="headerlink" title="4. ArrayList 中方法部分源码"></a>4. ArrayList 中方法部分源码</h3><pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      *返回此列表中的元素数。 
      */</span>
     <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -776,6 +776,13 @@
 <li>其中 <code>add()</code> 方法可以有<strong>两个入参</strong>，第一个参数为插入数组的位置，第二个为插入的元素。这种插入方式，插入后后方元素要全部后移，操作方式是用 <code>System.arraycopy()</code> ，会产生新的数组，消耗较大。相比之下，<strong>LinkedList 中有相同的方法，效率更高</strong>。</li>
 <li><strong><code>toArray()</code> 方法还要再看文章理解</strong>。</li>
 </ul>
+<hr>
+<h3 id="5-时间复杂度"><a href="#5-时间复杂度" class="headerlink" title="5. 时间复杂度"></a>5. 时间复杂度</h3><ol>
+<li>get()：恒定 O(1)。</li>
+<li>add()：在最后添加，O(1)，如果遇到扩容，当前添加是 O(N)，但平均下来还是 O(1)。</li>
+<li>add(index, element)：O(N)，因为要移动元素。</li>
+<li>remove()：O(N)，因为要移动元素。</li>
+</ol>
 <hr>
 <h2 id="2-ArrayList-面试问题总结"><a href="#2-ArrayList-面试问题总结" class="headerlink" title="2. ArrayList 面试问题总结"></a>2. ArrayList 面试问题总结</h2><h3 id="1-ArrayList的扩容机制"><a href="#1-ArrayList的扩容机制" class="headerlink" title="1. ArrayList的扩容机制"></a>1. ArrayList的扩容机制</h3><ol>
 <li>ArrayList源码中有三个构造函数。其中<strong>无参构造，ArrayList的长度为0，直到添加第一个元素时进行扩容，大小为10</strong>。</li>
@@ -1060,26 +1067,26 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/hashmap-yuan-ma-jie-xi/">
+                <a href="/2020/08/25/wang-luo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HashMap源码解析">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="网络">
                         
-                        <span class="card-title">HashMap源码解析</span>
+                        <span class="card-title">网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HashMap 源码解析1. JDK 1.8 前后的区别1. HashMap 简介HashMap 继承了 AbstractMap ，实现了 Map、cloneable 和java.io.serializable 接口。
-
-继承了 Abstr
+                            网络1. OSI 和 TCP/IP 的分层结构1. 分层介绍
+OSI的体系结构分为七层，TCP/IP 的体系结构分为四层；
+学习计算机网络使用的是一种折中的办法，分为五层的体系结构，从下到上分别为：物理层、数据链路层、网络层、运输层和应用层
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
                         </span>
                         <span class="publish-author">
                             
@@ -1115,22 +1122,21 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/linkedlist-yuan-ma-jie-xi/">
+                <a href="/2020/08/05/hashmap-yuan-ma-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="LinkedList源码解析">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HashMap源码解析">
                         
-                        <span class="card-title">LinkedList源码解析</span>
+                        <span class="card-title">HashMap源码解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            LinkedList 源码解析1. 定义及构造方法源码1. LinkedList 简介
-LinkedList 实现了 List 接口 和 Deque 接口，是一个双端链表，同时也具有队列的性质。
+                            HashMap 源码解析1. JDK 1.8 前后的区别1. HashMap 简介HashMap 继承了 AbstractMap ，实现了 Map、cloneable 和java.io.serializable 接口。
 
-LinkedList 实现了 Clonea
+继承了 Abstr
                         
                     </div>
                     <div class="publish-info">
@@ -1364,7 +1370,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.8k</span>&nbsp;字
+                class="white-color">94.3k</span>&nbsp;字
             
             
             

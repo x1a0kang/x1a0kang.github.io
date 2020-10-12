@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-28
+                    2020-10-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    14k
+                    14.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    51 分
+                    52 分
                 </div>
                 
 
@@ -1011,6 +1011,19 @@ SELECT STU.name, STU.gender,class.name FROM STU (INNER) JOIN class ON STU.'class
 <li>读操作多的情况下，MyISAM 更好，因为 InnoDB 要维护更多的数据。</li>
 </ul>
 <hr>
+<h3 id="13-InnoDB-和-MyISAM-的应用场景"><a href="#13-InnoDB-和-MyISAM-的应用场景" class="headerlink" title="13. InnoDB 和 MyISAM 的应用场景"></a>13. InnoDB 和 MyISAM 的应用场景</h3><p>MyISAM：</p>
+<ol>
+<li>做很多 count 计算的场景；</li>
+<li>查询非常频繁的场景，因为 InnoDB 要维护的东西更多，比如有 MVCC 的存在，就要有 undolog，旧版本链，都需要维护。</li>
+<li>条件：不需要事务，不需要外键等等。</li>
+</ol>
+<p>InnoDB：</p>
+<ol>
+<li>需要事务控制；</li>
+<li>表更新和查询都比较频繁的场景，因为 InnoDB 的行锁可以提高并发量。</li>
+<li>事务日志，故障恢复更好。</li>
+</ol>
+<hr>
 <h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2. 事务"></a>2. 事务</h2><h3 id="1-什么是事务"><a href="#1-什么是事务" class="headerlink" title="1. 什么是事务"></a>1. 什么是事务</h3><p>概念：<strong>事务是逻辑上的一组操作，要么同时成功，要么同时失败</strong>。</p>
 <p>举例：<strong>事务最经典也经常被拿出来说例子就是转账了</strong>。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么都成功，要么都要失败。</p>
 <p>使用步骤：</p>
@@ -1199,11 +1212,13 @@ ROLLBACK</code></pre>
 <hr>
 <h3 id="11-建立索引的原则"><a href="#11-建立索引的原则" class="headerlink" title="11. 建立索引的原则"></a>11. 建立索引的原则</h3><ol>
 <li>对于经常查询的字段，建立索引；</li>
+<li>尽量选择唯一的列建立索引，效率更高；</li>
 <li>频繁增删改的字段，不建议建立索引；</li>
 <li>索引数量适当，不建议建立太多索引；</li>
 <li>数据量小的表不建议建立索引；</li>
 <li>区分度低的列不建议建立索引；</li>
 <li>尽量对字段小的列建立索引，如 INT 肯定比 VARCHAR(100) 字段小；</li>
+<li>尽量使用前缀进行索引，如 varchar 很长的列。</li>
 </ol>
 <hr>
 <h3 id="12-命中索引但效率低"><a href="#12-命中索引但效率低" class="headerlink" title="12. 命中索引但效率低"></a>12. 命中索引但效率低</h3><ol>
@@ -1275,7 +1290,7 @@ ROLLBACK</code></pre>
 <li>由于 MySQL 的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然多个事务是访问不同行的记录， 但是<strong>如果使用相同的索引键， 是会出现锁冲突的</strong>。</li>
 </ul>
 <hr>
-<h3 id="5-间隙锁"><a href="#5-间隙锁" class="headerlink" title="5. 间隙锁"></a>5. 间隙锁</h3><p>当我们<strong>用范围条件检索数据</strong>而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给<strong>符合范围条件的已有数据记录的索引项加锁</strong>；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”。InnoDB 也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁。 </p>
+<h3 id="5-间隙锁"><a href="#5-间隙锁" class="headerlink" title="5. 间隙锁"></a>5. 间隙锁</h3><p>当我们<strong>用范围条件检索数据</strong>而不是相等条件检索数据，并请求共享或排他锁时，InnoDB 会给<strong>符合范围条件的已有数据记录的索引项加锁</strong>；对于键值在条件范围内但并不存在的记录，叫做 “ 间隙（GAP) ”。InnoDB 也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁。 </p>
 <blockquote>
 <p><strong>间隙锁的作用</strong></p>
 </blockquote>
@@ -2122,7 +2137,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.8k</span>&nbsp;字
+                class="white-color">94.3k</span>&nbsp;字
             
             
             

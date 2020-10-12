@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-23
+                    2020-10-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.2k
+                    4.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    18 分
+                    19 分
                 </div>
                 
 
@@ -910,7 +910,7 @@
 <li>创建时指定容量值：HashMap会将其扩充为2的幂次方大小；HashTable直接使用给定的大小。也就是说 HashMap 总是使用2的幂作为哈希表的大小。</li>
 </ol>
 </li>
-<li>底层数据结构：HashMap在JDK1.8以后，当<strong>链表</strong>长度大于阈值（默认为8）而<strong>数组</strong>长度小于 64时，那么会选择先进行数组扩容，当<strong>数组</strong>长度大于64时，将链表转化为红黑树，以减少搜索时间；HashTable没有这样的机制。</li>
+<li>底层数据结构：HashMap在 JDK1.8 以后，当<strong>链表</strong>长度大于阈值（默认为8）而<strong>数组</strong>长度小于 64 时，那么会选择先进行数组扩容，当<strong>数组</strong>长度大于 64 时，将链表转化为红黑树，以减少搜索时间；HashTable 没有这样的机制。</li>
 </ol>
 <hr>
 <h3 id="4-HashMap和HashSet的区别"><a href="#4-HashMap和HashSet的区别" class="headerlink" title="4. HashMap和HashSet的区别"></a>4. HashMap和HashSet的区别</h3><ul>
@@ -940,6 +940,24 @@
 <td align="center">HashSet使用成员对象来计算hashcode值，对于两个对象来说hashcode可能相同，所以要用<code>equals()</code>方法用来判断对象的相等性</td>
 </tr>
 </tbody></table>
+<hr>
+<h3 id="5-解决哈希冲突的方法"><a href="#5-解决哈希冲突的方法" class="headerlink" title="5. 解决哈希冲突的方法"></a>5. 解决哈希冲突的方法</h3><blockquote>
+<p>三种方法</p>
+</blockquote>
+<ol>
+<li>拉链法：HashMap 采用的就是这种方法。</li>
+<li>开放地址法：在数组中再次探查可以使用的位置，有线性探查、二次探查，伪随机探查等。</li>
+<li>再哈希法：一个哈希函数冲突，换另一个哈希函数。</li>
+<li>建立公共溢出区：和基本表产生冲突的元素，放入公共溢出区。</li>
+</ol>
+<blockquote>
+<p><strong>对比</strong></p>
+</blockquote>
+<ol>
+<li><strong>对扩容的要求</strong>：拉链法即使数组满了，发生哈希冲突也可以不用扩容，而开放地址法不可以。</li>
+<li><strong>内存占用</strong>：拉链法的指针会多占用空间，但由于链表上的节点是动态申请的，不会造成资源浪费。当要存储的元素本身尺寸很大时，指针的开销可以忽略不计了。</li>
+<li><strong>操作</strong>：拉链法<strong>查找</strong>简单，只要在链表上查找，且是指针操作。开放地址法根据策略不同有不同的查找方式，比较复杂。同理拉链法<strong>删除</strong>操作也简单，而开放地址法不能真正删除某一位置的元素，只能打上标记，否则其他位置和其产生哈希冲突的元素就再也找不到了。</li>
+</ol>
 <hr>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1199,26 +1217,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/25/wang-luo/">
+                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="网络">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
                         
-                        <span class="card-title">网络</span>
+                        <span class="card-title">ArrayList源码解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            网络1. OSI 和 TCP/IP 的分层结构1. 分层介绍
-OSI的体系结构分为七层，TCP/IP 的体系结构分为四层；
-学习计算机网络使用的是一种折中的办法，分为五层的体系结构，从下到上分别为：物理层、数据链路层、网络层、运输层和应用层
+                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-25
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
                         </span>
                         <span class="publish-author">
                             
@@ -1254,19 +1270,22 @@ OSI的体系结构分为七层，TCP/IP 的体系结构分为四层；
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
+                <a href="/2020/08/05/linkedlist-yuan-ma-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="LinkedList源码解析">
                         
-                        <span class="card-title">ArrayList源码解析</span>
+                        <span class="card-title">LinkedList源码解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
+                            LinkedList 源码解析1. 定义及构造方法源码1. LinkedList 简介
+LinkedList 实现了 List 接口 和 Deque 接口，是一个双端链表，同时也具有队列的性质。
+
+LinkedList 实现了 Clonea
                         
                     </div>
                     <div class="publish-info">
@@ -1500,7 +1519,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.8k</span>&nbsp;字
+                class="white-color">94.3k</span>&nbsp;字
             
             
             

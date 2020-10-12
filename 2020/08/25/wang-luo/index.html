@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-27
+                    2020-10-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8.6k
+                    10.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    30 分
+                    37 分
                 </div>
                 
 
@@ -528,24 +528,25 @@
 <li>在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 <strong>IP 协议</strong>，因此分组也叫 <strong>IP 数据报</strong> ，简称 <strong>数据报</strong>。</li>
 <li>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Intert Protocol）和许多路由选择协议，因此互联网的网络层也叫做<strong>网际层</strong>或<strong>IP层</strong>。 </li>
 <li><strong>子网掩码</strong>：它是一种用来指明一个 IP 地址的哪些位标识的是主机所在的子网，以及哪些位标识的是主机的位掩码。子网掩码不能单独存在，它必须结合IP地址一起使用。</li>
+<li><strong>设备：路由器</strong>。</li>
+<li><strong>协议：IP、ARP、RARP 和 ICMP 等</strong>。</li>
 </ul>
 <hr>
 <h3 id="5-数据链路层"><a href="#5-数据链路层" class="headerlink" title="5. 数据链路层"></a>5. 数据链路层</h3><p><strong>数据链路层（data link layer）通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议。</strong></p>
 <ul>
-<li><p>在两个相邻节点之间传送数据时，<strong>数据链路层将网络层交下来的 IP 数据报组装成帧</strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。</p>
-</li>
-<li><p>链路是从一个结点到相邻节点的一段物理链路，数据链路则在链路的基础上增加了一些必要的硬件（如网络适配器）和软件（如协议的实现）。</p>
-</li>
-<li><p>数据链路层传输协议的数据单元是帧。数据链路层的三个基本问题是：<strong>封装成帧</strong>，<strong>透明传输</strong>和<strong>差错检测</strong>。</p>
-</li>
-<li><p><strong>MAC 地址</strong>：意译为媒体访问控制，或称为<strong>物理地址、硬件地址，用来定义网络设备的位置</strong>。在 OSI 模型中，第三层网络层负责 IP 地址，第二层数据链路层则负责 MAC 地址。因此<strong>一个主机会有一个 MAC 地址，而每个网络位置会有一个专属于它的 IP 地址</strong>。</p>
-</li>
+<li>在两个相邻节点之间传送数据时，<strong>数据链路层将网络层交下来的 IP 数据报组装成帧</strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。</li>
+<li>链路是从一个结点到相邻节点的一段物理链路，数据链路则在链路的基础上增加了一些必要的硬件（如网络适配器）和软件（如协议的实现）。</li>
+<li>数据链路层传输协议的数据单元是帧。数据链路层的三个基本问题是：<strong>封装成帧</strong>，<strong>透明传输</strong>和<strong>差错检测</strong>。</li>
+<li><strong>MAC 地址</strong>：意译为媒体访问控制，或称为<strong>物理地址、硬件地址，用来定义网络设备的位置</strong>。在 OSI 模型中，第三层网络层负责 IP 地址，第二层数据链路层则负责 MAC 地址。因此<strong>一个主机会有一个 MAC 地址，而每个网络位置会有一个专属于它的 IP 地址</strong>。</li>
+<li><strong>设备：网桥、交换机等</strong>。</li>
+<li><strong>协议：PPP（点对点协议）、ARQ（自动重传）等</strong>。</li>
 </ul>
 <hr>
 <h3 id="6-物理层"><a href="#6-物理层" class="headerlink" title="6. 物理层"></a>6. 物理层</h3><ul>
 <li><strong>在物理层上所传送的数据单位是比特</strong>。</li>
 <li><strong>物理层（physical layer）</strong>的作用是实现<strong>相邻计算机节点之间比特流的透明传送</strong>，尽可能屏蔽掉具体传输介质和物理设备的差异。</li>
 <li>“透明传送比特流” 表示<strong>经实际电路传送后的比特流没有发生变化</strong>，对传送的比特流来说，这个电路好像是看不见的。</li>
+<li><strong>设备：中继器，集线器等</strong>。</li>
 </ul>
 <hr>
 <h3 id="7-子网，子网掩码，子网地址，广播地址"><a href="#7-子网，子网掩码，子网地址，广播地址" class="headerlink" title="7. 子网，子网掩码，子网地址，广播地址"></a>7. 子网，子网掩码，子网地址，广播地址</h3><p><img src="%E7%BD%91%E7%BB%9C.assets/20160712182446560" alt=""></p>
@@ -638,6 +639,25 @@
 </ol>
 <p><img src="https://pic1.zhimg.com/80/v2-86c12ed3ddb2391c057f7d3598372880_720w.jpg" alt=""></p>
 <hr>
+<h3 id="10-TCP-粘包拆包"><a href="#10-TCP-粘包拆包" class="headerlink" title="10. TCP 粘包拆包"></a>10. TCP 粘包拆包</h3><blockquote>
+<p><strong>粘包</strong></p>
+</blockquote>
+<p>粘包是指连续的包粘在一起，看起来像是一个包的情况。产生这种情况的原因有多种：</p>
+<ol>
+<li><strong>要发送的数据大于TCP发送缓冲区剩余空间大小，将会发生拆包</strong>。 </li>
+<li>待发送数据大于MSS（最大报文长度），TCP在传输前将进行拆包。 </li>
+<li>要发送的数据小于TCP发送缓冲区的大小，TCP将多次写入缓冲区的数据一次发送出去，将会发生粘包。 </li>
+<li><strong>接收数据端的应用层没有及时读取接收缓冲区中的数据，将发生粘包</strong>。</li>
+</ol>
+<blockquote>
+<p><strong>解决方法</strong></p>
+</blockquote>
+<ol>
+<li>发送端给每个数据包添加包首部，<strong>首部中应该至少包含数据包的长度</strong>，这样接收端在接收到数据后，通过读取包首部的长度字段，便知道每一个数据包的实际长度了。</li>
+<li>发送端<strong>将每个数据包封装为固定长度</strong>（不够的可以通过补0填充），这样接收端每次从接收缓冲区中读取固定长度的数据就自然而然的把每个数据包拆分开来。 </li>
+<li>可以<strong>在数据包之间设置边界，如添加特殊符号</strong>，这样，接收端通过这个边界就可以将不同的数据包拆分开。</li>
+</ol>
+<hr>
 <h2 id="3-HTTP-协议"><a href="#3-HTTP-协议" class="headerlink" title="3. HTTP 协议"></a>3. HTTP 协议</h2><h3 id="1-HTTP-简介"><a href="#1-HTTP-简介" class="headerlink" title="1. HTTP 简介"></a>1. HTTP 简介</h3><ul>
 <li>工作原理：HTTP 协议工作在客户端 / 服务器架构上（C / S）。<strong>浏览器作为 HTTP 客户端通过 URL 向 HTTP 服务端即WEB服务器发送所有请求</strong>。</li>
 <li><strong>HTTP 默认端口号为 80</strong>，可以修改。</li>
@@ -652,18 +672,40 @@
 <h3 id="2-HTTP-消息结构"><a href="#2-HTTP-消息结构" class="headerlink" title="2. HTTP 消息结构"></a>2. HTTP 消息结构</h3><ul>
 <li>客户端：客户端发送一个 HTTP 请求到服务器，请求消息包括以下格式：<strong>请求行（request line）、请求头部（header）</strong>、空行和请求数据。<ul>
 <li><strong>请求行</strong>中包括：<strong>请求方法</strong>（最常用的方法为 GET 和 POST）、<strong>URL</strong> 和<strong>协议版本</strong>，用空格隔开。</li>
-<li><strong>请求头部</strong>内格式为：<strong>头部字段名 ：值</strong>（可以有多个）。</li>
+<li><strong>请求头部</strong>内格式为：<strong>头部字段名 ：值</strong>（可以有多个）。<ul>
+<li>Accept：客户端想要接收的数据类型。</li>
+<li>Accept-CharSet：客户端可接收的字符集。</li>
+<li>Accept-Language：浏览器所希望的语言种类，当服务器能够提供一种以上的语言版本时要用到。</li>
+<li><strong>Host</strong>：客户机通过这个头告诉服务器，想访问的主机名。</li>
+<li>User-Agent：User-Agent 头域的内容包含发出请求的用户信息、浏览器类型，如果 Servlet 返回的内容与浏览器类型有关则该值非常有用。 </li>
+<li><strong>Cookie</strong>：客户机通过这个头可以向服务器带数据，这是最重要的请求头信息之一。</li>
+<li><strong>Connection</strong>：处理完这次请求后是否断开连接还是继续保持连接。</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p><img src="%E7%BD%91%E7%BB%9C.assets/640.webp" alt=""></p>
+<p><img src="%E7%BD%91%E7%BB%9C.assets/20160921092902556.jpg" alt=""></p>
 <ul>
-<li>服务器端：服务器端响应消息包括以下格式：<strong>状态行</strong>、消息报头、空行和响应正文。<ul>
+<li>服务器端：服务器端响应消息包括以下格式：<strong>状态行</strong>、响应报头、空行和响应正文。<ul>
 <li><strong>状态行</strong>中包括：协议版本和<strong>状态码</strong>。常用状态码有：<strong>200（OK）</strong>、301（资源被永久转移到其他 URL）、<strong>404（请求的资源不存在）</strong>和 500（内部服务器错误）等。</li>
+<li><strong>响应报头</strong>：<ul>
+<li>Allow：服务器支持哪些请求方法(如GET、POST等)。</li>
+<li>Content-Encoding：文档的编码(Encode)方法。 </li>
+<li>Content- Type：表示后面的文档属于什么数据类型。 </li>
+<li>Date：当前的 GMT 时间。</li>
+<li>Expires：告诉浏览器把回送的资源缓存多长时间，-1或0则是不缓存。</li>
+<li>Location：这个头配合302状态码使用，用于重定向接收者到一个新URI地址。</li>
+<li>Server：服务器通过这个头告诉浏览器服务器的类型。 </li>
+<li>Set-Cookie：设置和页面关联的Cookie。 </li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p><img src="%E7%BD%91%E7%BB%9C.assets/640-1601175112868.webp" alt=""></p>
+<p><img src="%E7%BD%91%E7%BB%9C.assets/20160921092902557.jpg" alt=""></p>
 <ul>
 <li><strong>200：请求被正常处理</strong></li>
 <li><strong>204：请求被受理但没有资源可以返回</strong></li>
@@ -685,8 +727,8 @@
 <li><strong>GET：请求指定的页面信息，并返回实体主体。</strong>GET 方法的请求参数会拼在 URL 后，容易被窃取，且 URL 的长度有限制。</li>
 <li>HEAD：类似于 GET 请求，只不过返回的响应中没有具体的内容，用于获取报头。</li>
 <li><strong>POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST 请求可能会导致新资源的建立和/或已有资源的修改。</strong>POST 请求会把参数和值放在消息体中，对外界不可见，且长度不受限制。</li>
-<li>PUT：从客户端向服务器传送的数据取代指定的文档的内容。</li>
-<li>DELETE：请求服务器删除指定的页面。</li>
+<li><strong>PUT</strong>：从客户端向服务器传送的数据取代指定的文档的内容。</li>
+<li><strong>DELETE</strong>：请求服务器删除指定的页面。</li>
 <li>CONNECT：HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器。</li>
 <li>OPTIONS：允许客户端查看服务器的性能。</li>
 <li>TRACE：回显服务器收到的请求，主要用于测试或诊断。</li>
@@ -746,11 +788,12 @@
 <hr>
 <h3 id="8-get-和-post-的区别"><a href="#8-get-和-post-的区别" class="headerlink" title="8. get 和 post 的区别"></a>8. get 和 post 的区别</h3><ol>
 <li><strong>Get 是用来从服务器上获得数据，而 Post 是用来向服务器上传递数据</strong>。</li>
-<li>Get 将表单中数据的按照 variable=value 的形式，添加到 action 所指向的 URL 后面，并且两者使用 “?” 连接，而各个变量之间使用 “&amp;” 连接；Post 是将表单中的数据放在 form 的数据体中，按照变量和值相对应的方式，传递到 action 所指向 URL。</li>
-<li>Get 是不安全的，因为在传输过程，数据被放在请求的 URL 中，而如今现有的很多服务器、代理服务器或者用户代理都会将请求 URL 记录到日志文件中，然后放在某个地方，这样就可能会有一些隐私的信息被第三方看到。另外，用户也可以在浏览器上直接看到提交的数据，一些系统内部消息将会一同显示在用户面前。Post 的所有操作对用户来说都是不可见的。</li>
-<li>Get 传输的数据量小，这主要是因为受 URL 长度限制；而 Post 可以传输大量的数据，所以在上传文件只能使用 Post（当然还有一个原因，将在后面的提到）。</li>
-<li>Get 限制 Form 表单的数据集的值必须为 ASCII 字符；而 Post 支持整个 ISO10646 字符集。</li>
+<li><strong>存储方式</strong>：Get 将表单中数据的按照 variable=value 的形式，<strong>添加到 action 所指向的 URL 后面</strong>，并且两者使用 “?” 连接，而各个变量之间使用 “&amp;” 连接；<strong>Post 是将表单中的数据放在 form 的数据体中</strong>，按照变量和值相对应的方式，传递到 action 所指向 URL。</li>
+<li><strong>安全性</strong>：<strong>Get 是不安全的</strong>，因为在传输过程，数据被放在请求的 URL 中，而如今现有的很多服务器、代理服务器或者用户代理都会将请求 URL 记录到日志文件中，然后放在某个地方，这样就可能会有一些隐私的信息被第三方看到。另外，用户也可以在浏览器上直接看到提交的数据，一些系统内部消息将会一同显示在用户面前。<strong>Post 的所有操作对用户来说都是不可见的</strong>。</li>
+<li><strong>数据量</strong>：<strong>Get 传输的数据量小</strong>，这主要是因为受 URL 长度限制；<strong>而 Post 可以传输大量的数据</strong>，所以在上传文件只能使用 Post（当然还有一个原因，将在后面的提到）。</li>
+<li><strong>字符集</strong>：<strong>Get 限制 Form 表单的数据集的值必须为 ASCII 字符</strong>；而 Post 支持整个 ISO10646 字符集。</li>
 <li>Get 是 Form 的默认方法。使用 Post 传输的数据，<strong>可以通过设置编码的方式正确转化中文</strong>；而 Get 传输的数据却没有变化。</li>
+<li><strong>缓存</strong>：GET 请求会被浏览器主动 cache，而 POST 不会，除非手动设置。 </li>
 </ol>
 <hr>
 <h3 id="9-从输入-URL-到显示页面的过程"><a href="#9-从输入-URL-到显示页面的过程" class="headerlink" title="9. 从输入 URL 到显示页面的过程"></a>9. 从输入 URL 到显示页面的过程</h3><ol>
@@ -767,11 +810,13 @@
 </ul>
 <p><img src="%E7%BD%91%E7%BB%9C.assets/5679451-6d9d8a9de1453f9a.webp" alt=""></p>
 <ol>
-<li>在浏览器中输入<a href="http://www.baidu.com域名，操作系统会先检查自己**本地的hosts文件**是否有这个网址映射关系，如果有，就先调用这个ip地址映射，完成域名解析。" target="_blank" rel="noopener">www.baidu.com域名，操作系统会先检查自己**本地的hosts文件**是否有这个网址映射关系，如果有，就先调用这个ip地址映射，完成域名解析。</a></li>
-<li>如果hosts里没有这个域名的映射，则会查找本地DNS解析器缓存，是否有这个网址映射关系，如果有，直接返回，完成域名解析。</li>
-<li>如果hosts与本地DNS解析器缓存都没有相应的网址映射关系，首先会找TCP/IP参数中设置的首选DNS服务器，在此我们叫它<strong>本地DNS服务器</strong>，此服务器收到查询时，如果要查询的域名，包含在本地配置区域资源中，则返回解析记过给客户端，完成域名解析，此解析具有权威性。</li>
-<li>如果要查询域名，不由本地DNS服务器区域解析，但该服务器已<strong>缓存</strong>了此网址映射关系，则调用这个IP地址映射，完成域名解析，此解析不具有权威性。</li>
-<li>如果本地DNS服务器本地区域文件与缓存解析都失效，则根据本地DNS服务器的设置（是否设置转发器）进行查询，如果未用转发模式，<strong>本地DNS就把请求发至13台根DNS</strong>，根DNS服务器收到请求后会判断这个域名（.com）是谁来授权管理，并会返回一个负责该顶级域名服务器的一个IP。本地DNS服务器收到IP信息后，将会联系负责.com域的这台服务器。这台负责.com域的服务器收到请求后，如果自己无法解析，它就会找一个管理.com域的下一级DNS服务器地址（baidu.com）给本地DNS服务器。当本地DNS服务器收到这个地址后，就会找baidu.com域服务器，重复上面的动作，进行查询，直至找到<a href="http://www.baidu.com主机。" target="_blank" rel="noopener">www.baidu.com主机。</a></li>
+<li>在浏览器中输入<a href="http://www.baidu.com域名，首先查找浏览器缓存，但浏览器缓存时间短，且有数量限制。" target="_blank" rel="noopener">www.baidu.com域名，首先查找浏览器缓存，但浏览器缓存时间短，且有数量限制。</a></li>
+<li>如果浏览器缓存中没有，则查找操作系统自身的缓存，可以用 ipconfig / displaydns 查看。</li>
+<li>如果操作系统缓存没有，则检查<strong>本地的 hosts 文件</strong>是否有这个网址映射关系，如果有，就先调用这个 ip 地址映射，完成域名解析。</li>
+<li>如果 hosts 也没有，则会找本地配置的（TCP/IP参数中设置）首选DNS服务器，在此我们叫它<strong>本地DNS服务器</strong>。这个过程是使用 UDP 协议向 DNS 服务器的 53 端口发起请求，<strong>这个请求是一个递归请求</strong>，也就是说本地 DNS 服务器一定会查到 IP 地址并返回。  </li>
+<li>此服务器收到查询时，如果要查询的域名，<strong>包含在本地配置区域资源中</strong>，则返回解析记过给客户端，完成域名解析，此解析具有权威性。</li>
+<li>如果要查询域名，不由本地DNS服务器区域解析，但<strong>该服务器已缓存</strong>了此网址映射关系，则调用这个IP地址映射，完成域名解析，此解析不具有权威性。</li>
+<li>如果本地DNS服务器本地区域文件与缓存解析都失效，则根据本地DNS服务器的设置（是否设置转发器）进行查询，如果未用转发模式，<strong>本地DNS就把请求发至13台根DNS，这个请求是一个递归请求</strong>，根DNS服务器收到请求后会判断这个域名（.com）是谁来授权管理，并会返回一个负责该顶级域名服务器的一个IP。本地DNS服务器收到IP信息后，将会联系负责.com域的这台服务器。这台负责.com域的服务器收到请求后，如果自己无法解析，它就会找一个管理.com域的下一级DNS服务器地址（baidu.com）给本地DNS服务器。当本地DNS服务器收到这个地址后，就会找baidu.com域服务器，重复上面的动作，进行查询，直至找到<a href="http://www.baidu.com主机。" target="_blank" rel="noopener">www.baidu.com主机。</a></li>
 </ol>
 <blockquote>
 <p><strong>递归查询和迭代查询</strong></p>
@@ -781,37 +826,96 @@
 <li>迭代查询是 A 向 B 查询，B 返回一个地址 C，A 再向 C 查询，依次类推，直到找到 IP 地址。</li>
 </ul>
 <hr>
-<h2 id="4-Session-和-Cookie"><a href="#4-Session-和-Cookie" class="headerlink" title="4. Session 和 Cookie"></a>4. Session 和 Cookie</h2><h3 id="1-Cookie"><a href="#1-Cookie" class="headerlink" title="1. Cookie"></a>1. Cookie</h3><ul>
-<li>Cookie 实际是一段文本数据，用于记录用户状态，保存在客户端：<ul>
-<li>客户端请求服务器，如果服务器需要记录该用户的状态，就会使用 response 客户端发送一个 Cookie（相当于身份证号码），客户端会把 Cookie 保存起来；</li>
-<li>当客户端再次请求服务器时，会把请求和 Cookie 一同提交给服务器，服务器检查 Cookie 以确认用户状态。服务器还可以根据需要修改 Cookie 的内容。</li>
+<h3 id="11-HTTP-缓存"><a href="#11-HTTP-缓存" class="headerlink" title="11. HTTP 缓存"></a>11. HTTP 缓存</h3><blockquote>
+<p>为什么要使用缓存</p>
+</blockquote>
+<p>客户端每次请求都要提供查找，下载，或者页面的渲染等，如果用户数量大，服务器存在较大压力，并且消耗时间多。</p>
+<blockquote>
+<p><strong>相关响应头</strong></p>
+</blockquote>
+<ol>
+<li>Cache-Control：<strong>请求/响应头</strong>，控制缓存的最高指令，有以下常用值：<ol>
+<li>no-store：所有内容都不缓存。</li>
+<li><strong>no-cache</strong>：缓存，但浏览器（客户端）使用缓存前，会判断缓存是否过期，如果过期则不使用。</li>
+<li>max-age = x：请求缓存后的 x 秒不再发起请求，比 expires 优先级高。</li>
+<li>public：客户端和代理服务器都可以缓存。</li>
+<li>private：只有客户端可以缓存。</li>
+</ol>
+</li>
+<li>Expires：<strong>响应头</strong>，代表资源过期时间，由服务器返回提供。</li>
+<li>Last-Modified：响应头，资源最近修改时间，由服务器返回。</li>
+<li>if-Modified-Since：请求头，资源最近修改时间，由浏览器提供给服务器，和 Last-Modified 是一对，两者会进行对比。</li>
+<li>Etag：响应头，资源标识，由服务器返回。</li>
+<li>if-None-Match：请求头，资源标识，由浏览器提供给服务器，和 Etag 是一对，两者会进行对比。</li>
+</ol>
+<blockquote>
+<p><strong>缓存机制</strong></p>
+</blockquote>
+<ol>
+<li><strong>Expires</strong>：给资源设置过期时间，在过期时间内不用从服务器获得。<ul>
+<li>如果过期了，但资源并没有被修改过，有没有方法避免从服务器获取资源？</li>
 </ul>
 </li>
-<li><strong>Cookie 的有效期</strong>：Cookie 的 maxAge 决定 Cookie 的有效期。<strong>maxAge 为正数时</strong>，浏览器会将maxAge为正数的 Cookie 持久化，即<strong>写到对应的 Cookie 文件中</strong>。无论客户关闭了浏览器还是电脑，只要还在 maxAge 秒之前，登录网站时该 Cookie 仍然有效。<strong>maxAge 为负数时</strong>，表示该 Cookie 仅在本浏览器窗口以及本窗口打开的子窗口内有效，关闭窗口后该 Cookie 即失效。这种 Cookie <strong>不会被写入文件中， Cookie 信息保存在浏览器内存中</strong>，因此关闭浏览器该 Cookie 就消失了。<strong>Cookie 默认的 maxAge 值为 –1</strong>，也就是说 Cookie 默认是会话 Cookie。<strong>maxAge 为0时</strong>，表示<strong>删除</strong>该 Cookie。</li>
-<li><strong>Cookie 的修改和删除</strong>：response 对象提供的 Cookie 操作方法只有一个添加操作 <code>add(Cookie cookie)</code>。要想修改 Cookie 只能使<strong>用一个同名的 Cookie 来覆盖原来的 Cookie</strong>，达到修改的目的。删除时用一个 maxAge 为 0 的同名 Cookie 覆盖原来的 Cookie。</li>
+<li><strong>Last-Modified 和 if-Modified-Since</strong>：<strong>最近修改时间的对比</strong>，如果资源过期，而两者对的上，则说明资源没有被修改过，返回状态码 304，还是从缓存中获得。如果对不上，返回新的 Expires 和 Last-Modified 和 if-Modified-Since。<ul>
+<li>只能精确到秒，如果资源在 1s 内被改变了，浏览器就无法获得最新的资源。</li>
+</ul>
+</li>
+<li><strong>Etag 和 if-None-Match</strong>：<strong>文件内容唯一对比标记</strong>。通过对比这两者是否相等，判断资源是否是最新的。<strong>优先级比 Last-Modified 和 if-Modified-Since 高</strong>。</li>
+</ol>
+<ul>
+<li><strong>重要缺陷</strong>：如果设置永不过期，浏览器无法主动感知服务器内资源的变化。</li>
+<li><strong>解决方式</strong>：<strong>给资源加 MD5/hash 标识</strong>，文件如果改动，标识就会变化，请求的就不再是缓存的资源，而是另一个资源了，就必须去服务器取最新的。</li>
+</ul>
+<hr>
+<h2 id="4-Session-和-Cookie"><a href="#4-Session-和-Cookie" class="headerlink" title="4. Session 和 Cookie"></a>4. Session 和 Cookie</h2><h3 id="1-Cookie"><a href="#1-Cookie" class="headerlink" title="1. Cookie"></a>1. Cookie</h3><ul>
+<li><p>Cookie 实际是一段文本数据，用于记录用户状态，保存在客户端：</p>
+<ul>
+<li>客户端请求服务器，如果服务器需要记录该用户的状态，就会使用 response 客户端发送一个 Cookie（相当于身份证号码），客户端会把 Cookie 保存起来；</li>
+<li>当客户端再次请求服务器时，会把请求和 Cookie 一同提交给服务器，服务器检查 Cookie 以确认用户状态。服务器还可以根据需要修改 Cookie 的内容。</li>
+<li><strong>Cookie 具有不可跨域名性</strong>，即不同网站颁发的 Cookie 不能通用。如当我访问 baidu 的时候，浏览器只会把 baidu 颁发的 Cookie 带过去，而不会带上 google 的 Cookie。但 Cookie 可以通过设置 domain 属性实现跨域名。</li>
+</ul>
+</li>
+<li><p><strong>Cookie 的有效期</strong>：Cookie 的 maxAge 决定 Cookie 的有效期。<strong>maxAge 为正数时</strong>，浏览器会将maxAge为正数的 Cookie 持久化，即<strong>写到对应的 Cookie 文件中</strong>。无论客户关闭了浏览器还是电脑，只要还在 maxAge 秒之前，登录网站时该 Cookie 仍然有效。<strong>maxAge 为负数时</strong>，表示该 Cookie 仅在本浏览器窗口以及本窗口打开的子窗口内有效，关闭窗口后该 Cookie 即失效。这种 Cookie <strong>不会被写入文件中， Cookie 信息保存在浏览器内存中</strong>，因此关闭浏览器该 Cookie 就消失了。<strong>Cookie 默认的 maxAge 值为 –1</strong>，也就是说 Cookie 默认是会话 Cookie。<strong>maxAge 为0时</strong>，表示<strong>删除</strong>该 Cookie。</p>
+</li>
+<li><p><strong>Cookie 的修改和删除</strong>：response 对象提供的 Cookie 操作方法只有一个添加操作 <code>add(Cookie cookie)</code>。要想修改 Cookie 只能使<strong>用一个同名的 Cookie 来覆盖原来的 Cookie</strong>，达到修改的目的。删除时用一个 maxAge 为 0 的同名 Cookie 覆盖原来的 Cookie。</p>
+</li>
+<li><p><strong>Cookie 在 Java 中的使用</strong>：Java 中提供了 <strong>Cookie 类</strong>，用于创建一个 Cookie 对象，其中的方法有：</p>
+<ul>
+<li>构造方法 <code>public Cookie(String name,String value)</code></li>
+<li>setValue 与 getValue 方法 </li>
+<li>setMaxAge 与 getMaxAge 方法 </li>
+<li>getName 方法等</li>
+</ul>
+<p><strong>response 接口（实现类 HttpServletResponse）</strong>中定义了 addCookie 方法，用于在响应 HTTP 请求时返回 Cookie。</p>
+<p><strong>request 接口（实现类 HttpServletRequest）</strong>中定义了 getCookie 方法，用于获取 HTTP 请求中的 Cookie。</p>
+</li>
 </ul>
 <hr>
 <h3 id="2-Session"><a href="#2-Session" class="headerlink" title="2. Session"></a>2. Session</h3><ul>
 <li>Session 另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而 <strong>Session 保存在服务器上</strong>。<ul>
 <li>客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是 Session。</li>
 <li>客户端浏览器再次访问时只需要从该 Session 中查找该客户的状态。 </li>
+<li><strong>Session 具有不可跨域名性</strong>，即不同网站颁发的 Session 不能通用。</li>
 </ul>
 </li>
 <li>每个来访者对应一个 Session 对象，<strong>所有该客户的状态信息都保存在这个 Session 对象里。Session 对象是在客户端第一次请求服务器的时候自动创建的</strong>。Session 也是一种 key-value 的属性对。</li>
-<li><strong>Session 有效期</strong>：Session 保存在服务器端。<strong>为了获得更高的存取速度，服务器一般把Session放在内存里</strong>。每个用户都会有一个独立的 Session。<strong>为防止内存溢出，服务器会把长时间内没有活跃的Session从内存删除。这个时间就是 Session 的超时时间</strong>。如果超过了超时时间没访问过服务器，Session就自动失效了。</li>
+<li><strong>Session 有效期</strong>：Session 保存在服务器端。<strong>为了获得更高的存取速度，服务器一般把 Session 放在内存里</strong>。每个用户都会有一个独立的 Session。<strong>为防止内存溢出，服务器会把长时间内没有活跃的Session从内存删除。这个时间就是 Session 的超时时间</strong>。如果超过了超时时间没访问过服务器，Session就自动失效了。</li>
 <li>Session 中提供了很多方法，使用起来比 Cookie 方便。</li>
 </ul>
 <hr>
 <h3 id="3-Session-和-Cookie-的联系"><a href="#3-Session-和-Cookie-的联系" class="headerlink" title="3. Session 和 Cookie 的联系"></a>3. Session 和 Cookie 的联系</h3><ul>
 <li><strong>Session需要使用Cookie作为识别标志</strong>：HTTP 协议是无状态的，Session 不能依据 HTTP 连接来判断是否为同一客户，因此服务器向客户端浏览器发送一个<strong>名为 JSESSIONID 的 Cookie，它的值为该 Session 的 id</strong>（也就是 <code>HttpSession.getId()</code> 的返回值）。Session依据该Cookie来识别是否为同一用户。</li>
-<li><strong>URL 地址重写</strong>：当某些客户端不支持 Cookie，而想要使用 Session 来记录用户状态时，就需要使用 URL 地址重写。URL 地址重写的原理是，<strong>将该用户 Session 的 id 信息重写到 URL 地址中。服务器能够解析重写后的 URL 获取 Session 的 id</strong>。这样即使客户端不支持 Cookie，也可以使用 Session 来记录用户状态。 </li>
+<li><strong>URL 地址重写</strong>：当某些客户端不支持 Cookie，而想要使用 Session 来记录用户状态时，就需要使用 URL 地址重写。URL 地址重写的原理是，<strong>将该用户 Session 的 id 信息重写到 URL 地址中。服务器能够解析重写后的 URL 获取 Session 的 id</strong>。这样即使客户端不支持 Cookie，也可以使用 Session 来记录用户状态。<strong>Java 中提供 encodeURL 方法</strong>。</li>
 </ul>
 <hr>
 <h3 id="4-Session-和-Cookie-的区别"><a href="#4-Session-和-Cookie-的区别" class="headerlink" title="4. Session 和 Cookie 的区别"></a>4. Session 和 Cookie 的区别</h3><ol>
-<li>Cookie 数据保存在客户端（浏览器端），Session 数据保存在服务器端。</li>
-<li>Cookie 不是很安全，<strong>考虑到安全性应当使用 Session</strong>。但 Cookie 可以加密，使用时再到服务器端解密。</li>
-<li>Session 会在一定时间内保存在服务器上。当访问增多时，会比较占用服务器的性能，<strong>考虑到减轻服务器性能方面，应当使用 Cookie</strong>。</li>
-<li>单个 Cookie 保存的数据不能超过 4K，很多浏览器都限制一个站点最多保存 20 个 Cookie。<strong>Session对象没有对存储的数据量的限制，其中可以保存更为复杂的数据类型</strong>。</li>
+<li><strong>存储位置</strong>：Cookie 数据保存在客户端（浏览器端），Session 数据保存在服务器端。</li>
+<li><strong>安全性</strong>：Cookie 对客户端可见，不是很安全，<strong>考虑到安全性应当使用 Session</strong>。但 Cookie 可以加密，使用时再到服务器端解密。</li>
+<li><strong>有效期</strong>：<strong>Cookie 可以设置有效期，保存在硬盘上</strong>，即使浏览器关闭，Cookie 仍然存在。Session 保存在服务器中，可以设置有效期，一般保存在内存中。且 Session 依赖对应的 Cookie，如果 Cookie 失效（maxAge 设置为 -1，并且关闭了浏览器），Session 虽然还在服务器中，但也就失效了。</li>
+<li><strong>对服务器负担</strong>：Session 会在一定时间内保存在服务器上，且每个用户都会产生一个 Session。当访问增多时，会比较占用服务器的性能，<strong>考虑到减轻服务器性能方面，应当使用 Cookie</strong>。</li>
+<li><strong>存储内容</strong>：<strong>单个 Cookie 保存的数据不能超过 4K</strong>，存储的是字符串，很多浏览器都限制一个站点最多保存 20 个 Cookie。<strong>Session对象没有对存储的数据量的限制，其中可以保存更为复杂的数据类型</strong>。</li>
+<li><strong>浏览器支持</strong>：<strong>浏览器可以禁用 Cookie</strong>，此时 Cookie 就不能使用了，但 Session 仍然可以通过重写 URL 继续使用。</li>
+<li><strong>跨域名</strong>：<strong>Cookie 可以设置 domain 属性实现跨域名</strong>，而Session 不可以。</li>
 </ol>
 <hr>
 <h3 id="5-应用场景"><a href="#5-应用场景" class="headerlink" title="5. 应用场景"></a>5. 应用场景</h3><ul>
@@ -819,7 +923,7 @@
 <li>Session 一个应用场景是<strong>购物车</strong>，添加了商品之后，服务器端储存这些添加的商品就用到了 Session。下一次同一个用户登录时，就可以从 Session 读取到之前添加的商品。<strong>Cookie只是一个身份信息</strong>，且容量有限，无法储存购物车这种较多的数据。</li>
 </ul>
 <hr>
-<h2 id="5-其他"><a href="#5-其他" class="headerlink" title="5. 其他"></a>5. 其他</h2><p>socket servlet 等</p>
+<h2 id="5-其他"><a href="#5-其他" class="headerlink" title="5. 其他"></a>5. 其他</h2><p>servlet 等</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1138,21 +1242,19 @@ LinkedList：双向链表（JDK 1.6 前为循环链表，
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/05/hashmap-yuan-ma-jie-xi/">
+                <a href="/2020/08/05/arraylist-yuan-ma-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HashMap源码解析">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ArrayList源码解析">
                         
-                        <span class="card-title">HashMap源码解析</span>
+                        <span class="card-title">ArrayList源码解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HashMap 源码解析1. JDK 1.8 前后的区别1. HashMap 简介HashMap 继承了 AbstractMap ，实现了 Map、cloneable 和java.io.serializable 接口。
-
-继承了 Abstr
+                            ArrayList 源码解析1. ArrayList 源码1. ArrayList 简介ArrayList 继承了 AbstractList ，实现了 List、RandomAccess、Cloneable 和 java.io.serial
                         
                     </div>
                     <div class="publish-info">
@@ -1386,7 +1488,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.8k</span>&nbsp;字
+                class="white-color">94.3k</span>&nbsp;字
             
             
             

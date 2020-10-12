@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-27
+                    2020-10-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.3k
+                    8.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    27 分
+                    31 分
                 </div>
                 
 
@@ -746,6 +746,14 @@ String<span class="token punctuation">[</span><span class="token punctuation">]<
 </ol>
 </li>
 </ul>
+<blockquote>
+<p><strong>泛型的好处</strong></p>
+</blockquote>
+<ol>
+<li><strong>效率</strong>：在不使用泛型时，如 ArrayList 只接收 Object 类型的对象，这就需要类型转换，把其他对象转换成 Object 储存，取出时还要再转换成原类型。</li>
+<li><strong>安全</strong>：强制类型转换当类型不符时就会发生，使用泛型可以避免强制类型转换丢失信息，或抛出 ClassCastException，同时可以使代码可读性更强。</li>
+<li><strong>兼容性</strong>：不管是自定义的类或以后 Java 中新添加的类，都可以很好的兼容。</li>
+</ol>
 <hr>
 <h3 id="5-static关键字"><a href="#5-static关键字" class="headerlink" title="5. static关键字"></a>5. static关键字</h3><ul>
 <li>意思是静态的、全局的，被修饰内容在一定范围内是<strong>共享的</strong>，谁都可以访问，此时需要注意<strong>并发</strong>读写的问题。</li>
@@ -905,15 +913,53 @@ y<span class="token operator">:</span>小张
 <li><strong>Exception（异常）:是程序本身可以处理的异常</strong>。Exception 类有一个重要的子类 <strong>RuntimeException</strong>。RuntimeException 异常由 Java 虚拟机抛出。<strong>NullPointerException</strong>（要访问的变量没有引用任何对象时，抛出该异常）、<strong>ArithmeticException</strong>（算术运算异常，一个整数除以 0 时，抛出该异常）和 <strong>ArrayIndexOutOfBoundsException</strong> （下标越界异常）。 </li>
 <li><strong>注意：异常和错误的区别：异常能被程序本身处理，错误是无法处理。</strong> </li>
 </ul>
+<blockquote>
+<p><strong>运行时异常和非运行时异常</strong></p>
+</blockquote>
+<ol>
+<li><p>运行时异常：RuntimeException 类及其子类。</p>
+<ul>
+<li>java.lang.ArrayIndexOutOfBoundsException：数组索引越界异常</li>
+<li>java.lang.NullPointerException：空指针异常；</li>
+<li>java.lang.ArithmeticException：算术条件异常，如整数除零；</li>
+<li>java.lang.NegativeArraySizeException：数组长度为负异常；</li>
+</ul>
+<p><strong>这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理</strong>。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。运行时异常的特点是Java编译器不会检查它，也就是说，<strong>当程序中可能出现这类异常，即使没有用 try-catch 语句捕获它，也没有用 throws 子句声明抛出它，也会编译通过</strong>。</p>
+</li>
+<li><p>非运行时异常：RuntimeException 以外的异常，从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。 </p>
+<ul>
+<li>IOException：处理输入输出流时的异常。</li>
+<li>ClassNotFoundException：找不到类异常。</li>
+<li>Tread 类下的如 sleep() 等方法也要 try catch。</li>
+</ul>
+</li>
+</ol>
+<p><img src="01-Java%E5%9F%BA%E7%A1%80.assets/%E5%BC%82%E5%B8%B8.png" alt=""></p>
+<blockquote>
+<p><strong>可查异常和不可查异常</strong></p>
+</blockquote>
+<ol>
+<li><strong>可查异常</strong>：编译器要求必须处理的异常，RuntimeException 以外的异常都是可查异常。这种异常的特点是 Java 编译器会检查它，也就是说，<strong>当程序中可能出现这类异常，要么用 try-catch 语句捕获它，要么用 throws 子句声明抛出它，否则编译不会通过</strong>。 </li>
+<li>不可查异常：编译器不要求必须处理的异常，RuntimeException 和 Error 都是不可查异常。</li>
+</ol>
+<p><img src="Java%E5%9F%BA%E7%A1%80.assets/%E5%BC%82%E5%B8%B82.png" alt="异常层次图"></p>
+<blockquote>
+<p><strong>Java 的处理方式</strong></p>
+</blockquote>
+<ol>
+<li>错误：对于方法运行中可能出现的 Error，当运行方法不欲捕捉时，Java 允许该方法不做任何抛出声明。因为，<strong>大多数Error 异常属于永远不能被允许发生的状况，也属于合理的应用程序不该捕捉的异常</strong>。</li>
+<li>运行时异常：由于运行时异常的不可查性，为了更合理、更容易地实现应用程序，Java 规定，<strong>运行时异常将由 Java 运行时系统自动抛出，允许应用程序忽略运行时异常</strong>。</li>
+<li>可查异常：对于所有的可查异常，Java 规定：<strong>一个方法必须捕捉，或者声明抛出方法之外</strong>。也就是说，当一个方法选择不捕捉可查异常时，它必须声明将抛出异常。</li>
+</ol>
 <hr>
-<h3 id="12-thy-catch-finally"><a href="#12-thy-catch-finally" class="headerlink" title="12. thy-catch-finally"></a>12. thy-catch-finally</h3><ul>
+<h3 id="12-try-catch-finally"><a href="#12-try-catch-finally" class="headerlink" title="12. try-catch-finally"></a>12. try-catch-finally</h3><ul>
 <li><strong>try块</strong>：用于捕获异常。其后可接零个或多个 catch 块，如果没有 catch 块，则必须跟一个 finally 块。 </li>
 <li><strong>catch 块：</strong> 用于处理 try 捕获到的异常。 </li>
 <li><strong>finally 块：</strong> 无论是否捕获或处理异常，finally 块里的语句都会被执行。<strong>当在 try 块或 catch 块中遇到 return 语句时，finally 语句块将在方法返回之前被执行</strong>。</li>
 </ul>
 <p><strong>在以下 4 种特殊情况下，finally 块不会被执行：</strong></p>
 <ol>
-<li>在 finally 语句块第一行发生了异常。 因为在其他行，finally 块还是会得到执行</li>
+<li>在 finally 语句块第一行发生了异常。 因为在其他行，finally 块还是会得到执行。</li>
 <li>在前面的代码中用了 System.exit(int)已退出程序。 exit 是带参函数 ；若该语句在异常语句之后，finally 会执行</li>
 <li>程序所在的线程死亡。</li>
 <li>关闭 CPU。</li>
@@ -921,8 +967,6 @@ y<span class="token operator">:</span>小张
 <ul>
 <li><strong>注意</strong>：当 try 语句和 finally 语句中都有 return 语句时，在方法返回之前，finally 语句的内容将被执行，并且 finally 语句的返回值将会覆盖原始的返回值。 </li>
 </ul>
-<p><img src="01-Java%E5%9F%BA%E7%A1%80.assets/%E5%BC%82%E5%B8%B82.png" alt="异常层次图"></p>
-<p><img src="01-Java%E5%9F%BA%E7%A1%80.assets/%E5%BC%82%E5%B8%B8.png" alt=""></p>
 <hr>
 <h3 id="13-I-O流"><a href="#13-I-O流" class="headerlink" title="13. I/O流"></a>13. I/O流</h3><ul>
 <li>按照流的流向分，可以分为输入流和输出流；</li>
@@ -950,11 +994,11 @@ y<span class="token operator">:</span>小张
 </ol>
 <hr>
 <h3 id="3-Java中抽象类和接口的区别"><a href="#3-Java中抽象类和接口的区别" class="headerlink" title="3. Java中抽象类和接口的区别"></a>3. Java中抽象类和接口的区别</h3><ol>
-<li>抽象类用abstract修饰，接口用interface修饰；</li>
+<li>抽象类用 abstract 修饰，接口用 interface 修饰；</li>
 <li>抽象类只能被单继承，接口可以实现多个；</li>
 <li>抽象类中可以有非抽象方法，接口中必须都是抽象方法；</li>
-<li>接口中成员变量必须是public static final修饰，必须赋初值，实现类不能重新定义或修改。抽象类中的成员变量默认default，子类可以重新定义或修改；</li>
-<li>抽象类中允许有静态方法(static修饰)，接口中的方法不允许有静态方法。 </li>
+<li>接口中成员变量必须是 public static final 修饰，必须赋初值，实现类不能重新定义或修改。抽象类中的成员变量默认default，子类可以重新定义或修改；</li>
+<li>抽象类中允许有静态方法(static 修饰)，接口中的方法不允许有静态方法。 </li>
 </ol>
 <hr>
 <h3 id="4-Java中抽象类和普通类的区别"><a href="#4-Java中抽象类和普通类的区别" class="headerlink" title="4. Java中抽象类和普通类的区别"></a>4. Java中抽象类和普通类的区别</h3><ol>
@@ -969,6 +1013,55 @@ y<span class="token operator">:</span>小张
 <li>从存储方式上看：如果成员变量是使用 <code>static</code> 修饰的，那么这个成员变量是属于类的，如果没有使用 <code>static</code> 修饰，这个成员变量是属于实例的。而<strong>对象存在于堆内存</strong>，<strong>局部变量则存在于栈内存</strong>。 </li>
 <li>从生存时间上看：成员变量是对象的一部分，它随着<strong>对象</strong>的创建而存在，而局部变量随着<strong>方法</strong>的调用而自动消失。 </li>
 <li>初值：成员变量如果没有被赋初值，则会自动以类型的默认值而赋值（一种情况例外:被 final 修饰的成员变量也必须显式地赋值），而局部变量则不会自动赋值，<strong>在使用前必须手动赋值</strong>。</li>
+</ol>
+<hr>
+<h3 id="6-重载和重写的区别"><a href="#6-重载和重写的区别" class="headerlink" title="6. 重载和重写的区别"></a>6. 重载和重写的区别</h3><ol>
+<li><strong>发生位置</strong>：重载发生在本类（一个类中），重写发生在继承关系或实现接口的子类中。</li>
+<li><strong>方法名</strong>：两者的方法名都必须保持不变，不能修改。</li>
+<li><strong>参数列表</strong>：重写方法参数列表一定不能改变，重载方法参数列表必须改变。</li>
+<li><strong>返回值</strong>：重写方法返回值一定不能改变，重载方法返回值可以改变。</li>
+<li><strong>异常</strong>：重写方法不可抛出更大的异常，可以减小或删除。重载方法异常可以修改。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>重写</th>
+<th>重载</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类的数量</td>
+<td>父子类、接口与实现类</td>
+<td>本类</td>
+</tr>
+<tr>
+<td>方法名称</td>
+<td>一致</td>
+<td>一致</td>
+</tr>
+<tr>
+<td>参数列表</td>
+<td>一定不能修改</td>
+<td>必须修改</td>
+</tr>
+<tr>
+<td>返回类型</td>
+<td>一定不能修改</td>
+<td>可以修改</td>
+</tr>
+<tr>
+<td>异常</td>
+<td>可以减少或删除，但不能扩展</td>
+<td>可以修改</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="7-创建对象的几种方式"><a href="#7-创建对象的几种方式" class="headerlink" title="7. 创建对象的几种方式"></a>7. 创建对象的几种方式</h3><ol>
+<li>new：最常见的方式，使用了构造函数。</li>
+<li>反射：Class 类的 <code>newInstance()</code> 默认调用无参构造；或Constructor 类的 <code>newInstance()</code> 调用特定构造。工厂模式也是一个应用。</li>
+<li>clone：可以重写 <code>clone()</code> 方法，涉及到深拷贝和浅拷贝的问题。</li>
+<li>序列化和反序列化：需要实现 serializable 接口，将一个对象序列化，再反序列化。</li>
 </ol>
 <hr>
 <h2 id="4-反射"><a href="#4-反射" class="headerlink" title="4. 反射"></a>4. 反射</h2><h3 id="1-反射简介"><a href="#1-反射简介" class="headerlink" title="1. 反射简介"></a>1. 反射简介</h3><blockquote>
@@ -1729,7 +1822,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.8k</span>&nbsp;字
+                class="white-color">94.3k</span>&nbsp;字
             
             
             
