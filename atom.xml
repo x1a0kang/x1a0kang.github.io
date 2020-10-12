@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://x1a0kang.github.io/"/>
-  <updated>2020-10-12T12:18:30.237Z</updated>
+  <updated>2020-10-12T13:51:34.396Z</updated>
   <id>https://x1a0kang.github.io/</id>
   
   <author>
@@ -15,6 +15,75 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>实现 LRU 缓存</title>
+    <link href="https://x1a0kang.github.io/2020/10/12/lru-huan-cun/"/>
+    <id>https://x1a0kang.github.io/2020/10/12/lru-huan-cun/</id>
+    <published>2020-10-12T13:44:51.214Z</published>
+    <updated>2020-10-12T13:51:34.396Z</updated>
+    
+    <summary type="html">
+    
+      算法学习
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://x1a0kang.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="面试" scheme="https://x1a0kang.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="https://x1a0kang.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最长回文子串</title>
+    <link href="https://x1a0kang.github.io/2020/10/12/zui-chang-hui-wen-zi-chuan/"/>
+    <id>https://x1a0kang.github.io/2020/10/12/zui-chang-hui-wen-zi-chuan/</id>
+    <published>2020-10-12T13:12:07.996Z</published>
+    <updated>2020-10-12T13:44:56.791Z</updated>
+    
+    <summary type="html">
+    
+      算法学习
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://x1a0kang.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="面试" scheme="https://x1a0kang.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="https://x1a0kang.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>排序算法</title>
+    <link href="https://x1a0kang.github.io/2020/10/12/pai-xu-suan-fa/"/>
+    <id>https://x1a0kang.github.io/2020/10/12/pai-xu-suan-fa/</id>
+    <published>2020-10-12T12:28:04.837Z</published>
+    <updated>2020-10-12T13:12:19.822Z</updated>
+    
+    <summary type="html">
+    
+      算法学习
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://x1a0kang.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="面试" scheme="https://x1a0kang.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="https://x1a0kang.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux</title>
@@ -59,29 +128,6 @@
       <category term="Java" scheme="https://x1a0kang.github.io/tags/Java/"/>
     
       <category term="面试" scheme="https://x1a0kang.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>选择题常用知识点</title>
-    <link href="https://x1a0kang.github.io/2020/09/28/xuan-ze-ti-chang-yong-zhi-shi-dian/"/>
-    <id>https://x1a0kang.github.io/2020/09/28/xuan-ze-ti-chang-yong-zhi-shi-dian/</id>
-    <published>2020-09-28T12:56:59.113Z</published>
-    <updated>2020-08-22T07:36:26.338Z</updated>
-    
-    <summary type="html">
-    
-      Java学习
-    
-    </summary>
-    
-    
-      <category term="Java学习" scheme="https://x1a0kang.github.io/categories/Java%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Java" scheme="https://x1a0kang.github.io/tags/Java/"/>
-    
-      <category term="笔试" scheme="https://x1a0kang.github.io/tags/%E7%AC%94%E8%AF%95/"/>
     
   </entry>
   
