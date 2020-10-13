@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://x1a0kang.github.io/"/>
-  <updated>2020-10-13T07:46:24.576Z</updated>
+  <updated>2020-10-13T08:20:04.495Z</updated>
   <id>https://x1a0kang.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>克隆图</title>
+    <title>课程表</title>
     <link href="https://x1a0kang.github.io/2020/10/13/ke-cheng-biao/"/>
     <id>https://x1a0kang.github.io/2020/10/13/ke-cheng-biao/</id>
     <published>2020-10-13T07:32:50.319Z</published>
-    <updated>2020-10-13T07:46:24.576Z</updated>
+    <updated>2020-10-13T08:20:04.495Z</updated>
     
     <summary type="html">
     
@@ -63,11 +63,11 @@
   </entry>
   
   <entry>
-    <title>两个线程轮流打印奇偶数</title>
+    <title>实现死锁</title>
     <link href="https://x1a0kang.github.io/2020/10/13/shi-xian-si-suo/"/>
     <id>https://x1a0kang.github.io/2020/10/13/shi-xian-si-suo/</id>
     <published>2020-10-13T07:13:40.998Z</published>
-    <updated>2020-10-13T07:27:49.377Z</updated>
+    <updated>2020-10-13T08:20:16.428Z</updated>
     
     <summary type="html">
     
